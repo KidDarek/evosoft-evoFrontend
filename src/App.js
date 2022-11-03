@@ -3,6 +3,7 @@ import DummyPage from "./DummyPage";
 import Header1 from "./header/Header1";
 import Footer from "./footer/Footer";
 import Bestdeals from "./bestdeals/Bestdeals";
+import Banner from "./banner/Banner";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/Contact" element={<DummyPage text="Contact page"/>} />
           </Routes>
       </BrowserRouter>
+      <Banner/>
       <Bestdeals />
       <Footer />
     </>
