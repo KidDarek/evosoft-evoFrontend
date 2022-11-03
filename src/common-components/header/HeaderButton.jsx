@@ -14,9 +14,6 @@ const HeaderButton = (props) => {
       onClick={goToPageX}
     >
       {props.text}
-      {props.image ? (
-        <img src={props.image} width="50" height="50" alt="logo"></img>
-      ) : null}
     </button>
   );
 };
