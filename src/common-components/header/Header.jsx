@@ -1,17 +1,15 @@
 import React from "react";
 import HeaderButton from "./HeaderButton";
-import logo from "./evosoftlogo.png"
-const Header1 = (props) => {
-  
+import logo from "./evosoftlogo.png";
 
+const Header = (props) => {
   return (
     <>
       <div className="header1">
-
         <HeaderButton image={logo} path="/" />
 
         <div className="search-field">
-          <input type="text" placeholder="Search" style={{width: "400px"}}/>
+          <input type="text" placeholder="Search" style={{ width: "400px" }} />
           <button>Search</button>
         </div>
 
@@ -21,10 +19,9 @@ const Header1 = (props) => {
           <HeaderButton text="Contact" path="/Contact" />
           <button>Log in/Sign up</button>
         </div>
-
       </div>
     </>
   );
 };
 
-export default Header1;
+export default Header;

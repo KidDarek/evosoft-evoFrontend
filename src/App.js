@@ -1,24 +1,23 @@
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import DummyPage from "./DummyPage";
-import Header1 from "./header/Header1";
-import Footer from "./footer/Footer";
-import Bestdeals from "./bestdeals/Bestdeals";
-import Banner from "./banner/Banner";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MainPage from "./pages/main-page/MainPage";
+import Header from "./common-components/header/Header";
+import Footer from "./common-components/footer/Footer";
+import ContactPage from "./pages/contact-page/ContactPage";
+import FaqPage from "./pages/faq-page/FaqPage";
+import AboutUsPage from "./pages/about-us-page/AboutUsPage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-          <Header1 />
-          <Routes>
-            <Route path="/" element={<DummyPage text="Main page"/>} />
-            <Route path="/FAQ" element={<DummyPage text="FAQ page"/>} />
-            <Route path="/About-Us" element={<DummyPage text="About us page"/>} />
-            <Route path="/Contact" element={<DummyPage text="Contact page"/>} />
-          </Routes>
+        <Header />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/FAQ" element={<FaqPage />} />
+          <Route path="/About-Us" element={<AboutUsPage />} />
+          <Route path="/Contact" element={<ContactPage />} />
+        </Routes>
       </BrowserRouter>
-      <Banner/>
-      <Bestdeals />
       <Footer />
     </>
   );
