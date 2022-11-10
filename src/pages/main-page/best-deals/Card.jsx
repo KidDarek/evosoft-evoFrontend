@@ -42,13 +42,6 @@ const StyledBtn = styled("button")({
   borderRadius: "3px",
 });
 
-const StyledA = styled("a")({
-  textTransform: "uppercase",
-  color: "black",
-  textDecoration: "none",
-  fontWeight: "bold",
-});
-
 const Card = (props) => {
   return (
     <CardContainer>
@@ -62,8 +55,9 @@ const Card = (props) => {
         <div className="card-body">
           <StyledP>{props.body}</StyledP>
         </div>
+        <h2 style={{color: "green"}}>{props.price}</h2>
       </CardContent>
-
+      
       <StyledBtnDiv>
         <StyledBtn>View Product</StyledBtn>
       </StyledBtnDiv>
