@@ -8,7 +8,6 @@ const StyledFooter = styled("footer")({
   background: "aquamarine",
   height: "auto",
   width: "100vw",
-  
   color: "#fff",
 });
 
