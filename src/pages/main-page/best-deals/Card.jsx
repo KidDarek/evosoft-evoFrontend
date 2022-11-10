@@ -2,7 +2,7 @@ import React from "react";
 import "./Card.css";
 import { styled } from "@mui/material";
 
-const CardContainer = styled("div")({
+const StyledCardContainer = styled("div")({
   width: "300px",
   overflow: "hidden",
   boxShadow: "0px 0px 15px -5px",
@@ -42,16 +42,9 @@ const StyledBtn = styled("button")({
   borderRadius: "3px",
 });
 
-const StyledA = styled("a")({
-  textTransform: "uppercase",
-  color: "black",
-  textDecoration: "none",
-  fontWeight: "bold",
-});
-
 const Card = (props) => {
   return (
-    <CardContainer>
+    <StyledCardContainer>
       <div>
         <img src={props.imageUri} alt="" overflow="hidden" height="200px"></img>
       </div>
@@ -62,12 +55,13 @@ const Card = (props) => {
         <div className="card-body">
           <StyledP>{props.body}</StyledP>
         </div>
+        <h2 style={{ color: "green" }}>{props.price}</h2>
       </CardContent>
 
       <StyledBtnDiv>
         <StyledBtn>View Product</StyledBtn>
       </StyledBtnDiv>
-    </CardContainer>
+    </StyledCardContainer>
   );
 };
 

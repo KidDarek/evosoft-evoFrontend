@@ -55,9 +55,8 @@ const Footer = () => {
         <FooterContent>
           <FooterContentH3>evoFrontend</FooterContentH3>
           <FooterContentP>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo iste
-            corrupti doloribus odio sed!
-          </FooterContentP>
+            The trusted webshop of all kinds.
+            </FooterContentP>
         </FooterContent>
         <FooterBottom>
           <FooterBottomP>Copyright &copy; {new Date().getFullYear()} evoFrontend team.</FooterBottomP>
