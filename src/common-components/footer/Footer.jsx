@@ -54,7 +54,7 @@ const Footer = () => {
       <StyledFooter>
         <FooterContent>
           <FooterContentH3>evoFrontend</FooterContentH3>
-          <FooterContentP color="black">
+          <FooterContentP>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo iste
             corrupti doloribus odio sed!
           </FooterContentP>
