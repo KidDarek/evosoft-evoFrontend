@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import evoButtonL from "./evoButtonL.png"
 import evoButton from "./evoButton.png"
+import { styled } from "@mui/material";
 
 
-const LeftButton =({
+const StyledLeftButton = styled("button")({
   backgroundColor: "Transparent",
   height: "400px",
   width: "60px",
@@ -11,7 +12,7 @@ const LeftButton =({
   border: "none",
 });
 
-const RightButton =({
+const StyledRightButton = styled("button")({
   backgroundColor: "Transparent",
   height: "400px",
   width: "60px",
@@ -37,35 +38,32 @@ const Banner2 =({
 
 const currentBanner = [Banner1,Banner2]
 
-let IndexCount = 0;
+const SetNewBanner = () => {
+  const [bannerIndex, setIndex] = useState(0)
+
+  return(
+    <div id="BannerPic" style={currentBanner[bannerIndex % currentBanner.length]}>
+    <StyledLeftButton onClick={() => setIndex(bannerIndex - 1)}>
+    <img src={evoButtonL}
+    alt="Bal"
+    width={"60px"}/>
+    </StyledLeftButton>
+    
+    <StyledRightButton onClick={() => setIndex(bannerIndex + 1)}>
+    <img src={evoButton}
+    alt="Jobb"
+    width={"60px"}/>
+    </StyledRightButton>
+    </div>
+  )
+}
 
 
-const indexPlus = () => {
-  IndexCount++
-  
-}
-const indexMinus = () => {
-  IndexCount--
-}
 
 const Banner = () => {
   return (
     <>
-      <div id="BannerPic" style={currentBanner[IndexCount]}>
-        
-        <button style={LeftButton} onClick={indexMinus()}>
-        <img src={evoButtonL}
-        alt="Bal"
-        width={"60px"}/>
-        </button>
-
-        <button style={RightButton} onClick={indexPlus()}>
-        <img src={evoButton}
-        alt="Jobb"
-        width={"60px"}/>
-        </button>
-
-      </div>
+    <SetNewBanner/>
     </>
   );
 };
