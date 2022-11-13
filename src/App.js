@@ -5,6 +5,7 @@ import Footer from "./common-components/footer/Footer";
 import ContactPage from "./pages/contact-page/ContactPage";
 import FaqPage from "./pages/faq-page/FaqPage";
 import AboutUsPage from "./pages/about-us-page/AboutUsPage";
+import ProductPage from "./pages/Product-page/ProductPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/FAQ" element={<FaqPage />} />
           <Route path="/About-Us" element={<AboutUsPage />} />
           <Route path="/Contact" element={<ContactPage />} />
+          <Route path="/Product" element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import evoButtonL from "./evoButtonL.png"
 import evoButton from "./evoButton.png"
 import { styled } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 const StyledLeftButton = styled("button")({
@@ -41,8 +42,14 @@ const currentBanner = [Banner1,Banner2]
 const SetNewBanner = () => {
   const [bannerIndex, setIndex] = useState(0)
 
+  const navigate = useNavigate();
+
+  const navigateToProductPage = () => {
+    navigate("/Product");
+  };
+
   return(
-    <div id="BannerPic" style={currentBanner[bannerIndex % currentBanner.length]}>
+    <div id="BannerPic" style={currentBanner[bannerIndex % currentBanner.length]} onClick={navigateToProductPage}>
     <StyledLeftButton onClick={() => setIndex(bannerIndex - 1)}>
     <img src={evoButtonL}
     alt="Bal"
@@ -61,6 +68,7 @@ const SetNewBanner = () => {
 
 
 const Banner = () => {
+  
   return (
     <>
     <SetNewBanner/>
