@@ -5,7 +5,6 @@ import BestDealsPage from "./best-deals/BestDeals";
 const MainPage = (props) => {
   return (
     <>
-      <div>Main Page</div>
       <Banner />
       <BestDealsPage />
     </>
