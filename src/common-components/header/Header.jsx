@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "./evosoftlogo.png";
 import { useNavigate } from "react-router-dom";
-import MuiFormattedButton from "../MuiFormattedButton";
+import { styled } from "@mui/material";
+import MUIButton from '@mui/material/Button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 const Header = (props) => {
   const navigate = useNavigate();
 
@@ -17,53 +19,70 @@ const Header = (props) => {
   const navigateToContactUsPage = () => {
     navigate("/Contact");
   };
-  const headerStyle = {
-    backgroundColor: "aquamarine",
+  const StyledHeader = styled("div")({
+    backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #00cc99)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  }
-  const searchFieldStyle = {
-    marginLeft: "30%",
-  }
-  const linkStyle = {
+    gap:"15px",
+  });
+  const StyledLogo = styled("img") ({
+    width: "50px",
+    height: "50px",
+    marginLeft: "auto",
+    cursor: "pointer",
+  })
+  const StyledSearchField = styled("input")({
+    type: "text",
+    placeholder: "Search",
+    width: "400px" , 
+    height: "30px", 
+    borderRadius: "10px", 
+    marginLeft: "auto",
+  })
+  const StyledLinks = styled("div")({
     marginLeft:"auto",
+    marginRight:"25px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: "80px",
-  }
+    gap: "30px",
+  })
+  const BasicTheme = createTheme({
+    palette: {
+      green: {
+        main: "#00cc99",
+        contrastText: "#fff",
+      },
+      red: {
+        main: "#ff0055",
+        dark:"#990033",
+        contrastText: "#fff",
+      },
+      white: {
+        main: "#FFFFFF",
+      }
+    },
+  });
   return (
     <>
-      <div className="header1" style={headerStyle}>
-        <img
-          src={logo}
-          width="50"
-          height="50"
-          alt="logo"
-          onClick={navigateToMainPage}
-        />
-        <div className="search-field" style={searchFieldStyle}>
-          <input type="text" placeholder="Search" style={{ width: "400px" }} />
-          <button>Search</button>
-        </div>
+      <ThemeProvider theme={BasicTheme}>
+        <StyledHeader>
 
-        <div className="links" style={linkStyle}>
-          <MuiFormattedButton
-            buttonText="FAQ"
-            onButtonClick={navigateToFaqPage}
-          />
-          <MuiFormattedButton
-            buttonText="About Us"
-            onButtonClick={navigateToAboutUsPage}
-          />
-          <MuiFormattedButton
-            buttonText="Contact"
-            onButtonClick={navigateToContactUsPage}
-          />
-          <button>Log in/Sign up</button>
-        </div>
-      </div>
+          <StyledLogo src={logo} alt="logo" onClick={navigateToMainPage} />
+
+          <StyledSearchField />
+          <MUIButton variant="outlined" color="white">Search</MUIButton>
+
+          <StyledLinks>
+            <MUIButton variant="contained" onClick={navigateToFaqPage} color="red">FAQ</MUIButton>
+            <MUIButton variant="contained" onClick={navigateToAboutUsPage} color="red">About Us</MUIButton>
+            <MUIButton variant="contained" onClick={navigateToContactUsPage} color="red">Contact</MUIButton>
+            <MUIButton variant="contained" color="red">Log in / Sign up</MUIButton>
+          </StyledLinks>
+
+        </StyledHeader>
+      </ThemeProvider>
     </>
   );
 };
