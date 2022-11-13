@@ -5,7 +5,7 @@ import Footer from "./common-components/footer/Footer";
 import ContactPage from "./pages/contact-page/ContactPage";
 import FaqPage from "./pages/faq-page/FaqPage";
 import AboutUsPage from "./pages/about-us-page/AboutUsPage";
-import ProductPage from "./pages/Product-page/ProductPage";
+import ProductPage from "./pages/product-page/ProductPage";
 
 function App() {
   return (
