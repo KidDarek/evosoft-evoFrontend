@@ -9,6 +9,7 @@ const StyledFooter = styled("footer")({
   height: "auto",
   width: "100vw",
   color: "#fff",
+  marginTop: "20px",
 });
 
 const FooterContent = styled("div")({
