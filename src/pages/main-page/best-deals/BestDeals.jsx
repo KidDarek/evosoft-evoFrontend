@@ -60,8 +60,9 @@ const BestDealsPage = () => {
           price = "$1000"
         /> */}
           {/* <RequestDatabase /> */}
-          {products.map((product) => (
+          {products.map((product, index) => (
             <CardFiller
+              key={index}
               title={product.title}
               imageUri={product.imageUri}
               body={product.body}
