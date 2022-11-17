@@ -43,9 +43,30 @@ const BestDealsPage = () => {
   return (
     <>
     <StyledPadding>
+      <h2>Computers:</h2>
+
       <Grid container spacing={10} justifyContent="center">
-        <RequestDatabase />
+        <CardFiller 
+          title = "Wooden PC"
+          imageUri = "https://i.imgur.com/sJWUwiO.jpeg"
+          body = "Pray it won't catch on fire!"
+          price = "$1000"
+          />
+          <CardFiller 
+          title = "Wooden PC"
+          imageUri = "https://i.imgur.com/sJWUwiO.jpeg"
+          body = "Pray it won't catch on fire!"
+          price = "$1000"
+          />
+          <CardFiller 
+          title = "Wooden PC"
+          imageUri = "https://i.imgur.com/sJWUwiO.jpeg"
+          body = "Pray it won't catch on fire!"
+          price = "$1000"
+        />
+        {/*<RequestDatabase />*/}
       </Grid>
+      
     </StyledPadding>
     </>
   );
