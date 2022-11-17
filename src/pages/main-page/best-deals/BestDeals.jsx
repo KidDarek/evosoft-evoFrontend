@@ -43,7 +43,9 @@ const BestDealsPage = () => {
   return (
     <>
     <StyledPadding>
-      <RequestDatabase />
+      <Grid container spacing={10} justifyContent="center">
+        <RequestDatabase />
+      </Grid>
     </StyledPadding>
     </>
   );
