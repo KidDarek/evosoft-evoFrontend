@@ -15,3 +15,9 @@ export const products = [
   },
   {},
 ];
+export const users = [
+  {
+    email:"teszt",
+    password:"teszt",
+  }
+]
