@@ -47,14 +47,14 @@ const StyledH2ForPrice = styled("h2")({
 
 const StyledBtn = styled("button")({
   padding: "0.5rem",
-  backgroundColor: "white",
+  backgroundColor: "aquamarine",
   border: "none",
   transition: "0.2s",
   marginBottom: "0.5rem",
   borderRadius: "3px",
 
   "&:hover": {
-    background: "rgba(27, 156, 252, 0.1)",
+    background: "green",
     transform: "scale(1.1)",
   },
 });
