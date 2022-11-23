@@ -8,6 +8,7 @@ const StyledCardContainer = styled("div")({
   boxShadow: "0px 0px 15px -5px",
   transition: "0.5s",
   animation: "ease-in",
+  cursor: "pointer",
 
   "&:hover": {
     transform: "scale(1.1)",
@@ -67,7 +68,7 @@ const Card = (props) => {
   };
 
   return (
-    <StyledCardContainer>
+    <StyledCardContainer onClick={navigateToProductPage}>
       <div>
         <img src={props.imageUri} alt="" overflow="hidden" height="200px"></img>
       </div>
@@ -80,7 +81,7 @@ const Card = (props) => {
       </StyledCardContent>
 
       <StyledBtnDiv>
-        <StyledBtn onClick={navigateToProductPage}>View Product</StyledBtn>
+        <StyledBtn>View Product</StyledBtn>
       </StyledBtnDiv>
     </StyledCardContainer>
   );
