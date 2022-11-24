@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import React from 'react'
 import { products } from '../../db'
 
 const StyledPageDiv = styled("div")({
@@ -11,6 +10,7 @@ const StyledPageDiv = styled("div")({
     backgroundImage: "linear-gradient(to right, #00cc99, #0066ff, #ff0055)",
     
 })
+
 
 const StyledInfoDiv = styled("div")({
   width: "50%",
@@ -27,7 +27,7 @@ const StyledInfoDivText = styled("div")({
   display: "flex",
   justifyContent: "start",
   height: '100%',
-  border: "10px solid black"
+  //border: "10px solid black"
 })
 
 const StyledInfoDivText2 = styled("div")({
@@ -41,7 +41,6 @@ const StyledInfoDivText2 = styled("div")({
 
 const  desiredProduct = products
 
-
 const ProductPage = (props) => {
   return (
     <>
@@ -54,6 +53,7 @@ const ProductPage = (props) => {
       <h1 style={{color: "white"}}>Product name: {desiredProduct[0].title}</h1>
       <h1 style={{color: "white"}}>Price: {desiredProduct[0].price}</h1>
       <h1 style={{color: "white"}}>Category: {desiredProduct[0].category}</h1>
+      <h1 style={{color: "white"}}>Tags: {desiredProduct[0].tag}</h1>
       </div>
     </StyledInfoDivText>
     </StyledPageDiv>
@@ -61,6 +61,7 @@ const ProductPage = (props) => {
     <StyledInfoDivText2>
       <div>
       <h1 style={{color: "white"}}>Termék leírása</h1>
+      <h2 style={{color: "white"}}>{desiredProduct[0].body}</h2>
       </div>
     </StyledInfoDivText2>
     </StyledPageDiv>

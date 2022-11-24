@@ -7,8 +7,6 @@ import Card from "../best-deals/Card";
 import CardBig from "./CardBig";
 
 
-
-
 const StyledBannerDiv = styled("div")({
   display: "flex",
     alignItems: "center",
@@ -43,14 +41,17 @@ const banner=({
   backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #00cc99)",
 });
 
-
-
 const product = products
 
 const SetNewBanner = () => {
   const [bannerIndex, setIndex] = useState(0)
 
   const amountOfProd = product.length
+
+  if(bannerIndex === -9)
+  {
+    setIndex(0)
+  }
 
   return(
    
@@ -61,7 +62,7 @@ const SetNewBanner = () => {
           alt="Bal"
           width={"60px"} />
       </StyledLeftButton>
-      <div style={{width: "5%", height: "400px"}}></div>
+      <div style={{width: "5%", height: "400px"} }></div>
       <Card 
         title={product[[(amountOfProd+bannerIndex) % amountOfProd]].title}
         imageUri={product[[(amountOfProd+bannerIndex) % amountOfProd]].imageUri}
