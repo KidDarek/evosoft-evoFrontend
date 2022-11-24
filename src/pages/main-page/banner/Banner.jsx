@@ -2,7 +2,11 @@ import React, {useState} from "react";
 import evoButtonL from "./evoButtonL.png"
 import evoButton from "./evoButton.png"
 import { styled } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { products } from "../../../db";
+import Card from "../best-deals/Card";
+import CardBig from "./CardBig";
+
+
 
 
 const StyledBannerDiv = styled("div")({
@@ -32,42 +36,53 @@ const StyledRightButton = styled("button")({
 });
 
 
-const Banner1 =({
+const banner=({
   border: "0",
   height: "400px",
   width: "100%",
   backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #00cc99)",
 });
 
-const Banner2 =({
-  border: "0",
-  height: "400px",
-  width: "100%",
-  backgroundImage: "linear-gradient(to right, #00cc99, #0066ff, #ff0055)",
-});
 
 
-const currentBanner = [Banner1,Banner2]
+const product = products
 
 const SetNewBanner = () => {
   const [bannerIndex, setIndex] = useState(0)
 
-  const navigate = useNavigate();
-
-  const navigateToProductPage = () => {
-  navigate("/Product");
-  };
+  const amountOfProd = product.length
 
   return(
    
-    <div style={currentBanner[Math.abs(bannerIndex % currentBanner.length)]}>
+    <div style={banner}>
       <StyledBannerDiv>
       <StyledLeftButton onClick={() => setIndex(bannerIndex - 1)}>
         <img src={evoButtonL}
           alt="Bal"
           width={"60px"} />
       </StyledLeftButton>
-      <button style={{width: "90%", height: "100%", backgroundColor: "transparent" , border: "0"}} onClick={navigateToProductPage}></button>
+      <div style={{width: "5%", height: "400px"}}></div>
+      <Card 
+        title={product[[(amountOfProd+bannerIndex) % amountOfProd]].title}
+        imageUri={product[[(amountOfProd+bannerIndex) % amountOfProd]].imageUri}
+        body={product[[(amountOfProd+bannerIndex) % amountOfProd]].body}
+        price={product[[(amountOfProd+bannerIndex) % amountOfProd]].price}
+      />
+      <div style={{width: "10%", height: "400px"}}></div>
+      <CardBig
+        title={product[[(amountOfProd+bannerIndex + 1) % amountOfProd]].title}
+        imageUri={product[[(amountOfProd+bannerIndex + 1) % amountOfProd]].imageUri}
+        body={product[[(amountOfProd+bannerIndex + 1) % amountOfProd]].body}
+        price={product[[(amountOfProd+bannerIndex + 1) % amountOfProd]].price}
+      />
+      <div style={{width: "10%", height: "400px"}}></div>
+      <Card
+        title={product[[(amountOfProd+bannerIndex + 2)% amountOfProd]].title}
+        imageUri={product[[(amountOfProd+bannerIndex + 2) % amountOfProd]].imageUri}
+        body={product[[(amountOfProd+bannerIndex + 2) % amountOfProd]].body}
+        price={product[[(amountOfProd+bannerIndex + 2) % amountOfProd]].price}
+      />
+      <div style={{width: "5%", height: "400px"}}></div>
       <StyledRightButton onClick={() => setIndex(bannerIndex + 1)}>
         <img src={evoButton}
           alt="Jobb"
@@ -78,7 +93,6 @@ const SetNewBanner = () => {
 
   )
 }
-
 
 
 const Banner = () => {
