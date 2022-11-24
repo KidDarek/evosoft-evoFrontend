@@ -27,7 +27,7 @@ const StyledInfoDivText = styled("div")({
   display: "flex",
   justifyContent: "start",
   height: "100%",
-  border: "10px solid black",
+  //border: "10px solid black"
 });
 
 const StyledInfoDivText2 = styled("div")({
