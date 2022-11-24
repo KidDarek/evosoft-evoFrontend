@@ -60,11 +60,10 @@ const StyledBtn = styled("button")({
 });
 
 const Card = (props) => {
-
   const navigate = useNavigate();
 
   const navigateToProductPage = () => {
-    navigate("/Product");
+    navigate(`/Product/${12}`);
   };
 
   return (
@@ -76,8 +75,8 @@ const Card = (props) => {
         <StyledCardTitle>
           <StyledH3>{props.title}</StyledH3>
         </StyledCardTitle>
-          <StyledP>{props.body}</StyledP>
-          <StyledH2ForPrice>{props.price}</StyledH2ForPrice>
+        <StyledP>{props.body}</StyledP>
+        <StyledH2ForPrice>{props.price}</StyledH2ForPrice>
       </StyledCardContent>
 
       <StyledBtnDiv>
