@@ -10,16 +10,16 @@ import ProductPage from "./pages/product-page/ProductPage";
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/FAQ" element={<FaqPage />} />
-          <Route path="/About-Us" element={<AboutUsPage />} />
-          <Route path="/Contact" element={<ContactPage />} />
-          <Route path="/Product/:id" element={<ProductPage />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/FAQ" element={<FaqPage />} />
+            <Route path="/About-Us" element={<AboutUsPage />} />
+            <Route path="/Contact" element={<ContactPage />} />
+            <Route path="/Product/:id" element={<ProductPage />} />
+          </Routes>
+        </BrowserRouter>
       <Footer />
     </>
   );

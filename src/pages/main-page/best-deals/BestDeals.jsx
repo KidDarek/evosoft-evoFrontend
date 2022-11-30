@@ -35,16 +35,11 @@ const ReturnTwoRandomProductByCategory = () => {
     <>
       <h2>{category}:</h2>
       <hr style={{ marginBottom: "2rem" }} />
-      <Grid container spacing={30} justifyContent="center">
+      <Grid container spacing={20} justifyContent="center">
         {products.map((product) =>
           product.category === category ? (
             <Grid item xs="auto" md="auto" key={product.id}>
-              <Card
-                title={product.title}
-                imageUri={product.imageUri}
-                body={product.body}
-                price={product.price}
-              />
+              <Card id={product.id} />
             </Grid>
           ) : null
         )}

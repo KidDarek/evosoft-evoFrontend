@@ -1,6 +1,8 @@
 import React from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { products } from "../../../db";
+//import { products } from "../../../db";
 
 const StyledCardContainer = styled("div")({
   width: "300px",
@@ -47,20 +49,26 @@ const Card = (props) => {
     navigate("/Product");
   };
 
-  return (
-    <StyledCardContainer onClick={navigateToProductPage}>
-      <div>
-        <img src={props.imageUri} alt="" overflow="hidden" height="200px"></img>
-      </div>
-      <StyledCardContent>
-        <StyledCardTitle>
-          <StyledH3>{props.title}</StyledH3>
-        </StyledCardTitle>
-        <StyledP>{props.body}</StyledP>
-        <StyledH2ForPrice>{props.price}</StyledH2ForPrice>
-      </StyledCardContent>
-    </StyledCardContainer>
+  return products.map((product) =>
+    product.id === props.id ? (
+      <StyledCardContainer onClick={navigateToProductPage}>
+        <div>
+          <img
+            src={product.imageUri}
+            alt=""
+            overflow="hidden"
+            height="200px"
+          ></img>
+        </div>
+        <StyledCardContent>
+          <StyledCardTitle>
+            <StyledH3>{product.title}</StyledH3>
+          </StyledCardTitle>
+          <StyledP>{product.body}</StyledP>
+          <StyledH2ForPrice>{product.price}</StyledH2ForPrice>
+        </StyledCardContent>
+      </StyledCardContainer>
+    ) : null
   );
 };
-
 export default Card;
