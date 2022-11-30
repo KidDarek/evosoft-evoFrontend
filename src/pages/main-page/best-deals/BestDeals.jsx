@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { Fragment } from "react";
 import Card from "./Card";
 import { styled } from "@mui/material";
 import { products } from "../../../db";
@@ -31,8 +31,8 @@ const ReturnTwoRandomProductByCategory = () => {
   }
 
   // Returning category names with it's assigned items
-  return twoRandom.map((category) => (
-    <>
+  return twoRandom.map((category, i) => (
+    <Fragment key={i}>
       <h2>{category}:</h2>
       <hr style={{ marginBottom: "2rem" }} />
       <Grid container spacing={20} justifyContent="center">
@@ -44,7 +44,7 @@ const ReturnTwoRandomProductByCategory = () => {
           ) : null
         )}
       </Grid>
-    </>
+    </Fragment>
   ));
 };
 

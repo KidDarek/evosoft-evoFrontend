@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { products } from "../../../db";
@@ -49,25 +49,27 @@ const Card = (props) => {
     navigate("/Product");
   };
 
-  return products.map((product) =>
+  return products.map((product, i) =>
     product.id === props.id ? (
-      <StyledCardContainer onClick={navigateToProductPage}>
-        <div>
-          <img
-            src={product.imageUri}
-            alt=""
-            overflow="hidden"
-            height="200px"
-          ></img>
-        </div>
-        <StyledCardContent>
-          <StyledCardTitle>
-            <StyledH3>{product.title}</StyledH3>
-          </StyledCardTitle>
-          <StyledP>{product.body}</StyledP>
-          <StyledH2ForPrice>{product.price}</StyledH2ForPrice>
-        </StyledCardContent>
-      </StyledCardContainer>
+      <Fragment key={i}>
+        <StyledCardContainer onClick={navigateToProductPage}>
+          <div>
+            <img
+              src={product.imageUri}
+              alt=""
+              overflow="hidden"
+              height="200px"
+            ></img>
+          </div>
+          <StyledCardContent>
+            <StyledCardTitle>
+              <StyledH3>{product.title}</StyledH3>
+            </StyledCardTitle>
+            <StyledP>{product.body}</StyledP>
+            <StyledH2ForPrice>{product.price}</StyledH2ForPrice>
+          </StyledCardContent>
+        </StyledCardContainer>
+      </Fragment>
     ) : null
   );
 };
