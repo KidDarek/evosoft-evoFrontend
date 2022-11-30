@@ -35,35 +35,16 @@ const StyledCardTitle = styled("div")({
   marginBottom: "0.5rem",
 });
 
-const StyledBtnDiv = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-});
-
 const StyledH2ForPrice = styled("h2")({
   color: "green",
   textAlign: "center",
-});
-
-const StyledBtn = styled("button")({
-  padding: "0.5rem",
-  backgroundColor: "aquamarine",
-  border: "none",
-  transition: "0.2s",
-  marginBottom: "0.5rem",
-  borderRadius: "3px",
-
-  "&:hover": {
-    background: "green",
-    transform: "scale(1.1)",
-  },
 });
 
 const Card = (props) => {
   const navigate = useNavigate();
 
   const navigateToProductPage = () => {
-    navigate(`/Product/${12}`);
+    navigate("/Product");
   };
 
   return (
@@ -78,10 +59,6 @@ const Card = (props) => {
         <StyledP>{props.body}</StyledP>
         <StyledH2ForPrice>{props.price}</StyledH2ForPrice>
       </StyledCardContent>
-
-      <StyledBtnDiv>
-        <StyledBtn>View Product</StyledBtn>
-      </StyledBtnDiv>
     </StyledCardContainer>
   );
 };

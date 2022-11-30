@@ -10,61 +10,54 @@ const StyledPadding = styled("div")({
 });
 
 const ReturnTwoRandomProductByCategory = () => {
-
   // Filtering all products categories and putting it in an array
   let filtered = [];
-  products.map((product) => (
-    !filtered.includes(product.category) ?
-    filtered.push(product.category) : null
-  ))
-  
+  products.map((product) =>
+    !filtered.includes(product.category)
+      ? filtered.push(product.category)
+      : null
+  );
+
   // Choosing two random category which can not be a duplicate
   let twoRandom = [];
   let randomNumber = null;
-  for (let i = 0; i < filtered.length - 1; i++)
-  {
-    if (twoRandom.includes(filtered[randomNumber]) || randomNumber === null)
-    {
+  for (let i = 0; i < filtered.length - 1; i++) {
+    if (twoRandom.includes(filtered[randomNumber]) || randomNumber === null) {
       i--;
-      randomNumber = Math.floor(Math.random() * ((filtered.length - 1) + 1));
-    }
-    else
-    {
+      randomNumber = Math.floor(Math.random() * (filtered.length - 1 + 1));
+    } else {
       twoRandom.push(filtered[randomNumber]);
     }
   }
 
   // Returning category names with it's assigned items
-  return (
-    twoRandom.map((category) => (
-      <>
+  return twoRandom.map((category) => (
+    <>
       <h2>{category}:</h2>
-      <hr style={{marginBottom: "2rem"}}/>
+      <hr style={{ marginBottom: "2rem" }} />
       <Grid container spacing={30} justifyContent="center">
-      {
-        products.map((product) => (
-          product.category === category ?
-          <Grid item xs="auto" md="auto" key={product.id}>
-            <Card
-              title={product.title}
-              imageUri={product.imageUri}
-              body={product.body}
-              price={product.price}
-            />
-          </Grid> : null
-        ))
-      }
+        {products.map((product) =>
+          product.category === category ? (
+            <Grid item xs="auto" md="auto" key={product.id}>
+              <Card
+                title={product.title}
+                imageUri={product.imageUri}
+                body={product.body}
+                price={product.price}
+              />
+            </Grid>
+          ) : null
+        )}
       </Grid>
-      </>
-    ))
-  )
-}
+    </>
+  ));
+};
 
 const BestDealsPage = () => {
   return (
     <>
       <StyledPadding>
-      <ReturnTwoRandomProductByCategory />
+        <ReturnTwoRandomProductByCategory />
       </StyledPadding>
     </>
   );

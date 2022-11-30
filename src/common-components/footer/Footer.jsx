@@ -55,12 +55,12 @@ const Footer = () => {
       <StyledFooter>
         <FooterContent>
           <FooterContentH3>evoFrontend</FooterContentH3>
-          <FooterContentP>
-            The trusted webshop of all kinds.
-            </FooterContentP>
+          <FooterContentP>The trusted webshop of all kinds.</FooterContentP>
         </FooterContent>
         <FooterBottom>
-          <FooterBottomP>Copyright &copy; {new Date().getFullYear()} evoFrontend team.</FooterBottomP>
+          <FooterBottomP>
+            Copyright &copy; {new Date().getFullYear()} evoFrontend team.
+          </FooterBottomP>
         </FooterBottom>
       </StyledFooter>
     </>

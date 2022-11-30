@@ -10,7 +10,7 @@ const StyledCardContainer = styled("div")({
   animation: "ease-in",
   cursor: "pointer",
   alignItems: "center",
-  justifyContent: 'center',
+  justifyContent: "center",
   display: "flex",
   height: "100%",
 
@@ -64,7 +64,6 @@ const StyledBtn = styled("button")({
 });
 
 const CardBig = (props) => {
-
   const navigate = useNavigate();
 
   const navigateToProductPage = () => {
@@ -74,20 +73,25 @@ const CardBig = (props) => {
   return (
     <StyledCardContainer onClick={navigateToProductPage}>
       <div>
-      <div>
-        <img src={props.imageUri} alt="" overflow="hidden" height="200px"></img>
-      </div>
-      <StyledCardContent>
-        <StyledCardTitle>
-          <StyledH3>{props.title}</StyledH3>
-        </StyledCardTitle>
+        <div>
+          <img
+            src={props.imageUri}
+            alt=""
+            overflow="hidden"
+            height="200px"
+          ></img>
+        </div>
+        <StyledCardContent>
+          <StyledCardTitle>
+            <StyledH3>{props.title}</StyledH3>
+          </StyledCardTitle>
           <StyledP>{props.body}</StyledP>
           <StyledH2ForPrice>{props.price}</StyledH2ForPrice>
-      </StyledCardContent>
+        </StyledCardContent>
 
-      <StyledBtnDiv>
-        <StyledBtn>View Product</StyledBtn>
-      </StyledBtnDiv>
+        <StyledBtnDiv>
+          <StyledBtn>View Product</StyledBtn>
+        </StyledBtnDiv>
       </div>
     </StyledCardContainer>
   );

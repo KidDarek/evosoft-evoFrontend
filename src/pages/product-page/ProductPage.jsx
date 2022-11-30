@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { useParams } from "react-router-dom";
 import { products } from "../../db";
 
 const StyledPageDiv = styled("div")({
