@@ -5,8 +5,8 @@ import { products } from "../../../db";
 //import { products } from "../../../db";
 
 const StyledCardContainer = styled("div")({
-  width: "300px",
-  height: "300px",
+  width: "250px",
+  height: "250px",
   overflow: "hidden",
   boxShadow: "0px 0px 15px -5px",
   transition: "0.5s",
@@ -56,7 +56,7 @@ const Card = (props) => {
               src={product.imageUri}
               alt=""
               overflow="hidden"
-              height="200px"
+              height="150px"
             ></img>
           </div>
           <StyledCardContent>
