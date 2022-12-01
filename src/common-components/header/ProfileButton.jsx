@@ -30,6 +30,7 @@ const ProfileButton = (props) => {
     const logOut = () => {
         props.setLoggedin(false);
         handleClose();
+        navigate("/");
     };
 
     return (
@@ -41,7 +42,7 @@ const ProfileButton = (props) => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>P</Avatar>
+                <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>{props.logInID ? users[props.logInID - 1].name[0].toUpperCase() : "P"}</Avatar>
             </Button>
             <Menu
                 id="basic-menu"
