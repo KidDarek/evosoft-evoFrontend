@@ -95,7 +95,7 @@ const ProductPage = (props) => {
         <StyledInfoDivText2>
           <div>
             <h1 style={{ color: "white" }}>Termék leírása</h1>
-            <text>{products[id].body}</text>
+            <text style={{ color: "white" }}>{products[id].body}</text>
           </div>
         </StyledInfoDivText2>
       </StyledPageDiv>
