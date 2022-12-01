@@ -83,9 +83,41 @@ export const products = [
     tag: "[mouse, gamer, electronics, IT, Corsair]"
   }
 ];
+
 export const users = [
   {
     email:"teszt",
     password:"teszt"
+  }
+]
+
+export const userQuestions = [
+  {
+    question: "What happens if my product doesn't arrive on time?",
+    answer: "Don't worry! Our support team is eager to help you out! Just fill up the form on the contact page."
+  },
+  {
+    question: "Can I return my product?",
+    answer: "Of course you can! You have the right to return your product in 14 days and get a full refund."
+  },
+  {
+    question: ". I did not receive an email confirming my order. What shall I do?",
+    answer: "Sometimes the mailing system for the registered email address perceives our confirmation email as spam. So please check your Spam folder. If you can’t find our confirmation there,please check your orders after logging in by clicking on “My Webshop Profile” at the bottomof the Dashboard on the MYPOST page. If you see your order here in the list of orders withthe current date, this means that your order was received by us."
+  },
+  {
+    question: "The product disappeared from my Cart.",
+    answer: "This is likely to have happened after a long period of inactivity. Place the product you wish to purchase in the Cart again. Before paying, please double check that the required number of items appears with all products in the Cart."
+  },
+  {
+    question: "I’d like to receive information which I can’t find on the website. What can I do?",
+    answer: "Please contact Customer Service."
+  },
+  {
+    question: "Can I change my order after it has been sent?",
+    answer: "If you would like to change your order, please write to Customer Service giving the identification number for your order and specifying what you would like to change in it and, if necessary, we will contact you by email or using the phone number you gave in the course of registration."
+  },
+  {
+    question: "When will orders made at the weekend be processed?",
+    answer: "We start processing orders made at the weekend on the first working day of the following week from 8 in the morning."
   }
 ]
