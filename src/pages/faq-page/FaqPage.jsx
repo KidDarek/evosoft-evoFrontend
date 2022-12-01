@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { userQuestions } from "../../db";
-import MUIButton from "@mui/material/Button";
+import AddQuestionButton from "./AddQuestionButton";
 
 const StyledHeader = styled("div")({
   color: "white",
@@ -36,6 +36,7 @@ const StyledPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
 });
 
+
 const FaqPage = (props) => {
 
 
@@ -60,9 +61,7 @@ const FaqPage = (props) => {
           </StyledPageDiv>
         </>
       ))}
-      <StyledPageDiv>
-        <MUIButton variant="contained"> Add Question </MUIButton>
-      </StyledPageDiv>
+      <AddQuestionButton></AddQuestionButton>
     </>
   );
 };
