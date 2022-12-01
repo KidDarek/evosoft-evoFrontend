@@ -9,7 +9,7 @@ const StyledPageDiv = styled("div")({
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  padding: "25px",
+  padding: "10px 25px 10px 25px",
   backgroundImage: "linear-gradient(to right, #00cc99, #0066ff, #ff0055)",
 });
 
@@ -37,12 +37,13 @@ const StyledInfoDivText = styled("div")({
 });
 
 const StyledInfoDivText2 = styled("div")({
-  width: "100%",
-  marginLeft: "150px",
+  width: "79%",
+  marginRight: "75px",
   alignItems: "start",
   display: "flex",
   justifyContent: "start",
   height: "100%",
+  backgroundColor: "#00cc99",
 });
 
 
@@ -68,18 +69,22 @@ const ProductPage = (props) => {
         <StyledInfoDivText>
           <div>
             <h2 style={{ color: "white" }}>
-              Product name: {products[id].title}
+              Product name:
             </h2>
+            <text style={{ color: "white" }}> {products[id].title}</text>
             <h2 style={{ color: "white" }}>
-              Price: {products[id].price}
+              Price:
             </h2>
+            <text style={{ color: "white" }}> {products[id].price}</text>
             <h2 style={{ color: "white" }}>
-              Category: {products[id].category}
+              Category:
             </h2>
+            <text style={{ color: "white" }}> {products[id].category}</text>
             <h2 style={{ color: "white" }}>
-              Tags: {products[id].tag}
+              Tags:
             </h2>
-            <div>
+            <text style={{ color: "white" }}>  {products[id].tag}</text>
+            <div style={{ paddingTop: "20px" }}>
               <MUIButton variant="contained"> Add item to cart </MUIButton>
             </div>
           </div>
