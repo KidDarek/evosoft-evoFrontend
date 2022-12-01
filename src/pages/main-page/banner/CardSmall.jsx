@@ -44,7 +44,7 @@ const Card = (props) => {
   const navigate = useNavigate();
 
   const navigateToProductPage = () => {
-    navigate("/Product");
+    navigate(`/Product/${props.id}`);
   };
 
   return products.map((product, i) =>
