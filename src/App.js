@@ -7,10 +7,17 @@ import FaqPage from "./pages/faq-page/FaqPage";
 import AboutUsPage from "./pages/about-us-page/AboutUsPage";
 import ProductPage from "./pages/product-page/ProductPage";
 import ProfilePage from "./pages/profile-page/ProfilePage";
+import { styled } from "@mui/material";
+
+const StyledFontDiv = styled("div")({
+  fontFamily: "Roboto"
+});
+
 
 function App() {
   return (
     <>
+    <StyledFontDiv>
     <BrowserRouter>
           <Header />
           <Routes>
@@ -23,6 +30,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       <Footer />
+    </StyledFontDiv>
     </>
   );
 }
