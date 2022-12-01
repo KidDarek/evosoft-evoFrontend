@@ -3,8 +3,17 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
+import { useNavigate } from 'react-router-dom';
+import { users } from '../../db';
 
 const ProfileButton = (props) => {
+
+    const navigate = useNavigate();
+
+    const navigateToProfilePage = () => {
+        handleClose();
+        navigate(`/Profile${props.logInID}`);
+    };
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -22,6 +31,7 @@ const ProfileButton = (props) => {
         props.setLoggedin(false);
         handleClose();
     };
+
     return (
         <div>
             <Button
@@ -31,7 +41,7 @@ const ProfileButton = (props) => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>M</Avatar>
+                <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>P</Avatar>
             </Button>
             <Menu
                 id="basic-menu"
@@ -42,7 +52,7 @@ const ProfileButton = (props) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={navigateToProfilePage}>Profile</MenuItem>
                 <MenuItem onClick={logOut}>Logout</MenuItem>
             </Menu>
         </div>

@@ -34,7 +34,8 @@ const SignUpPopup = (props) => {
       return;
     }
     const password = passwordTextField.value;
-    const obj = { email, password };
+    const id = users[users.length - 1].id + 1;
+    const obj = { id, email, password };
     users.push(obj);
     console.log(users);
     setOpen(false);

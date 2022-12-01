@@ -65,6 +65,8 @@ const BasicTheme = createTheme({
 const Header = (props) => {
   const [loggedIn, setLoggedin] = useState(false);
 
+  const [logInID, setLoginID] = useState(null);
+
   const navigate = useNavigate();
 
   const navigateToMainPage = () => {
@@ -116,8 +118,8 @@ const Header = (props) => {
             >
               Contact
             </MUIButton>
-            {!loggedIn && <LoginButton theme={BasicTheme} setLoggedin={setLoggedin}> Log in / Sign up</LoginButton>}
-            {loggedIn && <ProfileButton setLoggedin={setLoggedin} />}
+            {!loggedIn && <LoginButton theme={BasicTheme} setLoggedin={setLoggedin} setLoginID={setLoginID}> Log in / Sign up</LoginButton>}
+            {loggedIn && <ProfileButton setLoggedin={setLoggedin} logInID={logInID} />}
           </StyledLinks>
         </StyledHeader>
       </ThemeProvider>

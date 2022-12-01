@@ -86,11 +86,15 @@ export const products = [
 
 export const users = [
   {
+    id:1,
+    name:"teszt",
     email:"teszt@teszt.teszt",
     password:"teszt"
   },
-  
+
   {
+    id:2,
+    name:"t",
     email:"t@t.t",
     password:"t"
   },

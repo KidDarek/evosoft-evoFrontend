@@ -37,7 +37,7 @@ const FooterContentP = styled("p")({
 });
 
 const FooterBottom = styled("div")({
-  background: "aquamarine",
+  background: "#00cc99",
   width: "100%",
   padding: "20px 0",
   textAlign: "center",

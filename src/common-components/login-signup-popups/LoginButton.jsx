@@ -28,13 +28,14 @@ const LoginButton = (props) => {
   const handleLogInRequest = () => {
     const emailextField = document.getElementById("log-in-email");
     const passwordTextField = document.getElementById("log-in-password");
-    const loginButton = document.getElementById("login-button");
     const email = emailextField.value;
     const password = passwordTextField.value;
     const logInData = { email, password };
     if (validEmail(email)) {
-      if (logIn(logInData)) {
+      const id = logIn(logInData);
+      if (id >= 0) {
         console.log("Successful login");
+        props.setLoginID(id);
       }
     }
     else {
@@ -48,10 +49,10 @@ const LoginButton = (props) => {
     for (let index = 0; index < users.length; index++) {
       if (logInData.email === users[index].email && logInData.password === users[index].password) {
         props.setLoggedin(true);
-        return true;
+        return index + 1;
       }
     }
-    return false;
+    return -1;
   }
 
   const validEmail = (emailText) => {
