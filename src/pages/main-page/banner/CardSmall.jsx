@@ -5,8 +5,8 @@ import { products } from "../../../db";
 //import { products } from "../../../db";
 
 const StyledCardContainer = styled("div")({
-  width: "450px",
-  height: "350px",
+  width: "300px",
+  height: "300px",
   overflow: "hidden",
   boxShadow: "0px 0px 15px -5px",
   transition: "0.5s",
@@ -39,10 +39,6 @@ const StyledCardTitle = styled("div")({
   marginBottom: "0.5rem",
 });
 
-const StyledH2ForPrice = styled("h2")({
-  color: "green",
-  textAlign: "center",
-});
 
 const Card = (props) => {
   const navigate = useNavigate();
@@ -68,7 +64,6 @@ const Card = (props) => {
               <StyledH3>{product.title}</StyledH3>
             </StyledCardTitle>
             <StyledP>{product.body}</StyledP>
-            <StyledH2ForPrice>{product.price}</StyledH2ForPrice>
           </StyledCardContent>
         </StyledCardContainer>
       </Fragment>
