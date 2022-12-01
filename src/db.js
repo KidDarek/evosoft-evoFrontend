@@ -86,9 +86,14 @@ export const products = [
 
 export const users = [
   {
-    email:"teszt",
+    email:"teszt@teszt.teszt",
     password:"teszt"
-  }
+  },
+  
+  {
+    email:"t@t.t",
+    password:"t"
+  },
 ]
 
 export const userQuestions = [

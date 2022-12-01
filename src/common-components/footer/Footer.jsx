@@ -7,7 +7,7 @@ const StyledFooter = styled("footer")({
   right: 0,
   background: "aquamarine",
   height: "auto",
-  width: "100vw",
+  width: "100%",
   color: "#fff",
   marginTop: "20px",
 });
@@ -38,7 +38,7 @@ const FooterContentP = styled("p")({
 
 const FooterBottom = styled("div")({
   background: "aquamarine",
-  width: "100vw",
+  width: "100%",
   padding: "20px 0",
   textAlign: "center",
 });

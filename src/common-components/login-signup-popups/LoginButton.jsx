@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -9,42 +9,58 @@ import { users } from "../../db";
 import SignUpButton from "./SignUpButton";
 
 const LoginButton = (props) => {
-  const [open, setOpen] = React.useState(false);
-  const [loggedIn, setLoggedin] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-    if (loggedIn) {
-      setLoggedin(false);
-      const loginButton = document.getElementById("login-button");
-      loginButton.innerText = "Log in / Sign up";
-      return;
-    }
     setOpen(true);
   };
+
   const handleClickClose = () => {
     setOpen(false);
   };
-  const handleLogIn = () => {
+
+  const requestLogin = (e) => {
+    if (e.key === 'Enter') {
+      handleLogInRequest();
+    }
+  }
+
+  const handleLogInRequest = () => {
     const emailextField = document.getElementById("log-in-email");
     const passwordTextField = document.getElementById("log-in-password");
     const loginButton = document.getElementById("login-button");
     const email = emailextField.value;
     const password = passwordTextField.value;
-
-    for (let index = 0; index < users.length; index++) {
-      if (email === users[index].email && password === users[index].password) {
-        console.log("access granted");
-        setLoggedin(true);
-        loginButton.innerText = "Log out";
-        break;
+    const logInData = { email, password };
+    if (validEmail(email)) {
+      if (logIn(logInData)) {
+        console.log("Successful login");
       }
     }
-
-    if (!loggedIn) {
-      console.log("access denied");
+    else {
+      console.log('Not Valid Email');
+      return;
     }
     setOpen(false);
   };
+
+  const logIn = (logInData) => {
+    for (let index = 0; index < users.length; index++) {
+      if (logInData.email === users[index].email && logInData.password === users[index].password) {
+        props.setLoggedin(true);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  const validEmail = (emailText) => {
+    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (emailText.match(validRegex)) {
+      return true;
+    }
+    return false;
+  }
 
   return (
     <div>
@@ -56,7 +72,7 @@ const LoginButton = (props) => {
       >
         Log in / Sign up
       </Button>
-      <Dialog open={open} onClose={handleClickClose}>
+      <Dialog open={open} onClose={handleClickClose} onKeyDown={requestLogin}>
         <DialogTitle>Log in to your account</DialogTitle>
         <DialogContent>
           <TextField
@@ -81,7 +97,7 @@ const LoginButton = (props) => {
         <DialogActions>
           <SignUpButton theme={props.theme} />
           <Button onClick={handleClickClose}>Cancel</Button>
-          <Button onClick={handleLogIn}>Log in</Button>
+          <Button onClick={handleLogInRequest}>Log in</Button>
         </DialogActions>
       </Dialog>
     </div>

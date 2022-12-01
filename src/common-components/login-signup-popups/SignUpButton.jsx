@@ -9,24 +9,44 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { users } from "../../db";
 
 const SignUpPopup = (props) => {
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClickClose = () => {
     setOpen(false);
   };
-  const handleSignUp = () => {
+
+  const requestSignUp = (e) => {
+    if (e.key === 'Enter') {
+      handleSignUpRequest();
+    }
+  }
+  const handleSignUpRequest = () => {
     const emailextField = document.getElementById("sign-up-email");
     const passwordTextField = document.getElementById("sign-up-password");
     const email = emailextField.value;
+    if (!validEmail(email)) {
+      console.log("Not valid email");
+      return;
+    }
     const password = passwordTextField.value;
     const obj = { email, password };
     users.push(obj);
     console.log(users);
     setOpen(false);
   };
+
+  const validEmail = (emailText) => {
+    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (emailText.match(validRegex)) {
+      return true;
+    }
+    return false;
+  }
 
   return (
     <div>
@@ -38,7 +58,7 @@ const SignUpPopup = (props) => {
       >
         Sign up instead
       </Button>
-      <Dialog open={open} onClose={handleSignUp}>
+      <Dialog open={open} onClose={handleSignUpRequest} onKeyDown={requestSignUp}>
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
           <TextField
@@ -62,7 +82,7 @@ const SignUpPopup = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClickClose}>Cancel</Button>
-          <Button onClick={handleSignUp}>Sign up</Button>
+          <Button onClick={handleSignUpRequest}>Sign up</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./evosoftlogo.png";
 import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material";
+import { Card, styled } from "@mui/material";
 import MUIButton from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LoginButton from "../login-signup-popups/LoginButton";
+import ProfileButton from "./ProfileButton";
+
 
 const StyledHeader = styled("div")({
   backgroundColor: "#00cc99",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "100vw",
+  width: "100%",
   gap: "15px",
 });
 
@@ -58,7 +60,11 @@ const BasicTheme = createTheme({
     },
   },
 });
+
+
 const Header = (props) => {
+  const [loggedIn, setLoggedin] = useState(false);
+
   const navigate = useNavigate();
 
   const navigateToMainPage = () => {
@@ -77,8 +83,6 @@ const Header = (props) => {
     navigate("/Contact");
   };
 
-  //const logIn = () => {};
-
   return (
     <>
       <ThemeProvider theme={BasicTheme}>
@@ -89,7 +93,7 @@ const Header = (props) => {
           <MUIButton variant="outlined" color="white">
             Search
           </MUIButton>
-
+          <Card />
           <StyledLinks>
             <MUIButton
               variant="contained"
@@ -112,7 +116,8 @@ const Header = (props) => {
             >
               Contact
             </MUIButton>
-            <LoginButton theme={BasicTheme}></LoginButton>
+            {!loggedIn && <LoginButton theme={BasicTheme} setLoggedin={setLoggedin}> Log in / Sign up</LoginButton>}
+            {loggedIn && <ProfileButton setLoggedin={setLoggedin} />}
           </StyledLinks>
         </StyledHeader>
       </ThemeProvider>
