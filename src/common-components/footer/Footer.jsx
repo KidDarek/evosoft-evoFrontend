@@ -5,7 +5,7 @@ const StyledFooter = styled("footer")({
   bottom: 0,
   left: 0,
   right: 0,
-  background: "aquamarine",
+  background: "#00cc99",
   height: "auto",
   width: "100%",
   color: "#fff",

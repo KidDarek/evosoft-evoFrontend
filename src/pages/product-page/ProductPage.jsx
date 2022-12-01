@@ -1,79 +1,101 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { useParams } from "react-router-dom";
 import { products } from "../../db";
+import MUIButton from "@mui/material/Button";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  height: "400px",
-  padding: "25px",
+  height: "100%",
+  padding: "10px 25px 10px 25px",
   backgroundImage: "linear-gradient(to right, #00cc99, #0066ff, #ff0055)",
 });
 
 const StyledInfoDiv = styled("div")({
-  width: "50%",
-  alignItems: "start",
-  marginLeft: "25px",
+  width: "60%",
+  alignItems: "center",
   display: "flex",
-  justifyContent: "start",
-  height: "100%",
+  justifyContent: "center",
+  height: "800px",
+  border: "10px solid grey"
 });
 
 const StyledInfoDivText = styled("div")({
-  width: "50%",
+  width: "300px",
   alignItems: "start",
   display: "flex",
+  paddingLeft: "10px",
   justifyContent: "start",
-  height: "100%",
-  //border: "10px solid black"
+  height: "800px",
+  marginRight: "75px",
+  marginLeft: "10px",
+  paddingTop: "10px",
+  paddingBottom: "10px",
+  backgroundColor: "#00cc99",
 });
 
 const StyledInfoDivText2 = styled("div")({
-  width: "100%",
+  width: "79%",
+  marginRight: "75px",
   alignItems: "start",
-  marginLeft: "25px",
   display: "flex",
   justifyContent: "start",
   height: "100%",
+  backgroundColor: "#00cc99",
 });
 
-const desiredProduct = products;
 
 const ProductPage = (props) => {
-  // const params = useParams();
-  // console.log(params.id);
+  const params = useParams();
+  const id = params.id
   return (
     <>
       <StyledPageDiv>
         <StyledInfoDiv>
           <div>
             <img
-              src={desiredProduct[0].imageUri}
+              src={products[id].imageUri}
               alt="kep"
               height="450px"
               frame="true"
-              border="10px"
-              borderRadius="30px"
+              display="block"
+              margin-left="auto"
+              margin-right="auto"
             />
           </div>
         </StyledInfoDiv>
         <StyledInfoDivText>
           <div>
-            <h1 style={{ color: "white" }}>
-              Product name: {desiredProduct[0].title}
-            </h1>
-            <h1 style={{ color: "white" }}>Price: {desiredProduct[0].price}</h1>
-            <h1 style={{ color: "white" }}>
-              Category: {desiredProduct[0].category}
-            </h1>
+            <h2 style={{ color: "white" }}>
+              Product name:
+            </h2>
+            <text style={{ color: "white" }}> {products[id].title}</text>
+            <h2 style={{ color: "white" }}>
+              Price:
+            </h2>
+            <text style={{ color: "white" }}> {products[id].price}</text>
+            <h2 style={{ color: "white" }}>
+              Category:
+            </h2>
+            <text style={{ color: "white" }}> {products[id].category}</text>
+            <h2 style={{ color: "white" }}>
+              Tags:
+            </h2>
+            <text style={{ color: "white" }}>  {products[id].tag}</text>
+            <div style={{ paddingTop: "20px" }}>
+              <MUIButton variant="contained"> Add item to cart </MUIButton>
+            </div>
           </div>
+
         </StyledInfoDivText>
       </StyledPageDiv>
       <StyledPageDiv>
         <StyledInfoDivText2>
           <div>
             <h1 style={{ color: "white" }}>Termék leírása</h1>
+            <text style={{ color: "white" }}>{products[id].body}</text>
           </div>
         </StyledInfoDivText2>
       </StyledPageDiv>
