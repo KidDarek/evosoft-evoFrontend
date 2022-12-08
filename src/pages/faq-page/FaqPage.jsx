@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { userQuestions } from "../../db";
 import AddQuestionButton from "./AddQuestionButton";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 
 const StyledHeader = styled("div")({
   color: "white",
@@ -17,7 +17,7 @@ const StyledQuestion = styled("h1")({
   width: "100%",
   display: "flex",
   justifyContent: "center",
-  border: "5px solid red"
+  border: "5px solid red",
 });
 
 const StyledAnswer = styled("h2")({
@@ -37,12 +37,8 @@ const StyledPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
 });
 
-
 const FaqPage = (props) => {
-
-  const [questionAdded, setIndex] = useState(true)
-
-
+  const [questionAdded, setIndex] = useState(true);
 
   return (
     <>
@@ -53,20 +49,19 @@ const FaqPage = (props) => {
         </StyledHeader>
       </StyledPageDiv>
       {userQuestions.map((question, index) => (
-        <>
+        <Fragment key={index}>
           <StyledPageDiv>
-            <StyledQuestion key={index}>
-              {question.question}
-            </StyledQuestion>
+            <StyledQuestion>{question.question}</StyledQuestion>
           </StyledPageDiv>
           <StyledPageDiv>
-            <StyledAnswer key={index}>
-              {question.answer}
-            </StyledAnswer>
+            <StyledAnswer>{question.answer}</StyledAnswer>
           </StyledPageDiv>
-        </>
+        </Fragment>
       ))}
-      <AddQuestionButton setIndex={setIndex} questionAdded={questionAdded}></AddQuestionButton>
+      <AddQuestionButton
+        setIndex={setIndex}
+        questionAdded={questionAdded}
+      ></AddQuestionButton>
     </>
   );
 };
