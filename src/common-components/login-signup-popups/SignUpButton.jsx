@@ -36,16 +36,19 @@ const SignUpPopup = (props) => {
     }
   }
   const handleSignUpRequest = () => {
-    const emailextField = document.getElementById("sign-up-email");
+    const nameTextField = document.getElementById("sign-up-name");
+    const emailTextField = document.getElementById("sign-up-email");
     const passwordTextField = document.getElementById("sign-up-password");
-    const email = emailextField.value;
+    const email = emailTextField.value;
     if (!validEmail(email)) {
       handleSnackOpen();
       return;
     }
+    const name = nameTextField.value;
     const password = passwordTextField.value;
+    const role = "user";
     const id = users[users.length - 1].id + 1;
-    const obj = { id, email, password };
+    const obj = { id, name, email, password, role };
     users.push(obj);
     console.log(users);
     setOpen(false);
@@ -87,6 +90,15 @@ const SignUpPopup = (props) => {
       <Dialog open={open} onClose={handleSignUpRequest} onKeyDown={requestSignUp}>
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="sign-up-name"
+            label="Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
           <TextField
             autoFocus
             margin="dense"
