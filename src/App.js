@@ -8,6 +8,7 @@ import AboutUsPage from "./pages/about-us-page/AboutUsPage";
 import ProductPage from "./pages/product-page/ProductPage";
 import ProfilePage from "./pages/profile-page/ProfilePage";
 import { styled } from "@mui/material";
+import SearchPage from "./pages/search-page/SearchPage";
 
 const StyledFontDiv = styled("div")({
   fontFamily: "Roboto"
@@ -25,6 +26,7 @@ function App() {
             <Route path="/FAQ" element={<FaqPage />} />
             <Route path="/About-Us" element={<AboutUsPage />} />
             <Route path="/Contact" element={<ContactPage />} />
+            <Route path="/Search" element={<SearchPage />} />
             <Route path="/Profile:id" element={<ProfilePage />} />
             <Route path="/Product/:id" element={<ProductPage />} />
           </Routes>

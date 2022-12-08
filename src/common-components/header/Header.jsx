@@ -7,7 +7,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LoginButton from "../login-signup-popups/LoginButton";
 import ProfileButton from "./ProfileButton";
 
-
 const StyledHeader = styled("div")({
   backgroundColor: "#00cc99",
   display: "flex",
@@ -26,17 +25,13 @@ const StyledLogo = styled("img")({
   cursor: "pointer",
 });
 
-const StyledSearchField = styled("input")({
-  type: "text",
-  placeholder: "Search",
-  width: "400px",
-  height: "30px",
-  borderRadius: "10px",
+const StyledSearchDiv = styled("div")({
+  width: "40%",
   marginLeft: "auto",
+  marginRight: "auto",
 });
 
 const StyledLinks = styled("div")({
-  marginLeft: "auto",
   marginRight: "25px",
   display: "flex",
   alignItems: "center",
@@ -85,16 +80,20 @@ const Header = (props) => {
     navigate("/Contact");
   };
 
+  const navigateToSearchPage = () => {
+    navigate("/Search");
+  };
+
   return (
     <>
       <ThemeProvider theme={BasicTheme}>
         <StyledHeader>
           <StyledLogo src={logo} alt="logo" onClick={navigateToMainPage} />
-
-          <StyledSearchField />
-          <MUIButton variant="outlined" color="white">
-            Search
-          </MUIButton>
+          <StyledSearchDiv>
+            <MUIButton variant="contained" color="red" sx={{ width: 1 }} onClick={navigateToSearchPage}>
+              Go to search page
+            </MUIButton>
+          </StyledSearchDiv>
           <Card />
           <StyledLinks>
             <MUIButton

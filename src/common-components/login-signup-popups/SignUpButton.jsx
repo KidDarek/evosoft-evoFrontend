@@ -7,10 +7,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { users } from "../../db";
+import { IconButton, Snackbar } from "@mui/material";
 
 const SignUpPopup = (props) => {
 
   const [open, setOpen] = React.useState(false);
+  const [openSnack, setOpenSnack] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,6 +20,14 @@ const SignUpPopup = (props) => {
 
   const handleClickClose = () => {
     setOpen(false);
+  };
+
+  const handleSnackClose = () => {
+    setOpenSnack(false);
+  };
+
+  const handleSnackOpen = () => {
+    setOpenSnack(true);
   };
 
   const requestSignUp = (e) => {
@@ -30,7 +40,7 @@ const SignUpPopup = (props) => {
     const passwordTextField = document.getElementById("sign-up-password");
     const email = emailextField.value;
     if (!validEmail(email)) {
-      console.log("Not valid email");
+      handleSnackOpen();
       return;
     }
     const password = passwordTextField.value;
@@ -48,6 +58,21 @@ const SignUpPopup = (props) => {
     }
     return false;
   }
+
+  const snackAction = (
+    <React.Fragment>
+      <Button color="red" size="small" variant="contained" onClick={handleSnackClose}>
+        Close
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleSnackClose}
+      >
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <div>
@@ -85,7 +110,15 @@ const SignUpPopup = (props) => {
           <Button onClick={handleClickClose}>Cancel</Button>
           <Button onClick={handleSignUpRequest}>Sign up</Button>
         </DialogActions>
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={6000}
+          onClose={handleSnackClose}
+          message="Not a valid Email"
+          action={snackAction}
+        />
       </Dialog>
+
     </div>
   );
 };
