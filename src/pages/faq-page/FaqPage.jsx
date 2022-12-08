@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { userQuestions } from "../../db";
 import AddQuestionButton from "./AddQuestionButton";
+import React, { useState } from "react";
 
 const StyledHeader = styled("div")({
   color: "white",
@@ -39,9 +40,13 @@ const StyledPageDiv = styled("div")({
 
 const FaqPage = (props) => {
 
+  const [questionAdded, setIndex] = useState(true)
+
+
 
   return (
     <>
+      <div>{questionAdded ? null : null}</div>
       <StyledPageDiv>
         <StyledHeader>
           <h1> Frequently Asked Questions</h1>
@@ -61,7 +66,7 @@ const FaqPage = (props) => {
           </StyledPageDiv>
         </>
       ))}
-      <AddQuestionButton></AddQuestionButton>
+      <AddQuestionButton setIndex={setIndex} questionAdded={questionAdded}></AddQuestionButton>
     </>
   );
 };

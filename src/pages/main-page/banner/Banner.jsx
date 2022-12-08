@@ -45,11 +45,8 @@ const banner = ({
 const SetNewBanner = () => {
   const [bannerIndex, setIndex] = useState(0)
 
-  if (bannerIndex < 0) {
+  if (bannerIndex === -9) {
     setIndex(0)
-  }
-  if (bannerIndex > products.length - 3) {
-    setIndex(products.length - 3)
   }
 
 
@@ -63,11 +60,11 @@ const SetNewBanner = () => {
             width={"60px"} />
         </StyledLeftButton>
         <div style={{ width: "5%", height: "400px" }}></div>
-        <CardSmall id={bannerIndex} />
+        <CardSmall id={(products.length + bannerIndex) % products.length} />
         <div style={{ width: "10%", height: "400px" }}></div>
-        <CardBig id={bannerIndex + 1} />
+        <CardBig id={(products.length + bannerIndex + 1) % products.length} />
         <div style={{ width: "10%", height: "400px" }}></div>
-        <CardSmall id={bannerIndex + 2} />
+        <CardSmall id={(products.length + bannerIndex + 2) % products.length} />
         <div style={{ width: "5%", height: "400px" }}></div>
         <StyledRightButton onClick={() => setIndex(bannerIndex + 1)}>
           <img src={evoButton}

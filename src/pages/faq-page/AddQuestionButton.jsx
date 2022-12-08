@@ -19,21 +19,28 @@ const StyledPageDiv = styled("div")({
 });
 
 
-const AddQuestionButton = () => {
+const AddQuestionButton = (props) => {
 
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
+        props.setIndex(false)
         setOpen(true);
     };
 
     const handleClickClose = () => {
         setOpen(false);
     };
-    const Question = document.getElementById("Question");
 
     const addQuestion = () => {
-        userQuestions.question.push(Question)
+        const questionField = document.getElementById('QuestionField')
+        const question = questionField.value
+        if (question === '') { return }
+        const id = userQuestions.length
+        userQuestions.push({ id, question })
+        props.setIndex(true)
+        setOpen(false);
+        console.log(userQuestions)
     }
 
     return (
@@ -42,12 +49,12 @@ const AddQuestionButton = () => {
                 <MUIButton variant="contained" onClick={handleClickOpen}> Add Question </MUIButton>
             </StyledPageDiv>
             <Dialog open={open} onClose={handleClickClose}>
-                <DialogTitle>Log in to your account</DialogTitle>
+                <DialogTitle>Got a Question?</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="Question"
+                        id="QuestionField"
                         label="Question you wish to add"
                         type="text"
                         fullWidth
