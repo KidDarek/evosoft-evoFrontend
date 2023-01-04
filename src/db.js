@@ -26,7 +26,6 @@ export const products = [
     category: "Computers",
     tag: "[computer, laptop, electronics, IT, Apple, ARM, Mac]"
   },
-
   {
     id: 3,
     title: "Apple iPhone 14",
