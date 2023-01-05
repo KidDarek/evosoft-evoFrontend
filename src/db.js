@@ -101,8 +101,6 @@ export const users = [
   },
 ]
 export const shoppingItems = [
-  0,
-  2,
 ]
 export const userQuestions = [
   {

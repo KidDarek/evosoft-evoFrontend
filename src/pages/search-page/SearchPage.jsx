@@ -40,7 +40,6 @@ const SearchPage = () => {
       }
       includeItem = true;
     }
-    console.log(filteredProducts);
     setChecked(!checked);
   }
 

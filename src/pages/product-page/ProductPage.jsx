@@ -80,19 +80,19 @@ const ProductPage = (props) => {
             <h2 style={{ color: "white" }}>
               Product name:
             </h2>
-            <text style={{ color: "white" }}> {products[id].title}</text>
+            <div style={{ color: "white" }}> {products[id].title}</div>
             <h2 style={{ color: "white" }}>
               Price:
             </h2>
-            <text style={{ color: "white" }}> {products[id].price}</text>
+            <div style={{ color: "white" }}> {products[id].price}</div>
             <h2 style={{ color: "white" }}>
               Category:
             </h2>
-            <text style={{ color: "white" }}> {products[id].category}</text>
+            <div style={{ color: "white" }}> {products[id].category}</div>
             <h2 style={{ color: "white" }}>
               Tags:
             </h2>
-            <text style={{ color: "white" }}>  {products[id].tag}</text>
+            <div style={{ color: "white" }}>  {products[id].tag}</div>
             <div style={{ paddingTop: "20px" }}>
               <MUIButton variant="contained" onClick={() => AddItemToShoppingCart(id)}> Add item to cart </MUIButton>
             </div>
@@ -104,7 +104,7 @@ const ProductPage = (props) => {
         <StyledInfoDivText2>
           <div>
             <h1 style={{ color: "white" }}>Termék leírása</h1>
-            <text style={{ color: "white" }}>{products[id].body}</text>
+            <div style={{ color: "white" }}>{products[id].body}</div>
           </div>
         </StyledInfoDivText2>
       </StyledPageDiv>

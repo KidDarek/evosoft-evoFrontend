@@ -24,6 +24,7 @@ const ShoppingCart = (props) => {
     const navigate = useNavigate();
     const navigateToProductPage = (id) => {
         navigate(`/Product/${id}`);
+        handleClose();
     };
 
     return (
@@ -46,9 +47,10 @@ const ShoppingCart = (props) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                {shoppingItems.map((id) => (
-                    <MenuItem key={id} onClick={() => navigateToProductPage(id)}>{products[id].title}{<img src={products[id].imageUri} alt="Product.png" style={{ height: "25px" }}></img>}</MenuItem>
-                ))}
+                {shoppingItems.length === 0 ? <div style={{ margin: "2px" }}>Nothing</div> :
+                    shoppingItems.map((id) => (
+                        <MenuItem key={id} onClick={() => navigateToProductPage(id)}>{products[id].title}{<img src={products[id].imageUri} alt="Product.png" style={{ height: "25px" }}></img>}</MenuItem>
+                    ))}
             </Menu>
         </div >
     );
