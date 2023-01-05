@@ -13,7 +13,8 @@ const StyledPadding = styled("div")({
 });
 
 const tags = [];
-let filteredProductsIds = [];
+let filteredProducts = products;
+
 const SearchPage = () => {
 
   const [checked, setChecked] = useState(false);
@@ -26,7 +27,7 @@ const SearchPage = () => {
     else {
       tags.splice(index, 1);
     }
-    filteredProductsIds = [];
+    filteredProducts = [];
     let includeItem = true;
     for (let i = 0; i < products.length; i++) {
       for (let j = 0; j < tags.length; j++) {
@@ -35,11 +36,11 @@ const SearchPage = () => {
         }
       }
       if (includeItem) {
-        filteredProductsIds.push(products[i].id)
+        filteredProducts.push(products[i])
       }
       includeItem = true;
     }
-    console.log(filteredProductsIds);
+    console.log(filteredProducts);
     setChecked(!checked);
   }
 
@@ -52,11 +53,12 @@ const SearchPage = () => {
         <TagSelector HandleChange={HandleChange}></TagSelector>
         <SearchBar></SearchBar>
         <Grid container spacing={10} justifyContent="center" marginTop={1} marginBottom={10}>
-          {tags.length !== 0 ? filteredProductsIds.map((id) => (
-            <Grid item xs="auto" md="auto" key={id}>
-              <Card id={id} />
-            </Grid>
-          )) : null}
+          {tags.length !== 0 && filteredProducts.length === 0 ? <div>No product satisfies your filters</div> :
+            filteredProducts.map((product) => (
+              <Grid item xs="auto" md="auto" key={product.id}>
+                <Card id={product.id} />
+              </Grid>
+            ))}
         </Grid>
       </StyledPadding>
     </>
