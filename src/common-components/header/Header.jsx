@@ -6,6 +6,7 @@ import MUIButton from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LoginButton from "../login-signup-popups/LoginButton";
 import ProfileButton from "./ProfileButton";
+import ShoppingCart from "./ShoppingCart";
 
 const StyledHeader = styled("div")({
   backgroundColor: "#00cc99",
@@ -96,6 +97,7 @@ const Header = (props) => {
           </StyledSearchDiv>
           <Card />
           <StyledLinks>
+
             <MUIButton
               variant="contained"
               onClick={navigateToFaqPage}
@@ -119,6 +121,7 @@ const Header = (props) => {
             </MUIButton>
             {!loggedIn && <LoginButton theme={BasicTheme} setLoggedin={setLoggedin} setLoginID={setLoginID}> Log in / Sign up</LoginButton>}
             {loggedIn && <ProfileButton setLoggedin={setLoggedin} logInID={logInID} />}
+            <ShoppingCart />
           </StyledLinks>
         </StyledHeader>
       </ThemeProvider>

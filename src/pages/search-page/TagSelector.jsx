@@ -1,7 +1,7 @@
 import { products } from "../../db";
 import React, { Fragment } from "react";
 
-const ReturnTags = () => {
+const ReturnTags = (props) => {
   const tags = new Set();
 
   products.forEach((item) => {
@@ -15,7 +15,7 @@ const ReturnTags = () => {
     <div>
       {uniqueTags.map((tag) => (
         <div key={tag} style={{ display: "inline-block", margin: "10px" }}>
-          <input type="checkbox" id={tag} value={tag} />
+          <input type="checkbox" id={tag} value={tag} onChange={() => props.HandleChange(tag)} />
           <label htmlFor={tag}>{tag}</label>
         </div>
       ))}
@@ -23,11 +23,11 @@ const ReturnTags = () => {
   );
 };
 
-const TagSelector = () => {
+const TagSelector = (props) => {
   return (
     <>
       <div>Tags:</div>
-      <ReturnTags></ReturnTags>
+      <ReturnTags HandleChange={props.HandleChange}></ReturnTags>
     </>
   );
 };

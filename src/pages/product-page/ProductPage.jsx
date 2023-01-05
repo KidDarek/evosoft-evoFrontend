@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { products } from "../../db";
+import { products, shoppingItems } from "../../db";
 import MUIButton from "@mui/material/Button";
 
 const StyledPageDiv = styled("div")({
@@ -46,6 +46,15 @@ const StyledInfoDivText2 = styled("div")({
   backgroundColor: "#00cc99",
 });
 
+const AddItemToShoppingCart = (id) => {
+  id = parseInt(id)
+  for (let index = 0; index < shoppingItems.length; index++) {
+    if (shoppingItems[index] === id) {
+      return;
+    }
+  }
+  shoppingItems.push(id)
+}
 
 const ProductPage = (props) => {
   const params = useParams();
@@ -85,7 +94,7 @@ const ProductPage = (props) => {
             </h2>
             <text style={{ color: "white" }}>  {products[id].tag}</text>
             <div style={{ paddingTop: "20px" }}>
-              <MUIButton variant="contained"> Add item to cart </MUIButton>
+              <MUIButton variant="contained" onClick={() => AddItemToShoppingCart(id)}> Add item to cart </MUIButton>
             </div>
           </div>
 
