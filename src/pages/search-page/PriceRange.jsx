@@ -6,7 +6,7 @@ const PriceRange = (props) => {
         <>
             <div style={{ width: "25%" }}>
                 <text>Price range</text>
-                <Slider defaultValue={0} aria-label="Price" valueLabelDisplay="auto" max={9999} />
+                <Slider defaultValue={0} aria-label="Price" valueLabelDisplay="auto" type="range" max={9999} />
             </div>
         </>
     )
