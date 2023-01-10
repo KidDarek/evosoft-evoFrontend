@@ -1,33 +1,29 @@
-import { products } from "../../db";
 import React, { Fragment } from "react";
+import { products } from "../../db";
 
-const ReturnTags = (props) => {
+const TagSelector = (props) => {
   const tags = new Set();
 
   products.forEach((item) => {
-    const itemTags = item.tag.slice(1, -1).split(", ");
-    itemTags.forEach((tag) => tags.add(tag));
+    item.tag.forEach((tag) => tags.add(tag));
   });
 
   const uniqueTags = [...tags];
 
   return (
-    <div>
+    <>
+      <div>Tags:</div>
       {uniqueTags.map((tag) => (
         <div key={tag} style={{ display: "inline-block", margin: "10px" }}>
-          <input type="checkbox" id={tag} value={tag} onChange={() => props.HandleChange(tag)} />
+          <input
+            type="checkbox"
+            id={tag}
+            value={tag}
+            onChange={() => props.onSelect(tag)}
+          />
           <label htmlFor={tag}>{tag}</label>
         </div>
       ))}
-    </div>
-  );
-};
-
-const TagSelector = (props) => {
-  return (
-    <>
-      <div>Tags:</div>
-      <ReturnTags HandleChange={props.HandleChange}></ReturnTags>
     </>
   );
 };
