@@ -3,7 +3,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { products, shoppingItems } from "../../db";
 import MUIButton from "@mui/material/Button";
-
+import { TextField } from "@mui/material";
 const StyledPageDiv = styled("div")({
   display: "flex",
   alignItems: "center",
@@ -47,16 +47,24 @@ const StyledInfoDivText2 = styled("div")({
 });
 
 const AddItemToShoppingCart = (id) => {
+  const itemQuantityInput = document.getElementById("item-quantity");
+  const quantity = parseInt(itemQuantityInput.value);
+  if (quantity === 0) {
+    return;
+  }
   id = parseInt(id)
   for (let index = 0; index < shoppingItems.length; index++) {
-    if (shoppingItems[index] === id) {
+    if (shoppingItems[index].id === id) {
       return;
     }
   }
-  shoppingItems.push(id)
+  const shoppingItem = { id, quantity };
+  shoppingItems.push(shoppingItem)
 }
 
 const ProductPage = (props) => {
+  const [value, setValue] = React.useState("1");
+
   const params = useParams();
   const id = params.id
   return (
@@ -95,6 +103,26 @@ const ProductPage = (props) => {
             <div style={{ color: "white" }}>  {products[id].tag}</div>
             <div style={{ paddingTop: "20px" }}>
               <MUIButton variant="contained" onClick={() => AddItemToShoppingCart(id)}> Add item to cart </MUIButton>
+              <TextField
+                margin="dense"
+                id="item-quantity"
+                label="Quantity"
+                type="number"
+                variant="outlined"
+                sx={{ width: 150 }}
+                value={value}
+                onChange={(e) => {
+                  var value = parseInt(e.target.value, 10);
+                  if (isNaN(value)) {
+                    value = 1;
+                  }
+
+                  if (value > 100) value = 100;
+                  if (value < 1) value = 1;
+
+                  setValue(value);
+                }}
+              />
             </div>
           </div>
 
