@@ -60,7 +60,13 @@ const ShoppingCart = (props) => {
 
     const removeItem = (e, id) => {
         e.stopPropagation();
-        const index = shoppingItems.indexOf(id);
+        let index = 0;
+        for (let i = 0; i < shoppingItems.length; i++) {
+            if (shoppingItems[i].id === id) {
+                index = i;
+                break;
+            }
+        }
         shoppingItems.splice(index, 1);
         setRefresh(!refresh);
     };
