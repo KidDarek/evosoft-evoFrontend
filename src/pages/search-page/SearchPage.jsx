@@ -17,11 +17,15 @@ const SearchPage = () => {
   const [searchString, setSearchString] = useState("");
 
   const handleTagSelector = (tags) => {
-    setFilteredProducts(
-      products.filter((product) =>
-        product.tag.some((tag) => tags.indexOf(tag) >= 0)
-      )
-    );
+    if (tags.length === 0) {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(
+        products.filter((product) =>
+          tags.every((tag) => product.tag.includes(tag))
+        )
+      );
+    }
   };
 
   const handleSearch = (e) => {
@@ -36,8 +40,10 @@ const SearchPage = () => {
       )
     );
     setFilteredProducts(
-      filteredProducts.filter((product) =>
-        product.pricevalue.valueOf() <= document.getElementById("priceslider").value
+      filteredProducts.filter(
+        (product) =>
+          product.pricevalue.valueOf() <=
+          document.getElementById("priceslider").value
       )
     );
   };

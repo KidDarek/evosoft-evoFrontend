@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { products } from "../../db";
 
 const TagSelector = (props) => {
@@ -9,6 +9,15 @@ const TagSelector = (props) => {
   });
 
   const uniqueTags = [...tags];
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const handleCheckboxChange = (e) => {
+    if (e.target.checked) {
+      setSelectedTags([...selectedTags, e.target.value]);
+    } else {
+      setSelectedTags(selectedTags.filter((tag) => tag !== e.target.value));
+    }
+  };
 
   return (
     <>
@@ -19,11 +28,23 @@ const TagSelector = (props) => {
             type="checkbox"
             id={tag}
             value={tag}
-            onChange={() => props.onSelect(tag)}
+            onChange={handleCheckboxChange}
+            checked={selectedTags.includes(tag)}
           />
           <label htmlFor={tag}>{tag}</label>
         </div>
       ))}
+      <button
+        onClick={() => {
+          if (selectedTags.length === 0) {
+            props.onSelect(uniqueTags);
+          } else {
+            props.onSelect(selectedTags);
+          }
+        }}
+      >
+        Filter
+      </button>
     </>
   );
 };
