@@ -12,18 +12,23 @@ const TagSelector = (props) => {
 
   return (
     <>
-      <div>Tags:</div>
-      {uniqueTags.map((tag) => (
-        <div key={tag} style={{ display: "inline-block", margin: "10px" }}>
-          <input
-            type="checkbox"
-            id={tag}
-            value={tag}
-            onChange={() => props.onSelect(tag)}
-          />
-          <label htmlFor={tag}>{tag}</label>
+      <div style={{ padding: "10px" }}>
+        <div>Tags:</div>
+        <div style={{ width: "15%" }}>
+          {uniqueTags.map((tag) => (
+            <div key={tag} style={{ display: "inline-block", margin: "10px" }}>
+              <input
+                type="checkbox"
+                id={tag}
+                value={tag}
+                onChange={() => props.onSelect(tag)}
+              />
+              <label htmlFor={tag}>{tag}</label>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+
     </>
   );
 };
