@@ -6,7 +6,7 @@ export const products = [
     body: "Superior gaming pc!",
     price: "$1000",
     category: "Computers",
-    tag: "[computer, gamer, electronics, IT]"
+    tag: ["computer", "gamer", "electronics", "IT"]
   },
   {
     id: 1,
@@ -15,7 +15,7 @@ export const products = [
     body: "An excellent windows laptop",
     price: "$1000",
     category: "Computers",
-    tag: "[computer, laptop, electronics, IT, Microsoft]"
+    tag: ["computer", "laptop", "electronics", "IT", "Microsoft"]
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ export const products = [
     body: "An excellent ARM powered macbook",
     price: "$1000",
     category: "Computers",
-    tag: "[computer, laptop, electronics, IT, Apple, ARM, Mac]"
+    tag: ["computer", "laptop", "electronics", "IT", "Apple", "ARM", "Mac"]
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ export const products = [
     body: "With the latest dynamic island!",
     price: "$8999",
     category: "Smartphones",
-    tag: "[smartphone, electronics, Apple, iOS]"
+    tag: ["smartphone", "electronics", "Apple", "iOS"]
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ export const products = [
     body: "The latest Samsung flagship with 108MPX camera",
     price: "$9999",
     category: "Smartphones",
-    tag: "[smartphone, electronics, Samsung, Android]"
+    tag: ["smartphone", "electronics", "Samsung", "Android"]
   },
   {
     id: 5,
@@ -51,7 +51,7 @@ export const products = [
     body: "High quality for affordable price. Try the latest Xiaomi now!",
     price: "$999",
     category: "Smartphones",
-    tag: "[smartphone, electronics, Xiaomi, Android]"
+    tag: ["smartphone", "electronics", "Xiaomi", "Android"]
   },
 
   {
@@ -61,7 +61,7 @@ export const products = [
     body: "A gaming headset with immersive surround sound...",
     price: "$1000",
     category: "Computer accessories",
-    tag: "[headset, gamer, electronics, IT, JBL]"
+    tag: ["headset", "gamer", "electronics", "IT", "JBL"]
   },
   {
     id: 7,
@@ -70,7 +70,7 @@ export const products = [
     body: "Featuring all-new low-profile switches within a lean, durable casing, experience ultra-responsive gaming designed for long-lasting ergonomic use.",
     price: "$2000",
     category: "Computer accessories",
-    tag: "[keyboard, gamer, electronics, IT, Razer]"
+    tag: ["keyboard", "gamer", "electronics", "IT", "Razer"]
   },
   {
     id: 8,
@@ -79,9 +79,9 @@ export const products = [
     body: "The CORSAIR SABRE RGB PRO Gaming Mouse is designed with feedback from esports pros, weighing an ultra-light 74g...",
     price: "$2000",
     category: "Computer accessories",
-    tag: "[mouse, gamer, electronics, IT, Corsair]"
+    tag: ["mouse", "gamer", "electronics", "IT", "Corsair"]
   }
-];
+]
 
 export const users = [
   {
