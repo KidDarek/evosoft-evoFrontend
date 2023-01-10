@@ -8,8 +8,8 @@ import Card from "../main-page/best-deals/Card";
 import { Grid } from "@mui/material";
 
 const StyledPadding = styled("div")({
-  paddingLeft: "9rem",
-  paddingRight: "9rem",
+  paddingLeft: "25px",
+  paddingRight: "25px",
 });
 
 const SearchPage = () => {
@@ -51,31 +51,36 @@ const SearchPage = () => {
   return (
     <>
       <StyledPadding>
-        <div>SearchPage</div>
-        <TagSelector onSelect={handleTagSelector} />
-        <PriceRange id={"priceslider"}></PriceRange>
-        <SearchBar
-          searchString={searchString}
-          handleSearch={handleSearch}
-          handleSubmit={handleSubmit}
-        />
-        <Grid
-          container
-          spacing={10}
-          justifyContent="center"
-          marginTop={1}
-          marginBottom={10}
-        >
-          {filteredProducts.length === 0 ? (
-            <div>No product satisfies your filters</div>
-          ) : (
-            filteredProducts.map((product) => (
-              <Grid item xs="auto" md="auto" key={product.id}>
-                <Card id={product.id} />
-              </Grid>
-            ))
-          )}
-        </Grid>
+        <h1 style={{ textAlign: "center", backgroundColor: "#00cc99", height: "50px" }}>SearchPage</h1>
+        <div style={{ backgroundColor: "#00cc99", justifyContent: "start" }}>
+          <SearchBar
+            searchString={searchString}
+            handleSearch={handleSearch}
+            handleSubmit={handleSubmit}
+          />
+          <TagSelector onSelect={handleTagSelector} />
+          <PriceRange id={"priceslider"}></PriceRange>
+          <div>
+
+          </div>
+          <Grid
+            container
+            spacing={10}
+            justifyContent="center"
+            marginTop={1}
+            marginBottom={10}
+          >
+            {filteredProducts.length === 0 ? (
+              <div>No product satisfies your filters</div>
+            ) : (
+              filteredProducts.map((product) => (
+                <Grid item xs="auto" md="auto" key={product.id}>
+                  <Card id={product.id} />
+                </Grid>
+              ))
+            )}
+          </Grid>
+        </div>
       </StyledPadding>
     </>
   );
