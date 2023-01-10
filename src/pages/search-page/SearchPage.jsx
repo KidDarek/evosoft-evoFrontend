@@ -24,6 +24,14 @@ const SearchPage = () => {
     );
   };
 
+  const handlePriceSelector = (prices) => {
+    setFilteredProducts(
+      products.filter((product) =>
+        product.pricevalue.valueOf() <= prices
+      )
+    );
+  };
+
   const handleSearch = (e) => {
     setSearchString(e.target.value);
   };
@@ -42,10 +50,12 @@ const SearchPage = () => {
       <StyledPadding>
         <div>SearchPage</div>
         <TagSelector onSelect={handleTagSelector} />
+        <PriceRange></PriceRange>
         <SearchBar
           searchString={searchString}
           handleSearch={handleSearch}
           handleSubmit={handleSubmit}
+          priceValue={handlePriceSelector}
         />
         <Grid
           container

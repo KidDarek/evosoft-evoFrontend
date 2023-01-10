@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Slider from '@mui/material/Slider';
 
-const PriceRange = () => {
+const PriceRange = (props) => {
     return (
         <>
-            <text>Price range</text>
-            <Slider defaultValue={0} aria-label="Price" valueLabelDisplay="auto" max={9999} />
+            <div style={{ width: "25%" }}>
+                <text>Price range</text>
+                <Slider defaultValue={0} aria-label="Price" valueLabelDisplay="auto" max={9999} />
+            </div>
         </>
     )
 }
