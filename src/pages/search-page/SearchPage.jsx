@@ -28,6 +28,10 @@ const SearchPage = () => {
     }
   };
 
+  const priceFilter = (values) => {
+    setFilteredProducts(products.filter((product) => product.price <= values[1] && product.price >= values[0]))
+  }
+
   const handleSearch = (e) => {
     setSearchString(e.target.value);
   };
@@ -37,13 +41,6 @@ const SearchPage = () => {
     setFilteredProducts(
       filteredProducts.filter((product) =>
         product.title.toLowerCase().includes(searchString.toLowerCase())
-      )
-    );
-    setFilteredProducts(
-      filteredProducts.filter(
-        (product) =>
-          product.pricevalue.valueOf() <=
-          document.getElementById("priceslider").value
       )
     );
   };
@@ -59,7 +56,7 @@ const SearchPage = () => {
             handleSubmit={handleSubmit}
           />
           <TagSelector onSelect={handleTagSelector} />
-          <PriceRange id={"priceslider"}></PriceRange>
+          <PriceRange doFilter={priceFilter}></PriceRange>
           <div>
 
           </div>
