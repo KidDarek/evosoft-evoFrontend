@@ -68,7 +68,7 @@ const Card = (props) => {
               <StyledH3>{product.title}</StyledH3>
             </StyledCardTitle>
             <StyledP>{product.body}</StyledP>
-            <StyledH2ForPrice>{product.price}</StyledH2ForPrice>
+            <StyledH2ForPrice>{"$" + product.price}</StyledH2ForPrice>
           </StyledCardContent>
         </StyledCardContainer>
       </Fragment>
