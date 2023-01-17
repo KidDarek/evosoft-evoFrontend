@@ -13,6 +13,11 @@ const StyledClearText = styled("div")({
     margin: "auto"
 });
 
+const StyledShopText = styled("div")({
+    color: "#00cc99",
+    margin: "auto"
+});
+
 const StyledNothingText = styled("div")({
     margin: "2px",
     fontSize: "13px"
@@ -55,6 +60,11 @@ const ShoppingCart = (props) => {
 
     const navigateToProductPage = (id) => {
         navigate(`/Product/${id}`);
+        handleClose();
+    };
+
+    const navigateToShopPage = (id) => {
+        navigate("/Shop");
         handleClose();
     };
 
@@ -106,7 +116,10 @@ const ShoppingCart = (props) => {
                         </MenuItem>
                     ))}
 
-                {shoppingItems.length > 0 ? <MenuItem onClick={removeAllItems}><StyledClearText>Clear all</StyledClearText></MenuItem> : null}
+                {shoppingItems.length > 0 ?
+                    <MenuItem onClick={removeAllItems}><StyledClearText>Clear all</StyledClearText></MenuItem> : null}
+                {shoppingItems.length > 0 ?
+                    <MenuItem onClick={navigateToShopPage}><StyledShopText>Buy Items</StyledShopText></MenuItem> : null}
             </Menu>
         </div >
     );
