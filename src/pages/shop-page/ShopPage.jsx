@@ -42,7 +42,7 @@ let sum = 0;
 const CalculateSum = () => {
     sum = 0;
     for (let i = 0; i < shoppingItems.length; i++) {
-        sum += shoppingItems[i].quantity * products[shoppingItems[i].id].pricevalue;
+        sum += shoppingItems[i].quantity * products[shoppingItems[i].id].price;
     }
 }
 
@@ -55,7 +55,7 @@ const ShopPage = () => {
                     <StyledContainer key={id}>
                         <Card id={id} />
                         <StyledDiv>x{quantity}</StyledDiv>
-                        <StyledDiv>= ${quantity * products[id].pricevalue}</StyledDiv>
+                        <StyledDiv>= ${quantity * products[id].price}</StyledDiv>
                     </StyledContainer>
                 ) : null}
                 {shoppingItems.length !== 0 ?
