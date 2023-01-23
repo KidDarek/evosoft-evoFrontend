@@ -15,22 +15,37 @@ const StyledPadding = styled("div")({
 const SearchPage = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const filterProducts = () => {
+    let filtered = [...products];
+
+    if (searchString.length > 0) {
+      filtered = filtered.filter((product) => {
+        return product.title.toLowerCase().includes(searchString.toLowerCase());
+      });
+    }
+
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter((product) => {
+        return selectedTags.every((tag) => product.tag.includes(tag));
+      });
+    }
+    setFilteredProducts(filtered);
+  };
 
   const handleTagSelector = (tags) => {
-    if (tags.length === 0) {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter((product) =>
-          tags.every((tag) => product.tag.includes(tag))
-        )
-      );
-    }
+    setSelectedTags(tags);
+    filterProducts();
   };
 
   const priceFilter = (values) => {
-    setFilteredProducts(products.filter((product) => product.price <= values[1] && product.price >= values[0]))
-  }
+    setFilteredProducts(
+      products.filter(
+        (product) => product.price <= values[1] && product.price >= values[0]
+      )
+    );
+  };
 
   const handleSearch = (e) => {
     setSearchString(e.target.value);
@@ -38,17 +53,21 @@ const SearchPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFilteredProducts(
-      filteredProducts.filter((product) =>
-        product.title.toLowerCase().includes(searchString.toLowerCase())
-      )
-    );
+    filterProducts();
   };
 
   return (
     <>
       <StyledPadding>
-        <h1 style={{ textAlign: "center", backgroundColor: "#00cc99", height: "50px" }}>SearchPage</h1>
+        <h1
+          style={{
+            textAlign: "center",
+            backgroundColor: "#00cc99",
+            height: "50px",
+          }}
+        >
+          SearchPage
+        </h1>
         <div style={{ backgroundColor: "#00cc99", justifyContent: "start" }}>
           <SearchBar
             searchString={searchString}
@@ -57,9 +76,7 @@ const SearchPage = () => {
           />
           <TagSelector onSelect={handleTagSelector} />
           <PriceRange doFilter={priceFilter}></PriceRange>
-          <div>
-
-          </div>
+          <div></div>
           <Grid
             container
             spacing={10}
