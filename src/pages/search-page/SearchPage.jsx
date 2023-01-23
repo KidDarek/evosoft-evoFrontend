@@ -6,6 +6,7 @@ import PriceRange from "./PriceRange";
 import { products } from "../../db";
 import Card from "../main-page/best-deals/Card";
 import { Grid } from "@mui/material";
+import { useEffect } from "react";
 
 const StyledPadding = styled("div")({
   paddingLeft: "25px",
@@ -16,6 +17,9 @@ const SearchPage = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
+  useEffect(() => {
+    filterProducts();
+  }, [selectedTags]);
 
   const filterProducts = () => {
     let filtered = [...products];
