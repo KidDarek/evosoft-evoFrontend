@@ -55,6 +55,13 @@ const BasicTheme = createTheme({
       main: "#FFFFFF",
     },
   },
+  typography: {
+
+    button: {
+      fontSize: 16,
+      fontWeight: 700,
+    },
+  },
 });
 
 
