@@ -17,6 +17,7 @@ const SearchPage = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedPrice, setSelectedPrice] = useState([]);
 
   const filterProducts = () => {
     let filtered = [...products];
@@ -32,6 +33,12 @@ const SearchPage = () => {
         return selectedTags.every((tag) => product.tag.includes(tag));
       });
     }
+
+    if (selectedPrice.length > 0) {
+      filtered = filtered.filter((product) => {
+        return product.price <= selectedPrice[1] && product.price >= selectedPrice[0];
+      });
+    }
     setFilteredProducts(filtered);
   };
   useEffect(() => {
@@ -43,14 +50,6 @@ const SearchPage = () => {
     filterProducts();
   };
 
-  const priceFilter = (values) => {
-    setFilteredProducts(
-      products.filter(
-        (product) => product.price <= values[1] && product.price >= values[0]
-      )
-    );
-  };
-
   const handleSearch = (e) => {
     setSearchString(e.target.value);
   };
@@ -59,6 +58,7 @@ const SearchPage = () => {
     e.preventDefault();
     filterProducts();
   };
+
 
   return (
     <>
@@ -79,7 +79,10 @@ const SearchPage = () => {
             handleSubmit={handleSubmit}
           />
           <TagSelector onSelect={handleTagSelector} />
-          <PriceRange doFilter={priceFilter}></PriceRange>
+          <PriceRange
+            setSelectedPrice={setSelectedPrice}
+            filterProducts={filterProducts}
+          ></PriceRange>
           <div></div>
           <Grid
             container
