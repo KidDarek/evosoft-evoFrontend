@@ -23,7 +23,7 @@ const PriceRange = (props) => {
                 <h3>Price range</h3>
                 <div>
                     <TextField id="outlined-min" label="Min price" variant="outlined" style={{ width: "35%" }} onChange={textFieldInput} />
-                    <button style={{ width: "20%", height: "50px", margin: "0px 10px" }} onClick={""}>Filter</button>
+                    <button style={{ width: "20%", height: "50px", margin: "0px 10px" }} >Filter</button>
                     <TextField id="outlined-max" label="Max price" variant="outlined" style={{ width: "35%" }} onChange={textFieldInput} />
                 </div>
                 <div>

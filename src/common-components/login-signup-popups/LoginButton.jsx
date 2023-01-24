@@ -44,7 +44,6 @@ const LoginButton = (props) => {
     if (validEmail(email)) {
       const id = logIn(logInData);
       if (id >= 0) {
-        console.log("Successful login");
         props.setLoginID(id);
       }
     }

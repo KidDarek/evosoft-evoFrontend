@@ -118,7 +118,11 @@ const ProductPage = (props) => {
               <h2 style={{ color: "white" }}>
                 Tags:
               </h2>
-              <div style={{ color: "white" }}>  {products[id].tag}</div>
+              <div style={{ color: "white" }}>
+                {products[id].tag.map((i) =>
+                  i + ", "
+                )}
+              </div>
               <div style={{ paddingTop: "20px" }}>
                 <MUIButton variant="contained" onClick={() => AddItemToShoppingCart(id)}> Add item to cart </MUIButton>
                 <TextField

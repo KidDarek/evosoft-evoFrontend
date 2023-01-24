@@ -40,7 +40,6 @@ const AddQuestionButton = (props) => {
         userQuestions.push({ id, question })
         props.setIndex(true)
         setOpen(false);
-        console.log(userQuestions)
     }
 
     return (

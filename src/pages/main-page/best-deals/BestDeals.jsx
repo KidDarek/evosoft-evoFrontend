@@ -7,6 +7,7 @@ import { products } from "../../../db";
 const StyledPadding = styled("div")({
   paddingLeft: "9rem",
   paddingRight: "9rem",
+  marginBottom: "20px",
 });
 
 const ReturnTwoRandomProductByCategory = () => {

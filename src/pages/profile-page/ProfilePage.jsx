@@ -10,6 +10,7 @@ const StyledPageDiv = styled("div")({
     height: "100%",
     padding: "10px 25px 10px 25px",
     marginTop: "20px",
+    marginBottom: "15px",
     gap: "25px",
 });
 

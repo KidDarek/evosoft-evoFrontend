@@ -9,7 +9,7 @@ const StyledFooter = styled("footer")({
   height: "auto",
   width: "100%",
   color: "#fff",
-  marginTop: "20px",
+  marginTop: "0",
 });
 
 const FooterContent = styled("div")({
@@ -25,7 +25,7 @@ const FooterContentH3 = styled("h3")({
   fontWeight: 400,
   textTransform: "capitalize",
   lineHeight: "3rem",
-  color: "black",
+  color: "white",
 });
 
 const FooterContentP = styled("p")({
@@ -33,7 +33,7 @@ const FooterContentP = styled("p")({
   margin: "10px auto",
   lineHeight: "28px",
   fontSize: "14px",
-  color: "black",
+  color: "white",
 });
 
 const FooterBottom = styled("div")({
@@ -46,7 +46,7 @@ const FooterBottomP = styled("p")({
   fontSize: "14px",
   wordSpacing: "2px",
   textTransform: "capitalize",
-  color: "black",
+  color: "white",
 });
 
 const Footer = () => {

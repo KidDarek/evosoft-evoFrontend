@@ -50,7 +50,6 @@ const SignUpPopup = (props) => {
     const id = users[users.length - 1].id + 1;
     const obj = { id, name, email, password, role };
     users.push(obj);
-    console.log(users);
     setOpen(false);
   };
 

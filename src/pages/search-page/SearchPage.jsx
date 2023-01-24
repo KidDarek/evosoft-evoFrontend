@@ -86,7 +86,8 @@ const SearchPage = () => {
             spacing={10}
             justifyContent="center"
             marginTop={1}
-            marginBottom={10}
+            marginBottom={5}
+            paddingBottom={5}
           >
             {filteredProducts.length === 0 ? (
               <div>No product satisfies your filters</div>

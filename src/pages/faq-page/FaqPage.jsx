@@ -3,7 +3,15 @@ import { userQuestions } from "../../db";
 import AddQuestionButton from "./AddQuestionButton";
 import React, { Fragment, useState } from "react";
 
-const StyledHeader = styled("div")({
+const StyledHeader = styled("h1")({
+  color: "white",
+  aligntext: "center",
+  width: "80%",
+  display: "flex",
+  justifyContent: "center",
+});
+
+const StyledQuestion = styled("h2")({
   color: "white",
   aligntext: "center",
   width: "100%",
@@ -11,19 +19,15 @@ const StyledHeader = styled("div")({
   justifyContent: "center",
 });
 
-const StyledQuestion = styled("h1")({
-  color: "white",
-  aligntext: "center",
-  width: "100%",
-  display: "flex",
-  justifyContent: "center",
-  border: "5px solid red",
+const StyledQuestionContainer = styled("div")({
+  width: "40%",
+  borderBottom: "5px solid #ff0055",
 });
 
-const StyledAnswer = styled("h2")({
+const StyledAnswer = styled("h3")({
   color: "white",
-  aligntext: "center",
-  width: "100%",
+  aligntext: "left",
+  width: "40%",
   display: "flex",
   justifyContent: "center",
 });
@@ -45,13 +49,15 @@ const FaqPage = (props) => {
       <div>{questionAdded ? null : null}</div>
       <StyledPageDiv>
         <StyledHeader>
-          <h1> Frequently Asked Questions</h1>
+          Frequently Asked Questions
         </StyledHeader>
       </StyledPageDiv>
       {userQuestions.map((question, index) => (
         <Fragment key={index}>
           <StyledPageDiv>
-            <StyledQuestion>{question.question}</StyledQuestion>
+            <StyledQuestionContainer>
+              <StyledQuestion>{question.question}</StyledQuestion>
+            </StyledQuestionContainer>
           </StyledPageDiv>
           <StyledPageDiv>
             <StyledAnswer>{question.answer}</StyledAnswer>
