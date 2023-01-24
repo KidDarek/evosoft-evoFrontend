@@ -17,9 +17,6 @@ const SearchPage = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
-  useEffect(() => {
-    filterProducts();
-  }, [selectedTags]);
 
   const filterProducts = () => {
     let filtered = [...products];
@@ -37,6 +34,9 @@ const SearchPage = () => {
     }
     setFilteredProducts(filtered);
   };
+  useEffect(() => {
+    filterProducts();
+  }, [selectedTags]);
 
   const handleTagSelector = (tags) => {
     setSelectedTags(tags);

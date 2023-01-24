@@ -1,5 +1,3 @@
-
-
 const SearchBar = (props) => {
   return (
     <div style={{ padding: "10px" }}>
