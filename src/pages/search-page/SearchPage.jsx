@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import TagSelector from "./TagSelector";
 import SearchBar from "./SearchBar";
 import { styled } from "@mui/material";
@@ -21,7 +21,7 @@ const SearchPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState([]);
 
-  const filterProducts = () => {
+  const filterProducts = useCallback(() => {
     let filtered = [...products];
 
     if (searchString.length > 0) {
@@ -38,14 +38,17 @@ const SearchPage = () => {
 
     if (selectedPrice.length > 0) {
       filtered = filtered.filter((product) => {
-        return product.price <= selectedPrice[1] && product.price >= selectedPrice[0];
+        return (
+          product.price <= selectedPrice[1] && product.price >= selectedPrice[0]
+        );
       });
     }
     setFilteredProducts(filtered);
-  };
+  }, [selectedTags, searchString, selectedPrice]);
+
   useEffect(() => {
     filterProducts();
-  }, [selectedTags]);
+  }, [selectedTags, filterProducts]);
 
   const handleTagSelector = (tags) => {
     setSelectedTags(tags);
@@ -61,7 +64,6 @@ const SearchPage = () => {
     filterProducts();
   };
 
-
   return (
     <>
       <StyledPadding>
@@ -69,29 +71,33 @@ const SearchPage = () => {
           <div
             style={{
               textAlign: "center",
-              backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
+              backgroundImage:
+                "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
               height: "50px",
               fontSize: "35px",
-              fontWeight: "bold"
+              fontWeight: "bold",
             }}
           >
             SearchPage
           </div>
-          <div style={{
-            display: "flex",
-            alignItems: "start",
-            justifyContent: "center",
-            height: '100%'
-          }}>
-            <div style={{
-              backgroundColor: "#00cc99",
-              justifyContent: "start",
-              marginLeft: "10px",
-              marginTop: "83px",
-              border: "3px solid #00a568",
-              width: "30%"
-            }}>
-
+          <div
+            style={{
+              display: "flex",
+              alignItems: "start",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
+            <div
+              style={{
+                backgroundColor: "#00cc99",
+                justifyContent: "start",
+                marginLeft: "10px",
+                marginTop: "83px",
+                border: "3px solid #00a568",
+                width: "30%",
+              }}
+            >
               <SearchBar
                 searchString={searchString}
                 handleSearch={handleSearch}
