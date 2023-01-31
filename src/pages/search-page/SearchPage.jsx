@@ -12,6 +12,7 @@ const StyledPadding = styled("div")({
   backgroundColor: "#ff0055",
   paddingLeft: "25px",
   paddingRight: "25px",
+  paddingBottom: "25px",
 });
 
 const SearchPage = () => {
