@@ -18,7 +18,7 @@ const StyledPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
 });
 
-const StyledParagraph = styled("P")({
+const StyledParagraph = styled("p")({
   color: "white",
   aligntext: "left",
   width: "100%",
@@ -32,7 +32,7 @@ const ContactPage = (props) => {
   return (
     <>
       <StyledPageDiv>
-        <StyledHeader>Contanct</StyledHeader>
+        <StyledHeader>Contact</StyledHeader>
         <StyledParagraph>
 
           We are always here to help you with any questions or concerns you may have. You can reach us through the following ways:

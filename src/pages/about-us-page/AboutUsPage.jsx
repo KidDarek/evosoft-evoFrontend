@@ -18,7 +18,7 @@ const StyledPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
 });
 
-const StyledParagraph = styled("P")({
+const StyledParagraph = styled("p")({
   color: "white",
   aligntext: "left",
   width: "100%",
