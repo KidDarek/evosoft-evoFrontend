@@ -22,7 +22,7 @@ const TagSelector = (props) => {
   return (
     <div style={{ padding: "10px" }}>
       <div>Tags:</div>
-      <div style={{ width: "15%" }}>
+      <div style={{ width: "75%" }}>
         {uniqueTags.map((tag) => (
           <div key={tag} style={{ display: "inline-block", margin: "10px" }}>
             <input
