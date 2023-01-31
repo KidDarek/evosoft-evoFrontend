@@ -9,6 +9,7 @@ import { Grid } from "@mui/material";
 import { useEffect } from "react";
 
 const StyledPadding = styled("div")({
+  backgroundColor: "#ff0055",
   paddingLeft: "25px",
   paddingRight: "25px",
 });
@@ -63,45 +64,55 @@ const SearchPage = () => {
   return (
     <>
       <StyledPadding>
-        <h1
-          style={{
-            textAlign: "center",
-            backgroundColor: "#00cc99",
-            height: "50px",
-          }}
-        >
-          SearchPage
-        </h1>
-        <div style={{ backgroundColor: "#00cc99", justifyContent: "start" }}>
-          <SearchBar
-            searchString={searchString}
-            handleSearch={handleSearch}
-            handleSubmit={handleSubmit}
-          />
-          <TagSelector onSelect={handleTagSelector} />
-          <PriceRange
-            setSelectedPrice={setSelectedPrice}
-            filterProducts={filterProducts}
-          ></PriceRange>
-          <div></div>
-          <Grid
-            container
-            spacing={10}
-            justifyContent="center"
-            marginTop={1}
-            marginBottom={5}
-            paddingBottom={5}
+        <div style={{ backgroundColor: "#00cc99" }}>
+          <h1
+            style={{
+              textAlign: "center",
+              backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
+              height: "50px",
+            }}
           >
-            {filteredProducts.length === 0 ? (
-              <div>No product satisfies your filters</div>
-            ) : (
-              filteredProducts.map((product) => (
-                <Grid item xs="auto" md="auto" key={product.id}>
-                  <Card id={product.id} />
-                </Grid>
-              ))
-            )}
-          </Grid>
+            SearchPage
+          </h1>
+          <div style={{
+            display: "flex",
+            alignItems: "start",
+            justifyContent: "center",
+            height: '100%'
+          }}>
+            <div style={{ backgroundColor: "#00cc99", justifyContent: "start" }}>
+              <SearchBar
+                searchString={searchString}
+                handleSearch={handleSearch}
+                handleSubmit={handleSubmit}
+              />
+              <TagSelector onSelect={handleTagSelector} />
+              <PriceRange
+                setSelectedPrice={setSelectedPrice}
+                filterProducts={filterProducts}
+              ></PriceRange>
+            </div>
+            <div>
+              <Grid
+                container
+                spacing={10}
+                justifyContent="center"
+                marginTop={1}
+                marginBottom={5}
+                paddingBottom={5}
+              >
+                {filteredProducts.length === 0 ? (
+                  <div>No product satisfies your filters</div>
+                ) : (
+                  filteredProducts.map((product) => (
+                    <Grid item xs="auto" md="auto" key={product.id}>
+                      <Card id={product.id} />
+                    </Grid>
+                  ))
+                )}
+              </Grid>
+            </div>
+          </div>
         </div>
       </StyledPadding>
     </>

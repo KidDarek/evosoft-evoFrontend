@@ -27,7 +27,7 @@ const PriceRange = (props) => {
 
     return (
         <>
-            <div style={{ width: "15%", padding: "15px" }}>
+            <div style={{ width: "70%", padding: "15px" }}>
                 <h3>Price range</h3>
                 <div>
                     <TextField id="outlined-min" label="Min price" variant="outlined" value={value[0]} style={{ width: "35%" }} onChange={textFieldInput} />
