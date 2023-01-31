@@ -7,6 +7,7 @@ import { products } from "../../db";
 import Card from "../main-page/best-deals/Card";
 import { Grid } from "@mui/material";
 import { useEffect } from "react";
+//import Filter from "./Filter";
 
 const StyledPadding = styled("div")({
   backgroundColor: "#ff0055",
@@ -108,6 +109,14 @@ const SearchPage = () => {
                 setSelectedPrice={setSelectedPrice}
                 filterProducts={filterProducts}
               ></PriceRange>
+              {/*<Filter
+                searchString={searchString}
+                handleSearch={handleSearch}
+                handleSubmit={handleSubmit}
+                onSelect={handleTagSelector}
+                setSelectedPrice={setSelectedPrice}
+                filterProducts={filterProducts}
+            ></Filter>*/}
             </div>
             <div style={{ width: "70%" }}>
               <Grid
