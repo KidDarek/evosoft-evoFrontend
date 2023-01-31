@@ -65,22 +65,32 @@ const SearchPage = () => {
     <>
       <StyledPadding>
         <div style={{ backgroundColor: "#00cc99" }}>
-          <h1
+          <div
             style={{
               textAlign: "center",
               backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
               height: "50px",
+              fontSize: "35px",
+              fontWeight: "bold"
             }}
           >
             SearchPage
-          </h1>
+          </div>
           <div style={{
             display: "flex",
             alignItems: "start",
             justifyContent: "center",
             height: '100%'
           }}>
-            <div style={{ backgroundColor: "#00cc99", justifyContent: "start" }}>
+            <div style={{
+              backgroundColor: "#00cc99",
+              justifyContent: "start",
+              marginLeft: "10px",
+              marginTop: "83px",
+              border: "3px solid #00a568",
+              width: "30%"
+            }}>
+
               <SearchBar
                 searchString={searchString}
                 handleSearch={handleSearch}
@@ -92,7 +102,7 @@ const SearchPage = () => {
                 filterProducts={filterProducts}
               ></PriceRange>
             </div>
-            <div>
+            <div style={{ width: "70%" }}>
               <Grid
                 container
                 spacing={10}
