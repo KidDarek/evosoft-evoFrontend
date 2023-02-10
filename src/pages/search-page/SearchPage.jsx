@@ -1,12 +1,10 @@
 import React, { useState, useCallback } from "react";
-import TagSelector from "./TagSelector";
-import SearchBar from "./SearchBar";
 import { styled } from "@mui/material";
-import PriceRange from "./PriceRange";
 import { products } from "../../db";
 import Card from "../main-page/best-deals/Card";
 import { Grid } from "@mui/material";
 import { useEffect } from "react";
+import Filter from "./Filter";
 //import Filter from "./Filter";
 
 const StyledPadding = styled("div")({
@@ -89,35 +87,14 @@ const SearchPage = () => {
               height: "100%",
             }}
           >
-            <div
-              style={{
-                backgroundColor: "#00cc99",
-                justifyContent: "start",
-                marginLeft: "10px",
-                marginTop: "83px",
-                border: "3px solid #00a568",
-                width: "30%",
-              }}
-            >
-              <SearchBar
-                searchString={searchString}
-                handleSearch={handleSearch}
-                handleSubmit={handleSubmit}
-              />
-              <TagSelector onSelect={handleTagSelector} />
-              <PriceRange
-                setSelectedPrice={setSelectedPrice}
-                filterProducts={filterProducts}
-              ></PriceRange>
-              {/*<Filter
-                searchString={searchString}
-                handleSearch={handleSearch}
-                handleSubmit={handleSubmit}
-                onSelect={handleTagSelector}
-                setSelectedPrice={setSelectedPrice}
-                filterProducts={filterProducts}
-            ></Filter>*/}
-            </div>
+            <Filter
+              searchString={searchString}
+              handleSearch={handleSearch}
+              handleSubmit={handleSubmit}
+              onSelect={handleTagSelector}
+              setSelectedPrice={setSelectedPrice}
+              filterProducts={filterProducts}
+            ></Filter>
             <div style={{ width: "70%" }}>
               <Grid
                 container

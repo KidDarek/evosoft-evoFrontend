@@ -75,7 +75,7 @@ export const products = [
   {
     id: 8,
     title: "Corsair Sabre RGB Pro",
-    imageUri: "https://cdn.pocket-lint.com/r/s/970x/assets/images/158480-gadgets-review-corsair-sabre-rgb-pro-review-less-rgb-more-freedom-image2-h1iyr4c7xq.jpg",
+    imageUri: "https://i.imgur.com/HalrjMk.jpg",
     body: "The CORSAIR SABRE RGB PRO Gaming Mouse is designed with feedback from esports pros, weighing an ultra-light 74g...",
     price: 2000,
     category: "Computer accessories",
