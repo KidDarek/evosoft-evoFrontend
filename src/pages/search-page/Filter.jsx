@@ -4,6 +4,13 @@ import TextField from "@mui/material/TextField";
 import { products } from "../../db";
 import Button from "@mui/material/Button";
 
+/*class ProductFilter extends React.Component {
+  tags = [];
+  name = "";
+  priceMin = 0;
+  priceMax;
+}*/
+
 const Filter = (props) => {
   // TagSelector
   const tags = new Set();
