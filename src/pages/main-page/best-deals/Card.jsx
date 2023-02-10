@@ -11,6 +11,7 @@ const StyledCardContainer = styled("div")({
   transition: "0.5s",
   animation: "ease-in",
   cursor: "pointer",
+  background: "white",
 
   "&:hover": {
     transform: "scale(1.1)",
