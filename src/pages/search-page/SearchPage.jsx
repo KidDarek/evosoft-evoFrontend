@@ -15,6 +15,12 @@ const StyledPadding = styled("div")({
 });
 
 const SearchPage = () => {
+  /*class ProductFilter extends React.Component {
+  tags = [];
+  name = "";
+  priceMin = 0;
+  priceMax;
+}*/
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);

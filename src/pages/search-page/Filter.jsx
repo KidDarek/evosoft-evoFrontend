@@ -4,12 +4,9 @@ import TextField from "@mui/material/TextField";
 import { products } from "../../db";
 import Button from "@mui/material/Button";
 
-/*class ProductFilter extends React.Component {
-  tags = [];
-  name = "";
-  priceMin = 0;
-  priceMax;
-}*/
+// Price range
+const INITIAL_MIN_VALUE = 0;
+const INITIAL_MAX_VALUE = 9999;
 
 const Filter = (props) => {
   // TagSelector
@@ -20,7 +17,12 @@ const Filter = (props) => {
   });
 
   const uniqueTags = [...tags];
+
   const [selectedTags, setSelectedTags] = useState([]);
+  const [actualPriceRange, setActualPriceRange] = useState([
+    INITIAL_MIN_VALUE,
+    INITIAL_MAX_VALUE,
+  ]);
 
   const handleCheckboxChange = (e) => {
     if (e.target.checked) {
@@ -30,25 +32,19 @@ const Filter = (props) => {
     }
   };
 
-  // Price range
-  let minV = 0;
-  let maxV = 9999;
-
-  const [value, setValue] = useState([minV, maxV]);
-
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setActualPriceRange(newValue);
   };
 
   const textFieldInput = () => {
-    setValue([
+    setActualPriceRange([
       document.getElementById("outlined-min").value,
       document.getElementById("outlined-max").value,
     ]);
   };
 
   const setPrices = () => {
-    props.setSelectedPrice([value[0], value[1]]);
+    props.setSelectedPrice([actualPriceRange[0], actualPriceRange[1]]);
     props.filterProducts();
   };
 
@@ -122,7 +118,7 @@ const Filter = (props) => {
                 id="outlined-min"
                 label="Min price"
                 variant="outlined"
-                value={value[0]}
+                value={actualPriceRange[0]}
                 style={{ width: "35%" }}
                 onChange={textFieldInput}
               />
@@ -133,7 +129,7 @@ const Filter = (props) => {
                 id="outlined-max"
                 label="Max price"
                 variant="outlined"
-                value={value[1]}
+                value={actualPriceRange[1]}
                 style={{ width: "35%" }}
                 onChange={textFieldInput}
               />
@@ -141,7 +137,7 @@ const Filter = (props) => {
             <div>
               <Slider
                 getAriaLabel={() => "Price Range"}
-                value={value}
+                value={actualPriceRange}
                 valueLabelDisplay="auto"
                 onChange={handleChange}
                 max={9999}
