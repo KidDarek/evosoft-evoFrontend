@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
-//import { products } from '../../db';
 import { products } from "../../db";
+import Button from "@mui/material/Button";
 
 const Filter = (props) => {
   // TagSelector
@@ -61,8 +61,9 @@ const Filter = (props) => {
         <div style={{ padding: "10px" }}>
           <form onSubmit={props.handleSubmit}>
             <TextField
-              id="standard-basic"
-              label="Search for something"
+              id="outlined-search"
+              label="Search something..."
+              variant="outlined"
               value={props.searchString}
               onChange={props.handleSearch}
               style={{ width: "250px" }}
@@ -88,15 +89,28 @@ const Filter = (props) => {
                 <label htmlFor={tag}>{tag}</label>
               </div>
             ))}
-            <button onClick={() => props.onSelect(selectedTags)}>Filter</button>
           </div>
+        </div>
+
+        {/* Filter Button */}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="contained"
+            style={{ width: "20%", height: "50px", margin: "0px 10px" }}
+            onClick={() => {
+              props.onSelect(selectedTags);
+              setPrices();
+            }}
+          >
+            Filter
+          </Button>
         </div>
 
         {/** Price range /*/}
         <>
           <div style={{ width: "70%", padding: "15px" }}>
             <h3>Price range</h3>
-            <div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <TextField
                 id="outlined-min"
                 label="Min price"
@@ -105,12 +119,9 @@ const Filter = (props) => {
                 style={{ width: "35%" }}
                 onChange={textFieldInput}
               />
-              <button
-                style={{ width: "20%", height: "50px", margin: "0px 10px" }}
-                onClick={setPrices}
-              >
-                Filter
-              </button>
+              <label
+                style={{ width: "50%", height: "50px", margin: "0px 10px" }}
+              ></label>
               <TextField
                 id="outlined-max"
                 label="Max price"
