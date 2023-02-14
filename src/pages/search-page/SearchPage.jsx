@@ -13,6 +13,25 @@ const StyledPadding = styled("div")({
   paddingBottom: "25px",
 });
 
+const StyledDiv = styled("div")({
+  backgroundColor: "#00cc99",
+});
+
+const StyledTitle = styled("div")({
+  textAlign: "center",
+  backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
+  height: "50px",
+  fontSize: "35px",
+  fontWeight: "bold",
+});
+
+const StyledContent = styled("div")({
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "center",
+  height: "100%",
+});
+
 const SearchPage = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
@@ -64,27 +83,9 @@ const SearchPage = () => {
   return (
     <>
       <StyledPadding>
-        <div style={{ backgroundColor: "#00cc99" }}>
-          <div
-            style={{
-              textAlign: "center",
-              backgroundImage:
-                "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
-              height: "50px",
-              fontSize: "35px",
-              fontWeight: "bold",
-            }}
-          >
-            SearchPage
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "start",
-              justifyContent: "center",
-              height: "100%",
-            }}
-          >
+        <StyledDiv>
+          <StyledTitle>SearchPage</StyledTitle>
+          <StyledContent>
             <Filter
               handleSearch={handleSearch}
               handleSubmit={handleSubmit}
@@ -112,8 +113,8 @@ const SearchPage = () => {
                 )}
               </Grid>
             </div>
-          </div>
-        </div>
+          </StyledContent>
+        </StyledDiv>
       </StyledPadding>
     </>
   );

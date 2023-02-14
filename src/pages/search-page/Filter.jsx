@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import { products } from "../../db";
@@ -32,7 +32,8 @@ const Filter = (props) => {
     }
   };
 
-  const handleChange = (newValue) => {
+  // Event is USED!
+  const handleChange = (event, newValue) => {
     setActualPriceRange(newValue);
   };
 
