@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "./evosoftlogo.png";
+import logo from "../../Images/evosoftlogo.png";
 import { useNavigate } from "react-router-dom";
 import { Card, styled } from "@mui/material";
 import MUIButton from "@mui/material/Button";

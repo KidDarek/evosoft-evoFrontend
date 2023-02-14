@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
-import ShoppingCartLogo from './ShoppingCart.png';
+import ShoppingCartLogo from '../../Images/ShoppingCart.png';
 import { useNavigate } from 'react-router-dom';
 import { shoppingItems, products } from '../../db';
 import { styled } from '@mui/system';

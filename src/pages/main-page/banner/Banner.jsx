@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import evoButtonL from "./evoButtonL.png"
-import evoButton from "./evoButton.png"
+import evoButtonL from "../../../Images/evoButtonL.png"
+import evoButton from "../../../Images/evoButton.png"
 import { styled } from "@mui/material";
 import CardSmall from "./CardSmall";
 import CardBig from "./CardBig";
