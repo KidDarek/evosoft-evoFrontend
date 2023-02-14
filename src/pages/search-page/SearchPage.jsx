@@ -5,7 +5,6 @@ import Card from "../main-page/best-deals/Card";
 import { Grid } from "@mui/material";
 import { useEffect } from "react";
 import Filter from "./Filter";
-//import Filter from "./Filter";
 
 const StyledPadding = styled("div")({
   backgroundColor: "#ff0055",
@@ -15,12 +14,6 @@ const StyledPadding = styled("div")({
 });
 
 const SearchPage = () => {
-  /*class ProductFilter extends React.Component {
-  tags = [];
-  name = "";
-  priceMin = 0;
-  priceMax;
-}*/
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -65,7 +58,6 @@ const SearchPage = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     filterProducts();
   };
 
@@ -94,7 +86,6 @@ const SearchPage = () => {
             }}
           >
             <Filter
-              searchString={searchString}
               handleSearch={handleSearch}
               handleSubmit={handleSubmit}
               onSelect={handleTagSelector}

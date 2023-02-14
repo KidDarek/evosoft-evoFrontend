@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import { products } from "../../db";
@@ -32,7 +32,7 @@ const Filter = (props) => {
     }
   };
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setActualPriceRange(newValue);
   };
 
@@ -67,7 +67,6 @@ const Filter = (props) => {
               id="outlined-search"
               label="Search something..."
               variant="outlined"
-              value={props.searchString}
               onChange={props.handleSearch}
               style={{ width: "250px" }}
             />
