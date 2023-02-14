@@ -5,7 +5,6 @@ import Card from "../main-page/best-deals/Card";
 import { Grid } from "@mui/material";
 import { useEffect } from "react";
 import Filter from "./Filter";
-//import Filter from "./Filter";
 
 const StyledPadding = styled("div")({
   backgroundColor: "#ff0055",
@@ -14,13 +13,26 @@ const StyledPadding = styled("div")({
   paddingBottom: "25px",
 });
 
+const StyledDiv = styled("div")({
+  backgroundColor: "#00cc99",
+});
+
+const StyledTitle = styled("div")({
+  textAlign: "center",
+  backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
+  height: "50px",
+  fontSize: "35px",
+  fontWeight: "bold",
+});
+
+const StyledContent = styled("div")({
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "center",
+  height: "100%",
+});
+
 const SearchPage = () => {
-  /*class ProductFilter extends React.Component {
-  tags = [];
-  name = "";
-  priceMin = 0;
-  priceMax;
-}*/
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -65,36 +77,16 @@ const SearchPage = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     filterProducts();
   };
 
   return (
     <>
       <StyledPadding>
-        <div style={{ backgroundColor: "#00cc99" }}>
-          <div
-            style={{
-              textAlign: "center",
-              backgroundImage:
-                "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
-              height: "50px",
-              fontSize: "35px",
-              fontWeight: "bold",
-            }}
-          >
-            SearchPage
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "start",
-              justifyContent: "center",
-              height: "100%",
-            }}
-          >
+        <StyledDiv>
+          <StyledTitle>SearchPage</StyledTitle>
+          <StyledContent>
             <Filter
-              searchString={searchString}
               handleSearch={handleSearch}
               handleSubmit={handleSubmit}
               onSelect={handleTagSelector}
@@ -121,8 +113,8 @@ const SearchPage = () => {
                 )}
               </Grid>
             </div>
-          </div>
-        </div>
+          </StyledContent>
+        </StyledDiv>
       </StyledPadding>
     </>
   );

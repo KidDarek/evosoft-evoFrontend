@@ -32,6 +32,7 @@ const Filter = (props) => {
     }
   };
 
+  // Event is USED!
   const handleChange = (event, newValue) => {
     setActualPriceRange(newValue);
   };
@@ -67,7 +68,6 @@ const Filter = (props) => {
               id="outlined-search"
               label="Search something..."
               variant="outlined"
-              value={props.searchString}
               onChange={props.handleSearch}
               style={{ width: "250px" }}
             />
