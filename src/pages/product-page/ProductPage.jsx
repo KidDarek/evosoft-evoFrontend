@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { products, shoppingItems } from "../../db";
+import { products } from "../../db";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
 const StyledPageDiv = styled("div")({
@@ -64,8 +64,10 @@ const BasicTheme = createTheme({
 });
 
 const AddItemToShoppingCart = (id) => {
+  let shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
   const itemQuantityInput = document.getElementById("item-quantity");
   const quantity = parseInt(itemQuantityInput.value);
+  const price = products[id].price;
   if (quantity === 0) {
     return;
   }
@@ -75,8 +77,9 @@ const AddItemToShoppingCart = (id) => {
       return;
     }
   }
-  const shoppingItem = { id, quantity };
+  const shoppingItem = { id, quantity, price };
   shoppingItems.push(shoppingItem)
+  localStorage.setItem("shoppingItems", JSON.stringify(shoppingItems));
 }
 
 const ProductPage = (props) => {

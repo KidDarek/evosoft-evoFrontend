@@ -2,8 +2,10 @@
 import { Button, createTheme, styled } from '@mui/material';
 import { ThemeProvider } from '@mui/system';
 import React from 'react'
-import { shoppingItems, products } from '../../db'
+import { products } from '../../db'
 import Card from '../main-page/best-deals/Card'
+
+const shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
 
 const StyledContainer = styled("div")({
     marginTop: "25px",
@@ -42,7 +44,7 @@ let sum = 0;
 const CalculateSum = () => {
     sum = 0;
     for (let i = 0; i < shoppingItems.length; i++) {
-        sum += shoppingItems[i].quantity * products[shoppingItems[i].id].price;
+        sum += shoppingItems[i].quantity * shoppingItems[i].price;
     }
 }
 

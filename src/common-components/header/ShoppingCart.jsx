@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import ShoppingCartLogo from '../../Images/ShoppingCart.png';
 import { useNavigate } from 'react-router-dom';
-import { shoppingItems, products } from '../../db';
+import { products } from '../../db';
 import { styled } from '@mui/system';
 
 const StyledClearText = styled("div")({
@@ -48,6 +48,8 @@ const ShoppingCart = (props) => {
 
     const open = Boolean(anchorEl);
 
+    const shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -70,6 +72,7 @@ const ShoppingCart = (props) => {
 
     const removeItem = (e, id) => {
         e.stopPropagation();
+        let shoppingItems = JSON.parse(localStorage.getItem("shoppingItems"));
         let index = 0;
         for (let i = 0; i < shoppingItems.length; i++) {
             if (shoppingItems[i].id === id) {
@@ -78,15 +81,17 @@ const ShoppingCart = (props) => {
             }
         }
         shoppingItems.splice(index, 1);
+        localStorage.setItem("shoppingItems", JSON.stringify(shoppingItems));
         setRefresh(!refresh);
     };
 
     const removeAllItems = () => {
-        shoppingItems.splice(0, shoppingItems.length);
+        localStorage.removeItem("shoppingItems");
         setRefresh(!refresh);
     };
 
     return (
+
         <div>
             <Button
                 id="basic-button"
