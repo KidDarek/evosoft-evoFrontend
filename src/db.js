@@ -100,8 +100,6 @@ export const users = [
     role:"admin",
   },
 ]
-export const shoppingItems = [
-]
 export const userQuestions = [
   {
     id: 0,
