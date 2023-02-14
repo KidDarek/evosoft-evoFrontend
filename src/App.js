@@ -6,6 +6,7 @@ import ContactPage from "./pages/contact-page/ContactPage";
 import FaqPage from "./pages/faq-page/FaqPage";
 import AboutUsPage from "./pages/about-us-page/AboutUsPage";
 import ProductPage from "./pages/product-page/ProductPage";
+import ProductPageAdmin from "./pages/product-page/ProductPageAdmin";
 import ProfilePage from "./pages/profile-page/ProfilePage";
 import { styled } from "@mui/material";
 import SearchPage from "./pages/search-page/SearchPage";
@@ -31,6 +32,7 @@ function App() {
             <Route path="/Shop" element={<ShopPage />} />
             <Route path="/Profile:id" element={<ProfilePage />} />
             <Route path="/Product/:id" element={<ProductPage />} />
+            <Route path="/ProductAdmin/:id" element={<ProductPageAdmin />} />
           </Routes>
         </BrowserRouter>
       <Footer />
