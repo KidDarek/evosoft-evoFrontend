@@ -96,7 +96,8 @@ const ProductPage = (props) => {
               <img
                 src={products[id].imageUri}
                 alt="kep"
-                height="450px"
+                height="100%"
+                width="100%"
                 frame="true"
                 display="block"
                 margin-left="auto"
