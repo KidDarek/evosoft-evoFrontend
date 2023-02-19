@@ -8,7 +8,7 @@ const StyledPadding = styled("div")({
   backgroundColor: "#ff0055",
   paddingLeft: "25px",
   paddingRight: "25px",
-  paddingBottom: "25px",
+  paddingBottom: "50px",
 });
 
 const StyledDiv = styled("div")({
@@ -21,6 +21,7 @@ const StyledTitle = styled("div")({
   height: "50px",
   fontSize: "35px",
   fontWeight: "bold",
+  color: "white"
 });
 
 const StyledContent = styled("div")({
