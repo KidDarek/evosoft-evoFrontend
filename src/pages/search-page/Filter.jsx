@@ -1,26 +1,22 @@
-import React, { Fragment, useState } from "react";
+import React from "react";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import { products } from "../../db";
-import Button from "@mui/material/Button";
-
-// Price range
-const INITIAL_MIN_VALUE = 0;
-const INITIAL_MAX_VALUE = 9999;
 
 const Filter = (props) => {
+  const {
+    selectedTags,
+    setSelectedTags,
+    selectedPriceRange,
+    setSelectedPriceRange,
+  } = props;
+
   // Get all distinct tags from products
   const tags = new Set();
   products.forEach((product) => {
     product.tag.forEach((tag) => tags.add(tag));
   });
   const uniqueTags = [...tags];
-
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [actualPriceRange, setActualPriceRange] = useState([
-    INITIAL_MIN_VALUE,
-    INITIAL_MAX_VALUE,
-  ]);
 
   const handleCheckboxChange = (e) => {
     if (e.target.checked) {
@@ -30,21 +26,16 @@ const Filter = (props) => {
     }
   };
 
-  // Event is USED!
-  const handleChange = (event, newValue) => {
-    setActualPriceRange(newValue);
+  // "event" IS NEEDED HERE FOR PROPER WORKING
+  const handlePriceRangeChange = (event, newPriceRange) => {
+    setSelectedPriceRange(newPriceRange);
   };
 
-  const textFieldInput = () => {
-    setActualPriceRange([
+  const handleTextFieldInput = () => {
+    setSelectedPriceRange([
       document.getElementById("outlined-min").value,
       document.getElementById("outlined-max").value,
     ]);
-  };
-
-  const setPrices = () => {
-    props.setSelectedPrice([actualPriceRange[0], actualPriceRange[1]]);
-    props.filterProducts();
   };
 
   return (
@@ -61,7 +52,7 @@ const Filter = (props) => {
       >
         {/*Searchbar*/}
         <div style={{ padding: "10px" }}>
-          <form onSubmit={props.handleSubmit}>
+          <form>
             <TextField
               id="outlined-search"
               label="Search something..."
@@ -71,7 +62,6 @@ const Filter = (props) => {
             />
           </form>
         </div>
-
         {/*TagSelector*/}
         <div style={{ padding: "10px" }}>
           <div>Tags:</div>
@@ -92,58 +82,41 @@ const Filter = (props) => {
             ))}
           </div>
         </div>
-
-        {/* Filter Button */}
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            style={{ width: "20%", height: "50px", margin: "0px 10px" }}
-            onClick={() => {
-              props.onSelect(selectedTags);
-              setPrices();
-            }}
-          >
-            Filter
-          </Button>
-        </div>
-
         {/** Price range /*/}
-        <>
-          <div style={{ width: "70%", padding: "15px" }}>
-            <h3>Price range</h3>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <TextField
-                id="outlined-min"
-                label="Min price"
-                variant="outlined"
-                value={actualPriceRange[0]}
-                style={{ width: "35%" }}
-                onChange={textFieldInput}
-              />
-              <label
-                style={{ width: "50%", height: "50px", margin: "0px 10px" }}
-              ></label>
-              <TextField
-                id="outlined-max"
-                label="Max price"
-                variant="outlined"
-                value={actualPriceRange[1]}
-                style={{ width: "35%" }}
-                onChange={textFieldInput}
-              />
-            </div>
-            <div>
-              <Slider
-                getAriaLabel={() => "Price Range"}
-                value={actualPriceRange}
-                valueLabelDisplay="auto"
-                onChange={handleChange}
-                max={9999}
-                disableSwap
-              />
-            </div>
+        <div style={{ width: "70%", padding: "15px" }}>
+          <h3>Price range</h3>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <TextField
+              id="outlined-min"
+              label="Min price"
+              variant="outlined"
+              value={selectedPriceRange[0]}
+              style={{ width: "35%" }}
+              onChange={handleTextFieldInput}
+            />
+            <label
+              style={{ width: "50%", height: "50px", margin: "0px 10px" }}
+            ></label>
+            <TextField
+              id="outlined-max"
+              label="Max price"
+              variant="outlined"
+              value={selectedPriceRange[1]}
+              style={{ width: "35%" }}
+              onChange={handleTextFieldInput}
+            />
           </div>
-        </>
+          <div>
+            <Slider
+              getAriaLabel={() => "Price Range"}
+              value={selectedPriceRange}
+              valueLabelDisplay="auto"
+              onChange={handlePriceRangeChange}
+              max={9999}
+              disableSwap
+            />
+          </div>
+        </div>
       </div>
     </>
   );

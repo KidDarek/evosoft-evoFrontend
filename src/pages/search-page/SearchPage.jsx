@@ -30,11 +30,17 @@ const StyledContent = styled("div")({
   height: "100%",
 });
 
+const INITIAL_MIN_PRICE_VALUE = 0;
+const INITIAL_MAX_PRICE_VALUE = 9999;
+
 const SearchPage = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedPrice, setSelectedPrice] = useState([]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState([
+    INITIAL_MIN_PRICE_VALUE,
+    INITIAL_MAX_PRICE_VALUE,
+  ]);
 
   const filterProducts = useCallback(() => {
     let filtered = [...products];
@@ -51,31 +57,23 @@ const SearchPage = () => {
       });
     }
 
-    if (selectedPrice.length > 0) {
+    if (selectedPriceRange.length > 0) {
       filtered = filtered.filter((product) => {
         return (
-          product.price <= selectedPrice[1] && product.price >= selectedPrice[0]
+          product.price <= selectedPriceRange[1] &&
+          product.price >= selectedPriceRange[0]
         );
       });
     }
     setFilteredProducts(filtered);
-  }, [selectedTags, searchString, selectedPrice]);
+  }, [selectedTags, searchString, selectedPriceRange]);
 
   useEffect(() => {
     filterProducts();
-  }, [selectedTags, filterProducts]);
-
-  const handleTagSelector = (tags) => {
-    setSelectedTags(tags);
-    filterProducts();
-  };
+  }, [filterProducts]);
 
   const handleSearch = (e) => {
     setSearchString(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    filterProducts();
   };
 
   return (
@@ -86,9 +84,10 @@ const SearchPage = () => {
           <StyledContent>
             <Filter
               handleSearch={handleSearch}
-              handleSubmit={handleSubmit}
-              onSelect={handleTagSelector}
-              setSelectedPrice={setSelectedPrice}
+              selectedTags={selectedTags}
+              setSelectedTags={setSelectedTags}
+              selectedPriceRange={selectedPriceRange}
+              setSelectedPriceRange={setSelectedPriceRange}
               filterProducts={filterProducts}
             />
             <div style={{ width: "70%" }}>
