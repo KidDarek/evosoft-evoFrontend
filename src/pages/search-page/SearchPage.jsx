@@ -21,7 +21,7 @@ const StyledTitle = styled("div")({
   height: "50px",
   fontSize: "35px",
   fontWeight: "bold",
-  color: "white"
+  color: "white",
 });
 
 const StyledContent = styled("div")({

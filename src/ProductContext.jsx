@@ -1,23 +1,23 @@
 import React, { createContext, useState, useEffect } from "react";
-import { productsjs } from "../../db";
+import { products } from "./db";
 
 export const ProductContext = createContext();
 
 const ProductProvider = (props) => {
-  const [products, setProducts] = useState([]);
+  const [productsData, setProductsData] = useState([]);
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "backend") {
-      setProducts(productsjs);
+      setProductsData(products);
     } else {
       fetch("http://localhost:5001/getProducts")
         .then((response) => response.json())
-        .then((data) => setProducts(data));
+        .then((data) => setProductsData(data));
     }
   }, []);
 
   return (
-    <ProductContext.Provider value={products}>
+    <ProductContext.Provider value={productsData}>
       {props.children}
     </ProductContext.Provider>
   );
