@@ -60,7 +60,8 @@ const Card = (props) => {
               src={product.imageUri}
               alt=""
               overflow="hidden"
-              height="200px"
+              height="70%"
+              width="70%"
             ></img>
           </div>
           <StyledCardContent>

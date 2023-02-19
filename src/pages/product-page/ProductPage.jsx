@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { products } from "../../db";
+import { products, users } from "../../db";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
+import ProfileButton from "../../common-components/header/ProfileButton";
+
 const StyledPageDiv = styled("div")({
   display: "flex",
   alignItems: "center",
@@ -84,6 +86,9 @@ const AddItemToShoppingCart = (id) => {
 
 const ProductPage = (props) => {
   const [value, setValue] = React.useState("1");
+
+  let accountRole = users[0].role;
+  console.log(accountRole)
 
   const params = useParams();
   const id = params.id
