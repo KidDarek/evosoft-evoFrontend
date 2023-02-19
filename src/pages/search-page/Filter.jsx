@@ -9,13 +9,11 @@ const INITIAL_MIN_VALUE = 0;
 const INITIAL_MAX_VALUE = 9999;
 
 const Filter = (props) => {
-  // TagSelector
+  // Get all distinct tags from products
   const tags = new Set();
-
-  products.forEach((item) => {
-    item.tag.forEach((tag) => tags.add(tag));
+  products.forEach((product) => {
+    product.tag.forEach((tag) => tags.add(tag));
   });
-
   const uniqueTags = [...tags];
 
   const [selectedTags, setSelectedTags] = useState([]);

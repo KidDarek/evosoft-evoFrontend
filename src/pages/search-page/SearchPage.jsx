@@ -1,9 +1,7 @@
-import React, { useState, useCallback } from "react";
-import { styled } from "@mui/material";
+import React, { useState, useCallback, useEffect } from "react";
+import { styled, Grid } from "@mui/material";
 import { products } from "../../db";
 import Card from "../main-page/best-deals/Card";
-import { Grid } from "@mui/material";
-import { useEffect } from "react";
 import Filter from "./Filter";
 
 const StyledPadding = styled("div")({
@@ -92,7 +90,7 @@ const SearchPage = () => {
               onSelect={handleTagSelector}
               setSelectedPrice={setSelectedPrice}
               filterProducts={filterProducts}
-            ></Filter>
+            />
             <div style={{ width: "70%" }}>
               <Grid
                 container
