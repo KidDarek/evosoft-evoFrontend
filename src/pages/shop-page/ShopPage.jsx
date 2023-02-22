@@ -5,7 +5,7 @@ import React from 'react'
 import { products } from '../../db'
 import Card from '../main-page/best-deals/Card'
 
-const shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
+let shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
 
 const StyledContainer = styled("div")({
     marginTop: "25px",
@@ -49,6 +49,7 @@ const CalculateSum = () => {
 }
 
 const ShopPage = () => {
+    shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
     CalculateSum();
     return (
         <>

@@ -65,14 +65,18 @@ const ShoppingCart = (props) => {
         handleClose();
     };
 
-    const navigateToShopPage = (id) => {
+    const navigateToShopPage = () => {
         navigate("/Shop");
+        handleClose();
+    };
+    const navigateToMainPage = () => {
+        navigate("/");
         handleClose();
     };
 
     const removeItem = (e, id) => {
         e.stopPropagation();
-        let shoppingItems = JSON.parse(localStorage.getItem("shoppingItems"));
+        let shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
         let index = 0;
         for (let i = 0; i < shoppingItems.length; i++) {
             if (shoppingItems[i].id === id) {
@@ -87,6 +91,7 @@ const ShoppingCart = (props) => {
 
     const removeAllItems = () => {
         localStorage.removeItem("shoppingItems");
+        navigateToMainPage();
         setRefresh(!refresh);
     };
 
