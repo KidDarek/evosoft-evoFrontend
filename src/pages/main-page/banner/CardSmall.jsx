@@ -11,10 +11,23 @@ const StyledCardContainer = styled("div")({
   boxShadow: "0px 0px 15px -5px",
   padding: "10px",
   transition: "0.5s",
-  animation: "ease-in",
   cursor: "pointer",
   textAlign: "center",
   background: "linear-gradient(-45deg, #ff0055, #8900FF, #0066CD, #ffffff)",
+  backgroundSize: "200% 200%",
+  "@keyframes gradient": {
+    from: {
+      backgroundPosition: "50% 0% ",
+    },
+    "50%": {
+      backgroundPosition: "100% 50%",
+    },
+    to: {
+      backgroundPosition: "50% 0%",
+    }
+  },
+  animation: "gradient 10s infinite ease",
+  position: "static",
 
   "&:hover": {
     transform: "scale(1.1)",
