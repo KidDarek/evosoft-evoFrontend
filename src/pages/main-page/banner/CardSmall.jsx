@@ -9,15 +9,23 @@ const StyledCardContainer = styled("div")({
   height: "250px",
   overflow: "hidden",
   boxShadow: "0px 0px 15px -5px",
+  padding: "10px",
   transition: "0.5s",
   animation: "ease-in",
   cursor: "pointer",
   textAlign: "center",
+  background: "linear-gradient(-45deg, #ff0055, #8900FF, #0066CD, #ffffff)",
 
   "&:hover": {
     transform: "scale(1.1)",
     boxShadow: "0px 0px 15px 0px",
   },
+});
+
+const StyledH2ForPrice = styled("h2")({
+  color: "white",
+  textDecoration: "underline",
+  textAlign: "center",
 });
 
 const StyledCardContent = styled("div")({
@@ -28,12 +36,10 @@ const StyledCardContent = styled("div")({
 const StyledH3 = styled("h3")({
   margin: 0,
   padding: 0,
+  color: "white",
+  textDecoration: "underline",
 });
 
-const StyledP = styled("p")({
-  margin: 0,
-  padding: 0,
-});
 
 const StyledCardTitle = styled("div")({
   marginBottom: "0.5rem",
@@ -64,7 +70,7 @@ const Card = (props) => {
             <StyledCardTitle>
               <StyledH3>{product.title}</StyledH3>
             </StyledCardTitle>
-            <StyledP>{product.body}</StyledP>
+            <StyledH2ForPrice>{"$" + product.price}</StyledH2ForPrice>
           </StyledCardContent>
         </StyledCardContainer>
       </Fragment>

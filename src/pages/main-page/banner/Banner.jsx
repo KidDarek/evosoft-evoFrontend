@@ -11,7 +11,27 @@ const StyledBannerDiv = styled("div")({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  height: '100%',
+  border: "0",
+  height: "400px",
+  width: "100%",
+})
+
+const StyledBannerColors = styled("div")({
+  background: "linear-gradient(-45deg, #ff0055, #0003cc, #0066CD, #00cc99)",
+  backgroundSize: "200% 200%",
+  "@keyframes gradient": {
+    from: {
+      backgroundPosition: "50% 0% ",
+    },
+    "50%": {
+      backgroundPosition: "100% 50%",
+    },
+    to: {
+      backgroundPosition: "50% 0%",
+    }
+  },
+  animation: "gradient 10s infinite ease",
+  position: "static"
 
 })
 
@@ -34,13 +54,6 @@ const StyledRightButton = styled("button")({
 });
 
 
-const banner = ({
-  border: "0",
-  height: "400px",
-  width: "100%",
-  backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #00cc99)",
-});
-
 
 const SetNewBanner = () => {
   const [bannerIndex, setIndex] = useState(0)
@@ -52,7 +65,7 @@ const SetNewBanner = () => {
 
   return (
 
-    <div style={banner}>
+    <StyledBannerColors>
       <StyledBannerDiv>
         <StyledLeftButton onClick={() => setIndex(bannerIndex - 1)}>
           <img src={evoButtonL}
@@ -72,7 +85,7 @@ const SetNewBanner = () => {
             width={"60px"} />
         </StyledRightButton>
       </StyledBannerDiv>
-    </div>
+    </StyledBannerColors>
 
   )
 }
