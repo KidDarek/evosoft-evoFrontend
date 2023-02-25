@@ -5,7 +5,7 @@ import Card from "../main-page/best-deals/Card";
 import Filter from "./Filter";
 
 const StyledPadding = styled("div")({
-  backgroundColor: "#ff0055",
+  backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
   paddingLeft: "25px",
   paddingRight: "25px",
   paddingBottom: "50px",

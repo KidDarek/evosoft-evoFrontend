@@ -58,14 +58,14 @@ const Filter = (props) => {
               label="Search something..."
               variant="outlined"
               onChange={props.handleSearch}
-              style={{ width: "250px" }}
+              style={{ width: "100%" }}
             />
           </form>
         </div>
         {/*TagSelector*/}
         <div style={{ padding: "10px" }}>
           <div>Tags:</div>
-          <div style={{ width: "75%" }}>
+          <div style={{ width: "100%" }}>
             {uniqueTags.map((tag) => (
               <div
                 key={tag}
@@ -83,7 +83,7 @@ const Filter = (props) => {
           </div>
         </div>
         {/** Price range /*/}
-        <div style={{ width: "70%", padding: "15px" }}>
+        <div style={{ width: "90%", padding: "15px" }}>
           <h3>Price range</h3>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <TextField

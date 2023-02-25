@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import evoButtonL from "../../../Images/evoButtonL.png"
-import evoButton from "../../../Images/evoButton.png"
 import { styled } from "@mui/material";
 import CardSmall from "./CardSmall";
 import CardBig from "./CardBig";
@@ -37,20 +35,20 @@ const StyledBannerColors = styled("div")({
 
 
 const StyledLeftButton = styled("button")({
-  backgroundColor: "Transparent",
+  backgroundColor: "white",
   height: "400px",
-  width: "60px",
-  marginLeft: "25px",
+  width: "8%",
   border: "none",
+  opacity: "10%"
 });
 
 const StyledRightButton = styled("button")({
-  backgroundColor: "Transparent",
+  backgroundColor: "white",
   height: "400px",
-  width: "60px",
-  marginRight: "25px",
+  width: "8%",
   float: "right",
   border: "none",
+  opacity: "10%"
 });
 
 
@@ -68,9 +66,6 @@ const SetNewBanner = () => {
     <StyledBannerColors>
       <StyledBannerDiv>
         <StyledLeftButton onClick={() => setIndex(bannerIndex - 1)}>
-          <img src={evoButtonL}
-            alt="Bal"
-            width={"60px"} />
         </StyledLeftButton>
         <div style={{ width: "5%", height: "400px" }}></div>
         <CardSmall id={(products.length + bannerIndex) % products.length} />
@@ -80,9 +75,6 @@ const SetNewBanner = () => {
         <CardSmall id={(products.length + bannerIndex + 2) % products.length} />
         <div style={{ width: "5%", height: "400px" }}></div>
         <StyledRightButton onClick={() => setIndex(bannerIndex + 1)}>
-          <img src={evoButton}
-            alt="Jobb"
-            width={"60px"} />
         </StyledRightButton>
       </StyledBannerDiv>
     </StyledBannerColors>
