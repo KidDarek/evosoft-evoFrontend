@@ -7,7 +7,17 @@ import { products } from "../../../db";
 const StyledPadding = styled("div")({
   paddingLeft: "9rem",
   paddingRight: "9rem",
-  marginBottom: "20px",
+  borderBottom: "30px solid #00EFB3",
+  "@keyframes mainbestdealanimation": {
+    from: {
+      opacity: "0%",
+    },
+    to: {
+      opacity: "100%",
+    }
+  },
+  animation: "mainbestdealanimation 1s 1 ease",
+  position: "static"
 });
 
 const ReturnTwoRandomProductByCategory = () => {

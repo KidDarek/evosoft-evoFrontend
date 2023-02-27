@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { products, users } from "../../db";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
-import ProfileButton from "../../common-components/header/ProfileButton";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -12,7 +11,7 @@ const StyledPageDiv = styled("div")({
   justifyContent: "center",
   height: "100%",
   padding: "10px 25px 10px 25px",
-  backgroundImage: "linear-gradient(to right, #00cc99, #0066ff, #ff0055)",
+  backgroundColor: "#00EFB3",
 });
 
 const StyledInfoDiv = styled("div")({
@@ -21,7 +20,8 @@ const StyledInfoDiv = styled("div")({
   display: "flex",
   justifyContent: "center",
   height: "800px",
-  border: "10px solid grey"
+  border: "10px solid grey",
+  backgroundColor: "#00cc99",
 });
 
 const StyledInfoDivText = styled("div")({
