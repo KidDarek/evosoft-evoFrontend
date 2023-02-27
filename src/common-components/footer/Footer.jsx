@@ -10,6 +10,7 @@ const StyledFooter = styled("footer")({
   width: "100%",
   color: "#fff",
   marginTop: "0",
+  position: "static",
 });
 
 const FooterContent = styled("div")({

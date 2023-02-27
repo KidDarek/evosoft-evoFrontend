@@ -1,7 +1,47 @@
 import React from "react";
 import Slider from "@mui/material/Slider";
+import { styled } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { products } from "../../db";
+
+const StyledFilterBox = styled("div")({
+  backgroundColor: "#00cc99",
+  justifyContent: "start",
+  marginLeft: "10px",
+  marginTop: "83px",
+  border: "3px solid #00a568",
+  height: "500px",
+  width: "30%",
+  "@keyframes filterpopin": {
+    from: {
+      height: "0px",
+    },
+    to: {
+      height: "500px",
+    }
+  },
+  animation: "filterpopin 3s 1 ease",
+  position: "static"
+})
+
+const StyledFilterHider = styled("div")({
+  "@keyframes filtertextfieldanimation": {
+    from: {
+      opacity: "0%",
+    },
+    "33%": {
+      opacity: "0%",
+    },
+    "66%": {
+      opacity: "0%",
+    },
+    to: {
+      opacity: "100%",
+    }
+  },
+  animation: "filtertextfieldanimation 4s 1 ease",
+  position: "static"
+})
 
 const Filter = (props) => {
   const {
@@ -10,6 +50,7 @@ const Filter = (props) => {
     selectedPriceRange,
     setSelectedPriceRange,
   } = props;
+
 
   // Get all distinct tags from products
   const tags = new Set();
@@ -39,17 +80,8 @@ const Filter = (props) => {
   };
 
   return (
-    <>
-      <div
-        style={{
-          backgroundColor: "#00cc99",
-          justifyContent: "start",
-          marginLeft: "10px",
-          marginTop: "83px",
-          border: "3px solid #00a568",
-          width: "30%",
-        }}
-      >
+    <StyledFilterBox>
+      <StyledFilterHider>
         {/*Searchbar*/}
         <div style={{ padding: "10px" }}>
           <form>
@@ -117,8 +149,8 @@ const Filter = (props) => {
             />
           </div>
         </div>
-      </div>
-    </>
+      </StyledFilterHider>
+    </StyledFilterBox>
   );
 };
 

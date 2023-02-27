@@ -5,23 +5,14 @@ import Card from "../main-page/best-deals/Card";
 import Filter from "./Filter";
 
 const StyledPadding = styled("div")({
-  backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
+  backgroundColor: "#00EFB3",
   paddingLeft: "25px",
   paddingRight: "25px",
   paddingBottom: "50px",
 });
 
 const StyledDiv = styled("div")({
-  backgroundColor: "#00cc99",
-});
-
-const StyledTitle = styled("div")({
-  textAlign: "center",
-  backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
-  height: "50px",
-  fontSize: "35px",
-  fontWeight: "bold",
-  color: "white",
+  backgroundColor: "#00EFB3",
 });
 
 const StyledContent = styled("div")({
@@ -30,6 +21,26 @@ const StyledContent = styled("div")({
   justifyContent: "center",
   height: "100%",
 });
+
+const StyledProductDiv = styled("div")({
+  width: "70%",
+  "@keyframes pagestartanimation": {
+    from: {
+      opacity: "0%",
+    },
+    "33%": {
+      opacity: "0%",
+    },
+    "66%": {
+      opacity: "0%",
+    },
+    to: {
+      opacity: "100%",
+    }
+  },
+  animation: "pagestartanimation 4s 1 ease",
+  position: "static"
+})
 
 const INITIAL_MIN_PRICE_VALUE = 0;
 const INITIAL_MAX_PRICE_VALUE = 9999;
@@ -81,7 +92,6 @@ const SearchPage = () => {
     <>
       <StyledPadding>
         <StyledDiv>
-          <StyledTitle>SearchPage</StyledTitle>
           <StyledContent>
             <Filter
               handleSearch={handleSearch}
@@ -91,7 +101,7 @@ const SearchPage = () => {
               setSelectedPriceRange={setSelectedPriceRange}
               filterProducts={filterProducts}
             />
-            <div style={{ width: "70%" }}>
+            <StyledProductDiv>
               <Grid
                 container
                 spacing={10}
@@ -110,7 +120,7 @@ const SearchPage = () => {
                   ))
                 )}
               </Grid>
-            </div>
+            </StyledProductDiv>
           </StyledContent>
         </StyledDiv>
       </StyledPadding>
