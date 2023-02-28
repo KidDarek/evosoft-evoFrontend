@@ -15,30 +15,29 @@ const StyledFilterBox = styled("div")({
   "@keyframes filterpopin": {
     from: {
       transform: "translateX(-100%)",
-      opacity: 0,
+      opacity: "0",
     },
     to: {
       transform: "translateX(0)",
       opacity: "1",
     },
   },
-  animation: "filterpopin 0.5s 1 ease",
+  animation: "filterpopin 0.7s 1 ease",
   position: "static"
 })
 
 const StyledFilterHider = styled("div")({
   "@keyframes filtertextfieldanimation": {
     from: {
-      opacity: "0%",
-    },
-    "50%": {
-      opacity: "0%",
+      transform: "translateX(-100%)",
+      opacity: "0",
     },
     to: {
-      opacity: "100%",
-    }
+      transform: "translateX(0)",
+      opacity: "1",
+    },
   },
-  animation: "filtertextfieldanimation 1.5s 1 ease",
+  animation: "filtertextfieldanimation 0.5s 1 ease",
   position: "static"
 })
 
