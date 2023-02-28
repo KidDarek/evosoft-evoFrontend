@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import logo from "../../Images/evosoftlogo.png";
 import { useNavigate } from "react-router-dom";
 import { Card, styled } from "@mui/material";
 import MUIButton from "@mui/material/Button";
@@ -96,7 +95,7 @@ const Header = (props) => {
     <>
       <ThemeProvider theme={BasicTheme}>
         <StyledHeader>
-          <StyledLogo src={logo} alt="logo" onClick={navigateToMainPage} />
+          <StyledLogo src="/images/evosoftlogo.png" alt="logo" onClick={navigateToMainPage} />
           <StyledSearchDiv>
             <MUIButton variant="contained" color="red" sx={{ width: 1 }} onClick={navigateToSearchPage}>
               Go to search page
