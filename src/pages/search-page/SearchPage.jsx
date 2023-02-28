@@ -28,17 +28,14 @@ const StyledProductDiv = styled("div")({
     from: {
       opacity: "0%",
     },
-    "33%": {
-      opacity: "0%",
-    },
-    "66%": {
+    "50%": {
       opacity: "0%",
     },
     to: {
       opacity: "100%",
     }
   },
-  animation: "pagestartanimation 4s 1 ease",
+  animation: "pagestartanimation 1.5s 1 ease",
   position: "static"
 })
 

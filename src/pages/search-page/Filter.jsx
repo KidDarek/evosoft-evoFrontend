@@ -20,7 +20,7 @@ const StyledFilterBox = styled("div")({
       height: "500px",
     }
   },
-  animation: "filterpopin 3s 1 ease",
+  animation: "filterpopin 0.5s 1 ease",
   position: "static"
 })
 
@@ -29,17 +29,14 @@ const StyledFilterHider = styled("div")({
     from: {
       opacity: "0%",
     },
-    "33%": {
-      opacity: "0%",
-    },
-    "66%": {
+    "50%": {
       opacity: "0%",
     },
     to: {
       opacity: "100%",
     }
   },
-  animation: "filtertextfieldanimation 4s 1 ease",
+  animation: "filtertextfieldanimation 1.5s 1 ease",
   position: "static"
 })
 
