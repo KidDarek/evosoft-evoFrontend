@@ -10,15 +10,17 @@ const StyledFilterBox = styled("div")({
   marginLeft: "10px",
   marginTop: "83px",
   border: "3px solid #00a568",
-  height: "500px",
   width: "30%",
+  height: "100%",
   "@keyframes filterpopin": {
     from: {
-      height: "0px",
+      transform: "translateX(-100%)",
+      opacity: 0,
     },
     to: {
-      height: "500px",
-    }
+      transform: "translateX(0)",
+      opacity: "1",
+    },
   },
   animation: "filterpopin 0.5s 1 ease",
   position: "static"
