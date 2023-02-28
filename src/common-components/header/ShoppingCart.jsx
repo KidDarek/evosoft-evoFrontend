@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
-import ShoppingCartLogo from '../../Images/ShoppingCart.png';
 import { useNavigate } from 'react-router-dom';
 import { products } from '../../db';
 import { styled } from '@mui/system';
@@ -100,7 +99,7 @@ const ShoppingCart = (props) => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>{<img src={ShoppingCartLogo} alt='ShoppingCart.png' style={{ width: "24px", height: "24px" }}></img>}</Avatar>
+                <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>{<img src="/images/ShoppingCart.png" alt='ShoppingCart.png' style={{ width: "24px", height: "24px" }}></img>}</Avatar>
             </Button>
             <Menu
                 id="basic-menu"
