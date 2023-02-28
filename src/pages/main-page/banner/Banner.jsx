@@ -51,6 +51,16 @@ const StyledRightButton = styled("button")({
   opacity: "10%"
 });
 
+const StyledSmallDiv = styled("div")({
+  width: "5%",
+  height: "400px",
+})
+
+const StyledMediumDiv = styled("div")({
+  width: "10%",
+  height: "400px",
+})
+
 
 
 const SetNewBanner = () => {
@@ -67,13 +77,13 @@ const SetNewBanner = () => {
       <StyledBannerDiv>
         <StyledLeftButton onClick={() => setIndex(bannerIndex - 1)}>
         </StyledLeftButton>
-        <div style={{ width: "5%", height: "400px" }}></div>
+        <StyledSmallDiv></StyledSmallDiv>
         <CardSmall id={(products.length + bannerIndex) % products.length} />
-        <div style={{ width: "10%", height: "400px" }}></div>
+        <StyledMediumDiv></StyledMediumDiv>
         <CardBig id={(products.length + bannerIndex + 1) % products.length} />
-        <div style={{ width: "10%", height: "400px" }}></div>
+        <StyledMediumDiv></StyledMediumDiv>
         <CardSmall id={(products.length + bannerIndex + 2) % products.length} />
-        <div style={{ width: "5%", height: "400px" }}></div>
+        <StyledSmallDiv></StyledSmallDiv>
         <StyledRightButton onClick={() => setIndex(bannerIndex + 1)}>
         </StyledRightButton>
       </StyledBannerDiv>

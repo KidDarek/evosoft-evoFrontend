@@ -45,7 +45,8 @@ const AboutUsPage = (props) => {
           We also have an efficient and dedicated customer service team to assist with any questions or concerns.
 
           <br /> In addition, we offer fast and reliable shipping and easy returns, so you can shop with confidence. T
-          hank you for choosing us as your go-to online retailer.</StyledParagraph>
+          hank you for choosing us as your go-to online retailer.
+        </StyledParagraph>
       </StyledPageDiv>
     </>
   );

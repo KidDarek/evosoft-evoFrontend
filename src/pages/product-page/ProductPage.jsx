@@ -48,6 +48,15 @@ const StyledInfoDivText2 = styled("div")({
   backgroundColor: "#00cc99",
 });
 
+const StyledImage = styled("img")({
+  height: "100%",
+  width: "100%",
+  frame: "true",
+  display: "block",
+  marginLeft: "auto",
+  marginRight: "auto",
+})
+
 const BasicTheme = createTheme({
   palette: {
     green: {
@@ -98,15 +107,10 @@ const ProductPage = (props) => {
         <StyledPageDiv>
           <StyledInfoDiv>
             <div>
-              <img
+              <StyledImage
                 src={products[id].imageUri}
                 alt="kep"
-                height="100%"
-                width="100%"
-                frame="true"
-                display="block"
-                margin-left="auto"
-                margin-right="auto"
+
               />
             </div>
           </StyledInfoDiv>
