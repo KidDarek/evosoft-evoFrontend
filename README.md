@@ -3,3 +3,5 @@
 
 2. run application
    $ npm start
+
+Kércsi Bence jelen
