@@ -1,7 +1,8 @@
 import { Avatar, styled } from "@mui/material";
-import React from "react";
 import { useParams } from "react-router-dom";
 import { users } from "../../db";
+import React, { useState } from "react";
+import PurchaseHistoryButton from "./PurchaseHistoryButton";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -11,6 +12,27 @@ const StyledPageDiv = styled("div")({
   padding: "10px 25px 10px 25px",
   backgroundColor: "#00EFB3",
 });
+
+const StyledBrightPurchaseHistoryDiv = styled("div")({
+  width: "100%",
+  height: "100%",
+  backgroundColor: "#00e6ac",
+  color: "white",
+  textAlign: "center",
+  paddingTop: "50px",
+  paddingBottom: "50px",
+})
+
+const StyledDarkPurchaseHistoryDiv = styled("div")({
+  width: "100%",
+  height: "100%",
+  backgroundColor: "#00b386",
+  color: "white",
+  textAlign: "center",
+  paddingTop: "50px",
+  paddingBottom: "50px",
+})
+
 
 const StyledTable = styled("table")({
   width: "25%",
@@ -22,7 +44,15 @@ const StyledTable = styled("table")({
   fontWeight: 'bold'
 });
 
+const StyledPurchaseHistory = styled("div")({
+  width: "80%",
+  height: "100%",
+  backgroundColor: "#00cc99",
+})
+
 const ProfilePage = () => {
+  const [VisiblePurchaseHistory, setPurchaseHistory] = useState(false);
+
   const params = useParams();
   const id = params.id;
   return (
@@ -57,6 +87,16 @@ const ProfilePage = () => {
             </tr>
           </tbody>
         </StyledTable>
+      </StyledPageDiv>
+      <StyledPageDiv>
+        {!VisiblePurchaseHistory && <PurchaseHistoryButton setPurchaseHistory={setPurchaseHistory}></PurchaseHistoryButton>}
+        {VisiblePurchaseHistory &&
+          <StyledPurchaseHistory>
+            <StyledDarkPurchaseHistoryDiv> Product 1 </StyledDarkPurchaseHistoryDiv>
+            <StyledBrightPurchaseHistoryDiv> Product 2 </StyledBrightPurchaseHistoryDiv>
+            <StyledDarkPurchaseHistoryDiv> Product 3 </StyledDarkPurchaseHistoryDiv>
+            <StyledBrightPurchaseHistoryDiv> Product 4 </StyledBrightPurchaseHistoryDiv>
+          </StyledPurchaseHistory>}
       </StyledPageDiv>
     </>
   );
