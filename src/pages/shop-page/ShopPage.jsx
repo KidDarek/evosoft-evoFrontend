@@ -40,7 +40,7 @@ const BasicTheme = createTheme({
 
 let shoppingItems;
 const RefreshShoppingItems = () => {
-    shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
+    shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) ?? [];
 }
 
 let total;
