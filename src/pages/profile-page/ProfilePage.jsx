@@ -21,6 +21,18 @@ const StyledBrightPurchaseHistoryDiv = styled("div")({
   textAlign: "center",
   paddingTop: "50px",
   paddingBottom: "50px",
+  "@keyframes brightdivanimation": {
+    from: {
+      transform: "translateX(100%)",
+      opacity: "0",
+    },
+    to: {
+      transform: "translateX(0)",
+      opacity: "1",
+    },
+  },
+  animation: "brightdivanimation 0.5s 1 ease",
+  position: "static"
 })
 
 const StyledDarkPurchaseHistoryDiv = styled("div")({
@@ -31,6 +43,18 @@ const StyledDarkPurchaseHistoryDiv = styled("div")({
   textAlign: "center",
   paddingTop: "50px",
   paddingBottom: "50px",
+  "@keyframes darkdivanimation": {
+    from: {
+      transform: "translateX(-100%)",
+      opacity: "0",
+    },
+    to: {
+      transform: "translateX(0)",
+      opacity: "1",
+    },
+  },
+  animation: "darkdivanimation 0.5s 1 ease",
+  position: "static"
 })
 
 
