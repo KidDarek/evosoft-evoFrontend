@@ -54,7 +54,7 @@ const SignUpPopup = (props) => {
   };
 
   const validEmail = (emailText) => {
-    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validRegex = /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+[.-]?[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (emailText.match(validRegex)) {
       return true;
     }
