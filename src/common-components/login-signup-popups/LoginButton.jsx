@@ -36,9 +36,9 @@ const LoginButton = (props) => {
   }
 
   const handleLogInRequest = () => {
-    const emailextField = document.getElementById("log-in-email");
+    const emailTextField = document.getElementById("log-in-email");
     const passwordTextField = document.getElementById("log-in-password");
-    const email = emailextField.value;
+    const email = emailTextField.value;
     const password = passwordTextField.value;
     const logInData = { email, password };
     if (validEmail(email)) {
@@ -80,7 +80,7 @@ const LoginButton = (props) => {
   }
 
   const validEmail = (emailText) => {
-    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validRegex = /^[A-z0-9.-_]+@[A-z0-9.-_]+\.[A-z]+$/;
     if (emailText.match(validRegex)) {
       return true;
     }
