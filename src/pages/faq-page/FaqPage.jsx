@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { userQuestions } from "../../db";
+import { userQuestions } from "../../DataBaseLoader";
 import AddQuestionButton from "./AddQuestionButton";
 import React, { Fragment, useState } from "react";
 
@@ -48,9 +48,7 @@ const FaqPage = (props) => {
     <>
       <div>{questionAdded ? null : null}</div>
       <StyledPageDiv>
-        <StyledHeader>
-          Frequently Asked Questions
-        </StyledHeader>
+        <StyledHeader>Frequently Asked Questions</StyledHeader>
       </StyledPageDiv>
       {userQuestions.map((question, index) => (
         <Fragment key={index}>

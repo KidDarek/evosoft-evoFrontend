@@ -6,11 +6,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { users } from "../../db";
+import { users } from "../../DataBaseLoader";
 import { IconButton, Snackbar } from "@mui/material";
 
 const SignUpPopup = (props) => {
-
   const [open, setOpen] = React.useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
 
@@ -31,10 +30,10 @@ const SignUpPopup = (props) => {
   };
 
   const requestSignUp = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSignUpRequest();
     }
-  }
+  };
   const handleSignUpRequest = () => {
     const nameTextField = document.getElementById("sign-up-name");
     const emailTextField = document.getElementById("sign-up-email");
@@ -59,11 +58,16 @@ const SignUpPopup = (props) => {
       return true;
     }
     return false;
-  }
+  };
 
   const snackAction = (
     <React.Fragment>
-      <Button color="red" size="small" variant="contained" onClick={handleSnackClose}>
+      <Button
+        color="red"
+        size="small"
+        variant="contained"
+        onClick={handleSnackClose}
+      >
         Close
       </Button>
       <IconButton
@@ -71,8 +75,7 @@ const SignUpPopup = (props) => {
         aria-label="close"
         color="inherit"
         onClick={handleSnackClose}
-      >
-      </IconButton>
+      ></IconButton>
     </React.Fragment>
   );
 
@@ -86,7 +89,11 @@ const SignUpPopup = (props) => {
       >
         Sign up instead
       </Button>
-      <Dialog open={open} onClose={handleSignUpRequest} onKeyDown={requestSignUp}>
+      <Dialog
+        open={open}
+        onClose={handleSignUpRequest}
+        onKeyDown={requestSignUp}
+      >
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
           <TextField
@@ -129,7 +136,6 @@ const SignUpPopup = (props) => {
           action={snackAction}
         />
       </Dialog>
-
     </div>
   );
 };

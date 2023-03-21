@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { styled, Grid } from "@mui/material";
-import { products } from "../../db";
+import { products } from "../../DataBaseLoader";
 import Card from "../main-page/best-deals/Card";
 import Filter from "./Filter";
 
@@ -33,11 +33,11 @@ const StyledProductDiv = styled("div")({
     },
     to: {
       opacity: "100%",
-    }
+    },
   },
   animation: "pagestartanimation 1.5s 1 ease",
-  position: "static"
-})
+  position: "static",
+});
 
 const INITIAL_MIN_PRICE_VALUE = 0;
 const INITIAL_MAX_PRICE_VALUE = 9999;

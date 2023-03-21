@@ -5,7 +5,7 @@ import BestDealsPage from "./best-deals/BestDeals";
 
 const StlyedMainPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
-})
+});
 
 const MainPage = (props) => {
   return (

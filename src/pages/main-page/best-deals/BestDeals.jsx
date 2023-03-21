@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import React, { Fragment } from "react";
 import Card from "./Card";
 import { styled } from "@mui/material";
-import { products } from "../../../db";
+import { products } from "../../../DataBaseLoader";
 
 const StyledPadding = styled("div")({
   paddingLeft: "9rem",
@@ -14,10 +14,10 @@ const StyledPadding = styled("div")({
     },
     to: {
       opacity: "100%",
-    }
+    },
   },
   animation: "mainbestdealanimation 1s 1 ease",
-  position: "static"
+  position: "static",
 });
 
 const ReturnTwoRandomProductByCategory = () => {

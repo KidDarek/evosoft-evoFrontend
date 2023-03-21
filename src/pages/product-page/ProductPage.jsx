@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { products, users } from "../../db";
+import { products, users } from "../../DataBaseLoader";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
 
@@ -55,7 +55,7 @@ const StyledImage = styled("img")({
   display: "block",
   marginLeft: "auto",
   marginRight: "auto",
-})
+});
 
 const BasicTheme = createTheme({
   palette: {
@@ -75,69 +75,64 @@ const BasicTheme = createTheme({
 });
 
 const AddItemToShoppingCart = (id) => {
-  let shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
+  let shoppingItems =
+    JSON.parse(localStorage.getItem("shoppingItems")) === null
+      ? []
+      : JSON.parse(localStorage.getItem("shoppingItems"));
   const itemQuantityInput = document.getElementById("item-quantity");
   const quantity = parseInt(itemQuantityInput.value);
   const price = products[id].price;
   if (quantity === 0) {
     return;
   }
-  id = parseInt(id)
+  id = parseInt(id);
   for (let index = 0; index < shoppingItems.length; index++) {
     if (shoppingItems[index].id === id) {
       return;
     }
   }
   const shoppingItem = { id, quantity, price };
-  shoppingItems.push(shoppingItem)
+  shoppingItems.push(shoppingItem);
   localStorage.setItem("shoppingItems", JSON.stringify(shoppingItems));
-}
+};
 
 const ProductPage = (props) => {
   const [value, setValue] = React.useState("1");
 
   let accountRole = users[0].role;
-  console.log(accountRole)
+  console.log(accountRole);
 
   const params = useParams();
-  const id = params.id
+  const id = params.id;
   return (
     <>
       <ThemeProvider theme={BasicTheme}>
         <StyledPageDiv>
           <StyledInfoDiv>
             <div>
-              <StyledImage
-                src={products[id].imageUri}
-                alt="kep"
-
-              />
+              <StyledImage src={products[id].imageUri} alt="kep" />
             </div>
           </StyledInfoDiv>
           <StyledInfoDivText>
             <div>
-              <h2 style={{ color: "white" }}>
-                Product name:
-              </h2>
+              <h2 style={{ color: "white" }}>Product name:</h2>
               <div style={{ color: "white" }}> {products[id].title}</div>
-              <h2 style={{ color: "white" }}>
-                Price:
-              </h2>
+              <h2 style={{ color: "white" }}>Price:</h2>
               <div style={{ color: "white" }}> {products[id].price}</div>
-              <h2 style={{ color: "white" }}>
-                Category:
-              </h2>
+              <h2 style={{ color: "white" }}>Category:</h2>
               <div style={{ color: "white" }}> {products[id].category}</div>
-              <h2 style={{ color: "white" }}>
-                Tags:
-              </h2>
+              <h2 style={{ color: "white" }}>Tags:</h2>
               <div style={{ color: "white" }}>
-                {products[id].tag.map((i) =>
-                  i + ", "
-                )}
+                {products[id].tag.map((i) => i + ", ")}
               </div>
               <div style={{ paddingTop: "20px" }}>
-                <MUIButton variant="contained" onClick={() => AddItemToShoppingCart(id)}> Add item to cart </MUIButton>
+                <MUIButton
+                  variant="contained"
+                  onClick={() => AddItemToShoppingCart(id)}
+                >
+                  {" "}
+                  Add item to cart{" "}
+                </MUIButton>
                 <TextField
                   focused
                   margin="dense"
@@ -163,7 +158,6 @@ const ProductPage = (props) => {
                 />
               </div>
             </div>
-
           </StyledInfoDivText>
         </StyledPageDiv>
         <StyledPageDiv>
