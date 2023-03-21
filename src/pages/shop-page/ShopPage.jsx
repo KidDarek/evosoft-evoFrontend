@@ -6,20 +6,23 @@ import { products } from '../../db'
 import Card from '../main-page/best-deals/Card'
 
 const StyledContainer = styled("div")({
-    marginTop: "25px",
+    paddingTop: "25px",
     marginLeft: "25px",
     display: "flex",
     alignItems: "center",
     justifyContent: "left",
-
 });
 
 const StyledDiv = styled("div")({
     marginTop: "25px",
     marginLeft: "25px",
     fontSize: "50px",
-    color: "#00cc99"
+    color: "#ffffff",
 });
+
+const StyledPageDiv = styled("div")({
+    backgroundColor: "#00EFB3",
+})
 
 const BasicTheme = createTheme({
     palette: {
@@ -55,7 +58,7 @@ const ShopPage = () => {
     RefreshShoppingItems();
     CalculateTotal();
     return (
-        <>
+        <StyledPageDiv>
             <ThemeProvider theme={BasicTheme}>
                 {shoppingItems.length !== 0 ? shoppingItems.map(({ id, quantity }) =>
                     <StyledContainer key={id}>
@@ -68,7 +71,7 @@ const ShopPage = () => {
                     <StyledDiv>Your total is: ${total} <Button variant='contained' color='green' >Continue</Button></StyledDiv>
                     : null}
             </ThemeProvider>
-        </>
+        </StyledPageDiv>
     )
 }
 
