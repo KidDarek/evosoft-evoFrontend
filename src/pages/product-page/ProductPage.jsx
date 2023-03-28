@@ -16,10 +16,8 @@ const StyledPageDiv = styled("div")({
 
 const StyledInfoDiv = styled("div")({
   width: "60%",
-  alignItems: "center",
   display: "flex",
   justifyContent: "center",
-  height: "800px",
   border: "10px solid grey",
   backgroundColor: "#00cc99",
 });
@@ -49,9 +47,10 @@ const StyledInfoDivText2 = styled("div")({
 });
 
 const StyledImage = styled("img")({
-  height: "100%",
-  width: "100%",
-  frame: "true",
+  height: "auto",
+  width: "auto",
+  maxWidth: "100%",
+  maxHeight: "100%",
   display: "block",
   marginLeft: "auto",
   marginRight: "auto",
