@@ -3,11 +3,10 @@ import { ThemeProvider } from "@mui/system";
 import React from "react";
 import { products } from "../../DataBaseLoader";
 import Card from "../main-page/best-deals/Card";
-
-const shoppingItems =
-  JSON.parse(localStorage.getItem("shoppingItems")) === null
-    ? []
-    : JSON.parse(localStorage.getItem("shoppingItems"));
+import { Button, createTheme, styled } from '@mui/material';
+import { ThemeProvider } from '@mui/system';
+import React from 'react'
+import Card from '../main-page/best-deals/Card'
 
 const StyledContainer = styled("div")({
   marginTop: "25px",
@@ -41,39 +40,38 @@ const BasicTheme = createTheme({
   },
 });
 
-let sum = 0;
-const CalculateSum = () => {
-  sum = 0;
-  for (let i = 0; i < shoppingItems.length; i++) {
-    sum += shoppingItems[i].quantity * shoppingItems[i].price;
-  }
-};
+let shoppingItems;
+const RefreshShoppingItems = () => {
+    shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) ?? [];
+}
+
+let total;
+const CalculateTotal = () => {
+    total = 0;
+    for (let i = 0; i < shoppingItems.length; i++) {
+        total += shoppingItems[i].quantity * shoppingItems[i].price;
+    }
+}
 
 const ShopPage = () => {
-  CalculateSum();
-  return (
-    <>
-      <ThemeProvider theme={BasicTheme}>
-        {shoppingItems.length !== 0
-          ? shoppingItems.map(({ id, quantity }) => (
-              <StyledContainer key={id}>
-                <Card id={id} />
-                <StyledDiv>x{quantity}</StyledDiv>
-                <StyledDiv>= ${quantity * products[id].price}</StyledDiv>
-              </StyledContainer>
-            ))
-          : null}
-        {shoppingItems.length !== 0 ? (
-          <StyledDiv>
-            Your total is: ${sum}{" "}
-            <Button variant="contained" color="green">
-              Continue
-            </Button>
-          </StyledDiv>
-        ) : null}
-      </ThemeProvider>
-    </>
-  );
-};
+    RefreshShoppingItems();
+    CalculateTotal();
+    return (
+        <>
+            <ThemeProvider theme={BasicTheme}>
+                {shoppingItems.length !== 0 ? shoppingItems.map(({ id, quantity }) =>
+                    <StyledContainer key={id}>
+                        <Card id={id} />
+                        <StyledDiv>x{quantity}</StyledDiv>
+                        <StyledDiv>= ${quantity * products[id].price}</StyledDiv>
+                    </StyledContainer>
+                ) : null}
+                {shoppingItems.length !== 0 ?
+                    <StyledDiv>Your total is: ${total} <Button variant='contained' color='green' >Continue</Button></StyledDiv>
+                    : null}
+            </ThemeProvider>
+        </>
+    )
+}
 
 export default ShopPage;
