@@ -1,41 +1,43 @@
-
+import { Button, createTheme, styled } from "@mui/material";
+import { ThemeProvider } from "@mui/system";
+import React from "react";
+import { products } from "../../DataBaseLoader";
+import Card from "../main-page/best-deals/Card";
 import { Button, createTheme, styled } from '@mui/material';
 import { ThemeProvider } from '@mui/system';
 import React from 'react'
-import { products } from '../../db'
 import Card from '../main-page/best-deals/Card'
 
 const StyledContainer = styled("div")({
-    marginTop: "25px",
-    marginLeft: "25px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "left",
-
+  marginTop: "25px",
+  marginLeft: "25px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "left",
 });
 
 const StyledDiv = styled("div")({
-    marginTop: "25px",
-    marginLeft: "25px",
-    fontSize: "50px",
-    color: "#00cc99"
+  marginTop: "25px",
+  marginLeft: "25px",
+  fontSize: "50px",
+  color: "#00cc99",
 });
 
 const BasicTheme = createTheme({
-    palette: {
-        green: {
-            main: "#00cc99",
-            contrastText: "#fff",
-        },
-        red: {
-            main: "#ff0055",
-            dark: "#990033",
-            contrastText: "#fff",
-        },
-        white: {
-            main: "#FFFFFF",
-        },
+  palette: {
+    green: {
+      main: "#00cc99",
+      contrastText: "#fff",
     },
+    red: {
+      main: "#ff0055",
+      dark: "#990033",
+      contrastText: "#fff",
+    },
+    white: {
+      main: "#FFFFFF",
+    },
+  },
 });
 
 let shoppingItems;
@@ -72,4 +74,4 @@ const ShopPage = () => {
     )
 }
 
-export default ShopPage
+export default ShopPage;

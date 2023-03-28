@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { users } from "../../db";
+import { users } from "../../DataBaseLoader";
 import SignUpButton from "./SignUpButton";
 import { IconButton, Snackbar } from "@mui/material";
 
@@ -30,10 +30,10 @@ const LoginButton = (props) => {
   };
 
   const requestLogin = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleLogInRequest();
     }
-  }
+  };
 
   const handleLogInRequest = () => {
     const emailTextField = document.getElementById("log-in-email");
@@ -46,8 +46,7 @@ const LoginButton = (props) => {
       if (id >= 0) {
         props.setLoginID(id);
       }
-    }
-    else {
+    } else {
       handleSnackOpen();
       return;
     }
@@ -56,7 +55,12 @@ const LoginButton = (props) => {
 
   const snackAction = (
     <React.Fragment>
-      <Button color="red" size="small" variant="contained" onClick={handleSnackClose}>
+      <Button
+        color="red"
+        size="small"
+        variant="contained"
+        onClick={handleSnackClose}
+      >
         Close
       </Button>
       <IconButton
@@ -64,20 +68,22 @@ const LoginButton = (props) => {
         aria-label="close"
         color="inherit"
         onClick={handleSnackClose}
-      >
-      </IconButton>
+      ></IconButton>
     </React.Fragment>
   );
 
   const logIn = (logInData) => {
     for (let index = 0; index < users.length; index++) {
-      if (logInData.email === users[index].email && logInData.password === users[index].password) {
+      if (
+        logInData.email === users[index].email &&
+        logInData.password === users[index].password
+      ) {
         props.setLoggedin(true);
         return index + 1;
       }
     }
     return -1;
-  }
+  };
 
   const validEmail = (emailText) => {
     const validRegex = /^[A-z0-9.-_]+@[A-z0-9.-_]+\.[A-z]+$/;
@@ -85,7 +91,7 @@ const LoginButton = (props) => {
       return true;
     }
     return false;
-  }
+  };
 
   return (
     <div>

@@ -1,8 +1,7 @@
 import React, { Fragment } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../../db";
-//import { products } from "../../../db";
+import { products } from "../../../DataBaseLoader";
 
 const StyledCardContainer = styled("div")({
   width: "430px",
@@ -24,7 +23,7 @@ const StyledCardContainer = styled("div")({
     },
     to: {
       backgroundPosition: "50% 0%",
-    }
+    },
   },
   animation: "gradient 10s infinite ease",
   position: "static",
@@ -46,7 +45,6 @@ const StyledH3 = styled("h3")({
   color: "white",
   textDecoration: "underline",
 });
-
 
 const StyledCardTitle = styled("div")({
   marginBottom: "0.5rem",

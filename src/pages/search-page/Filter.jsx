@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "@mui/material/Slider";
 import { styled } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { products } from "../../db";
+import { products } from "../../DataBaseLoader";
 
 const StyledFilterBox = styled("div")({
   backgroundColor: "#00cc99",
@@ -23,8 +23,8 @@ const StyledFilterBox = styled("div")({
     },
   },
   animation: "filterpopin 0.7s 1 ease",
-  position: "static"
-})
+  position: "static",
+});
 
 const StyledFilterHider = styled("div")({
   "@keyframes filtertextfieldanimation": {
@@ -38,8 +38,8 @@ const StyledFilterHider = styled("div")({
     },
   },
   animation: "filtertextfieldanimation 0.5s 1 ease",
-  position: "static"
-})
+  position: "static",
+});
 
 const Filter = (props) => {
   const {
@@ -48,7 +48,6 @@ const Filter = (props) => {
     selectedPriceRange,
     setSelectedPriceRange,
   } = props;
-
 
   // Get all distinct tags from products
   const tags = new Set();
