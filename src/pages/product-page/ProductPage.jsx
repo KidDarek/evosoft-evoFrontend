@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { products, users } from "../../db";
 import MUIButton from "@mui/material/Button";
@@ -13,6 +13,29 @@ const StyledPageDiv = styled("div")({
   padding: "10px 25px 10px 25px",
   backgroundColor: "#00EFB3",
 });
+
+const StyledAnimation = styled("div")({
+  display: "flex",
+  justifyContent: "end",
+  transform: "scaleX(-1)",
+  "@keyframes cartAnim": {
+    from: {
+      transform: "translateX(1000%) scaleX(-1)",
+
+    },
+    "10%": {
+      transform: "translateX(0%) scaleX(-1)",
+    },
+    "20%": {
+      transform: "scale(-40,40)",
+    },
+    to: {
+      transform: "translateX(-10000%) scale(-40,40)",
+    },
+  },
+  animation: "cartAnim 5s 1 ease",
+  position: "static"
+})
 
 const StyledInfoDiv = styled("div")({
   width: "60%",
@@ -79,6 +102,7 @@ const AddItemToShoppingCart = (id) => {
   const itemQuantityInput = document.getElementById("item-quantity");
   const quantity = parseInt(itemQuantityInput.value);
   const price = products[id].price;
+
   if (quantity === 0) {
     return;
   }
@@ -95,6 +119,8 @@ const AddItemToShoppingCart = (id) => {
 
 const ProductPage = (props) => {
   const [value, setValue] = React.useState("1");
+  const [isAnimationused, setAnimationUsage] = useState(false);
+
 
   let accountRole = users[0].role;
   console.log(accountRole)
@@ -137,7 +163,14 @@ const ProductPage = (props) => {
                 )}
               </div>
               <div style={{ paddingTop: "20px" }}>
-                <MUIButton variant="contained" onClick={() => AddItemToShoppingCart(id)}> Add item to cart </MUIButton>
+                <MUIButton variant="contained" onClick={() => {
+                  AddItemToShoppingCart(id);
+                  setAnimationUsage(true);
+                  setTimeout(() => {
+                    setAnimationUsage(false)
+                  }, 5000);
+                }}>
+                  Add item to cart </MUIButton>
                 <TextField
                   focused
                   margin="dense"
@@ -165,6 +198,13 @@ const ProductPage = (props) => {
             </div>
 
           </StyledInfoDivText>
+          {!isAnimationused}
+          {isAnimationused &&
+            <StyledAnimation>
+              {<img src="/images/ShoppingCart.png" alt='ShoppingCart.png' style={{ width: "25px", height: "25px" }}></img>}
+            </StyledAnimation>
+          }
+
         </StyledPageDiv>
         <StyledPageDiv>
           <StyledInfoDivText2>
