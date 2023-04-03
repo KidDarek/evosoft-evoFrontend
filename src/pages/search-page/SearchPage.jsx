@@ -97,6 +97,8 @@ const SearchPage = () => {
               selectedPriceRange={selectedPriceRange}
               setSelectedPriceRange={setSelectedPriceRange}
               filterProducts={filterProducts}
+              INITIAL_MIN_PRICE_VALUE={INITIAL_MIN_PRICE_VALUE}
+              INITIAL_MAX_PRICE_VALUE={INITIAL_MAX_PRICE_VALUE}
             />
             <StyledProductDiv>
               <Grid

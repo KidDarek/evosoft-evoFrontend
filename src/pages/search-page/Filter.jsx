@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 import { styled } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -41,12 +41,16 @@ const StyledFilterHider = styled("div")({
   position: "static",
 });
 
+
+
 const Filter = (props) => {
   const {
     selectedTags,
     setSelectedTags,
     selectedPriceRange,
     setSelectedPriceRange,
+    INITIAL_MIN_PRICE_VALUE,
+    INITIAL_MAX_PRICE_VALUE,
   } = props;
 
   // Get all distinct tags from products
@@ -69,12 +73,29 @@ const Filter = (props) => {
     setSelectedPriceRange(newPriceRange);
   };
 
-  const handleTextFieldInput = () => {
-    setSelectedPriceRange([
-      document.getElementById("outlined-min").value,
-      document.getElementById("outlined-max").value,
-    ]);
+  const validatePriceRangeInput = (e, index) => {
+    var value = parseInt(e.target.value, 10);
+    value = clampValue(value, INITIAL_MIN_PRICE_VALUE, INITIAL_MAX_PRICE_VALUE);
+    if (index === 0) {
+      //index 0 means the min value in the price range
+      //this line ensures that the value in the min input is at most the value of the current max input
+      value = clampValue(value, INITIAL_MIN_PRICE_VALUE, selectedPriceRange[1]);
+      setSelectedPriceRange([value, selectedPriceRange[1]]);
+    }
+    else {
+      value = clampValue(value, selectedPriceRange[0], INITIAL_MAX_PRICE_VALUE);
+      setSelectedPriceRange([selectedPriceRange[0], value]);
+    }
   };
+
+  const clampValue = (value, min, max) => {
+    if (isNaN(value)) {
+      value = min;
+    }
+    if (value > max) value = max;
+    if (value < min) value = min;
+    return value;
+  }
 
   return (
     <StyledFilterBox>
@@ -118,10 +139,13 @@ const Filter = (props) => {
             <TextField
               id="outlined-min"
               label="Min price"
+              type="number"
               variant="outlined"
               value={selectedPriceRange[0]}
+              min={0}
+              max={9999}
               style={{ width: "35%" }}
-              onChange={handleTextFieldInput}
+              onChange={(e) => { validatePriceRangeInput(e, 0) }}
             />
             <label
               style={{ width: "50%", height: "50px", margin: "0px 10px" }}
@@ -129,10 +153,13 @@ const Filter = (props) => {
             <TextField
               id="outlined-max"
               label="Max price"
+              type="number"
               variant="outlined"
               value={selectedPriceRange[1]}
+              min={0}
+              max={9999}
               style={{ width: "35%" }}
-              onChange={handleTextFieldInput}
+              onChange={(e) => { validatePriceRangeInput(e, 1) }}
             />
           </div>
           <div>
