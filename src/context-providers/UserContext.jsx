@@ -14,6 +14,11 @@ function UserContextProvider({ children }) {
     fetchUsers();
   }, []);
 
+  async function getUserById(id) {
+    const user = await UserAPI.getById(id);
+    return user || null;
+  }
+
   async function addUser(user) {
     await UserAPI.add(user);
     setUsers([...users, user]);
@@ -29,11 +34,6 @@ function UserContextProvider({ children }) {
     setUsers(
       users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
     );
-  }
-
-  async function getUserById(id) {
-    const user = await UserAPI.getById(id);
-    return user || null;
   }
 
   return (
