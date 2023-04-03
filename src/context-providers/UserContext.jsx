@@ -1,47 +1,48 @@
-import { useState, useEffect } from "react";
-import { UserAPI } from "../api-implementations/UserAPI";
-import UserContext from "./UserContext";
+import { createContext, useEffect, useState } from "react";
+import UserAPI from "../api/UserAPI";
 
-const UserContextProvider = ({ children }) => {
+const UserContext = createContext([]);
+
+function UserContextProvider({ children }) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const users = await UserAPI.getAll();
-      setUsers(users);
-    };
-    fetchData();
+    async function fetchUsers() {
+      const data = await UserAPI.getAll();
+      setUsers(data);
+    }
+    fetchUsers();
   }, []);
 
-  const addUser = async (user) => {
-    await UserAPI.create(user);
-    const updatedUsers = await UserAPI.getAll();
-    setUsers(updatedUsers);
-  };
+  async function addUser(user) {
+    await UserAPI.add(user);
+    setUsers([...users, user]);
+  }
 
-  const removeUser = async (id) => {
+  async function removeUser(id) {
     await UserAPI.remove(id);
-    const updatedUsers = await UserAPI.getAll();
-    setUsers(updatedUsers);
-  };
+    setUsers(users.filter((user) => user.id !== id));
+  }
 
-  const updateUser = async (user) => {
-    await UserAPI.update(user);
-    const updatedUsers = await UserAPI.getAll();
-    setUsers(updatedUsers);
-  };
+  async function updateUser(updatedUser) {
+    await UserAPI.update(updatedUser);
+    setUsers(
+      users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+    );
+  }
+
+  async function getUserById(id) {
+    const user = await UserAPI.getById(id);
+    return user || null;
+  }
 
   return (
-    <UserContext.Provider value={{ users, addUser, removeUser, updateUser }}>
+    <UserContext.Provider
+      value={{ users, addUser, removeUser, updateUser, getUserById }}
+    >
       {children}
     </UserContext.Provider>
   );
-};
+}
 
-export default UserContextProvider;
-
-/* usage:
-import { createContext } from 'react';
-
-const UserContext = createContext();
-*/
+export { UserContext, UserContextProvider };
