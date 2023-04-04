@@ -30,7 +30,7 @@ const StyledAnimation = styled("div")({
       transform: "scale(-40,40)",
     },
     to: {
-      transform: "translateX(-10000%) scale(-40,40)",
+      transform: "translateX(-7000%) scale(-40,40)",
     },
   },
   animation: "cartAnim 5s 1 ease",
@@ -133,11 +133,12 @@ const ProductPage = (props) => {
         <StyledPageDiv>
           <StyledInfoDiv>
             <div>
-              <StyledImage
+              {!isAnimationused && <StyledImage
                 src={products[id].imageUri}
                 alt="kep"
 
-              />
+              />}
+              {isAnimationused}
             </div>
           </StyledInfoDiv>
           <StyledInfoDivText>
