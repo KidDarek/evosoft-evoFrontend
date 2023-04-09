@@ -10,7 +10,7 @@ const StyledCardContainer = styled("div")({
   overflow: "hidden",
   padding: "10px 25px 10px 0px",
   background: "#00cc99",
-  borderRadius: "15px"
+  borderRadius: "15px",
 });
 
 const StyledH3 = styled("h3")({
@@ -28,7 +28,7 @@ const StyledP = styled("p")({
   marginLeft: "30px",
   marginTop: "-10px",
   color: "white",
-  fontSize: "15px"
+  fontSize: "15px",
 });
 
 const StyledTable = styled("table")({
@@ -36,7 +36,7 @@ const StyledTable = styled("table")({
   background: "#00cc99",
   color: "white",
   cursor: "pointer",
-  borderRadius: "15px"
+  borderRadius: "15px",
 });
 
 const MiniCard = (props) => {

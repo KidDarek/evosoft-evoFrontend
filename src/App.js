@@ -13,15 +13,14 @@ import ShopPage from "./pages/shop-page/ShopPage";
 import CheckoutPage from "./pages/checkout-page/CheckoutPage";
 
 const StyledFontDiv = styled("div")({
-  fontFamily: "Roboto"
+  fontFamily: "Roboto",
 });
-
 
 function App() {
   return (
     <>
-    <StyledFontDiv>
-    <BrowserRouter>
+      <StyledFontDiv>
+        <BrowserRouter>
           <Header />
           <Routes>
             <Route path="/" element={<MainPage />} />
@@ -35,8 +34,8 @@ function App() {
             <Route path="/Product/:id" element={<ProductPage />} />
           </Routes>
         </BrowserRouter>
-      <Footer />
-    </StyledFontDiv>
+        <Footer />
+      </StyledFontDiv>
     </>
   );
 }

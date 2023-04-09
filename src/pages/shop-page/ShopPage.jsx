@@ -97,52 +97,69 @@ const ShopPage = () => {
             <tbody>
               <div>
                 <tr>
-                  <th align= "left" width="75%">Product</th>
-                  <th align= "center">Quantity</th>
-                  <th align= "center" width="25%">Price</th>
+                  <th align="left" width="75%">
+                    Product
+                  </th>
+                  <th align="center">Quantity</th>
+                  <th align="center" width="25%">
+                    Price
+                  </th>
                 </tr>
               </div>
               {shoppingItems.length !== 0
-              ? shoppingItems.map(({ id, quantity }) => (
-                  <div key={id}>
+                ? shoppingItems.map(({ id, quantity }) => (
+                    <div key={id}>
                       <tr valign="middle">
-                        <td><MiniCard id={id} /></td>
-                        <td rowSpan="3" width="17%"><StyledDiv>x{quantity}</StyledDiv></td>
-                        <td rowSpan="3"><StyledDiv>${quantity * products[id].price}</StyledDiv></td>
+                        <td>
+                          <MiniCard id={id} />
+                        </td>
+                        <td rowSpan="3" width="17%">
+                          <StyledDiv>x{quantity}</StyledDiv>
+                        </td>
+                        <td rowSpan="3">
+                          <StyledDiv>
+                            ${quantity * products[id].price}
+                          </StyledDiv>
+                        </td>
                       </tr>
-                  </div>
-                ))
-              : null}
+                    </div>
+                  ))
+                : null}
             </tbody>
           </StyledBigTable>
-        {shoppingItems.length !== 0 ? (
+          {shoppingItems.length !== 0 ? (
             <StyledSmallTable>
               <tbody>
                 <tr>
-                  <th style={{textAlign:"left", fontSize:"26px"}}>Total</th>
+                  <th style={{ textAlign: "left", fontSize: "26px" }}>Total</th>
                 </tr>
                 <tr>
                   <td>Subtotal: </td>
-                  <td align="right">${total}{" "}</td>
+                  <td align="right">${total} </td>
                 </tr>
                 <tr>
                   <td>Delivery: </td>
-                  <td align="right">${5}{" "}</td>
+                  <td align="right">${5} </td>
                 </tr>
-                <tr style={{fontWeight: "bold"}}>
+                <tr style={{ fontWeight: "bold" }}>
                   <td>Grand total: </td>
-                  <td align="right">${total+5}{" "}</td>
+                  <td align="right">${total + 5} </td>
                 </tr>
                 <tr>
                   <td colSpan="3" align="center">
-                    <Button variant="contained" color="green"  sx={{ width: 230}} onClick={navigateToCheckoutPage}>
+                    <Button
+                      variant="contained"
+                      color="green"
+                      sx={{ width: 230 }}
+                      onClick={navigateToCheckoutPage}
+                    >
                       Continue
                     </Button>
                   </td>
                 </tr>
               </tbody>
             </StyledSmallTable>
-        ) : null}
+          ) : null}
         </StyledPageDiv>
       </ThemeProvider>
     </>
