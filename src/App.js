@@ -16,7 +16,7 @@ const StyledFontDiv = styled("div")({
   fontFamily: "Roboto"
 });
 
-const BasicTheme = createTheme({
+const MainTheme = createTheme({
   palette: {
     green: {
       main: "#00cc99",
@@ -42,7 +42,7 @@ const BasicTheme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={BasicTheme}>
+    <ThemeProvider theme={MainTheme}>
     <StyledFontDiv>
     <BrowserRouter>
           <Header />
