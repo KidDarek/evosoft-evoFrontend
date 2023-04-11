@@ -10,15 +10,39 @@ import ProfilePage from "./pages/profile-page/ProfilePage";
 import { styled } from "@mui/material";
 import SearchPage from "./pages/search-page/SearchPage";
 import ShopPage from "./pages/shop-page/ShopPage";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const StyledFontDiv = styled("div")({
   fontFamily: "Roboto"
 });
 
+const BasicTheme = createTheme({
+  palette: {
+    green: {
+      main: "#00cc99",
+      contrastText: "#fff",
+    },
+    red: {
+      main: "#ff0055",
+      dark: "#990033",
+      contrastText: "#fff",
+    },
+    white: {
+      main: "#FFFFFF",
+    },
+  },
+  typography: {
+
+    button: {
+      fontSize: 16,
+      fontWeight: 700,
+    },
+  },
+});
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={BasicTheme}>
     <StyledFontDiv>
     <BrowserRouter>
           <Header />
@@ -35,7 +59,7 @@ function App() {
         </BrowserRouter>
       <Footer />
     </StyledFontDiv>
-    </>
+    </ThemeProvider>
   );
 }
 

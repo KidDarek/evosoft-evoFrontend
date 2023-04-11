@@ -1,5 +1,4 @@
-import { Button, createTheme, styled } from "@mui/material";
-import { ThemeProvider } from "@mui/system";
+import { Button, styled } from "@mui/material";
 import React from "react";
 import { products } from "../../DataBaseLoader";
 import Card from "../main-page/best-deals/Card";
@@ -19,22 +18,6 @@ const StyledDiv = styled("div")({
   color: "#00cc99",
 });
 
-const BasicTheme = createTheme({
-  palette: {
-    green: {
-      main: "#00cc99",
-      contrastText: "#fff",
-    },
-    red: {
-      main: "#ff0055",
-      dark: "#990033",
-      contrastText: "#fff",
-    },
-    white: {
-      main: "#FFFFFF",
-    },
-  },
-});
 
 let shoppingItems;
 const RefreshShoppingItems = () => {
@@ -54,25 +37,23 @@ const ShopPage = () => {
   CalculateTotal();
   return (
     <>
-      <ThemeProvider theme={BasicTheme}>
-        {shoppingItems.length !== 0
-          ? shoppingItems.map(({ id, quantity }) => (
-              <StyledContainer key={id}>
-                <Card id={id} />
-                <StyledDiv>x{quantity}</StyledDiv>
-                <StyledDiv>= ${quantity * products[id].price}</StyledDiv>
-              </StyledContainer>
-            ))
-          : null}
-        {shoppingItems.length !== 0 ? (
-          <StyledDiv>
-            Your total is: ${total}{" "}
-            <Button variant="contained" color="green">
-              Continue
-            </Button>
-          </StyledDiv>
-        ) : null}
-      </ThemeProvider>
+      {shoppingItems.length !== 0
+        ? shoppingItems.map(({ id, quantity }) => (
+          <StyledContainer key={id}>
+            <Card id={id} />
+            <StyledDiv>x{quantity}</StyledDiv>
+            <StyledDiv>= ${quantity * products[id].price}</StyledDiv>
+          </StyledContainer>
+        ))
+        : null}
+      {shoppingItems.length !== 0 ? (
+        <StyledDiv>
+          Your total is: ${total}{" "}
+          <Button variant="contained" color="green">
+            Continue
+          </Button>
+        </StyledDiv>
+      ) : null}
     </>
   );
 };

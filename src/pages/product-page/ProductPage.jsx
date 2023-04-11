@@ -3,7 +3,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { products, users } from "../../DataBaseLoader";
 import MUIButton from "@mui/material/Button";
-import { createTheme, TextField, ThemeProvider } from "@mui/material";
+import { TextField } from "@mui/material";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -56,22 +56,6 @@ const StyledImage = styled("img")({
   marginRight: "auto",
 });
 
-const BasicTheme = createTheme({
-  palette: {
-    green: {
-      main: "#00cc99",
-      contrastText: "#fff",
-    },
-    red: {
-      main: "#ff0055",
-      dark: "#990033",
-      contrastText: "#fff",
-    },
-    white: {
-      main: "#FFFFFF",
-    },
-  },
-});
 
 const AddItemToShoppingCart = (id) => {
   let shoppingItems =
@@ -105,69 +89,67 @@ const ProductPage = (props) => {
   const id = params.id;
   return (
     <>
-      <ThemeProvider theme={BasicTheme}>
-        <StyledPageDiv>
-          <StyledInfoDiv>
-            <div>
-              <StyledImage src={products[id].imageUri} alt="kep" />
+      <StyledPageDiv>
+        <StyledInfoDiv>
+          <div>
+            <StyledImage src={products[id].imageUri} alt="kep" />
+          </div>
+        </StyledInfoDiv>
+        <StyledInfoDivText>
+          <div>
+            <h2 style={{ color: "white" }}>Product name:</h2>
+            <div style={{ color: "white" }}> {products[id].title}</div>
+            <h2 style={{ color: "white" }}>Price:</h2>
+            <div style={{ color: "white" }}> {products[id].price}</div>
+            <h2 style={{ color: "white" }}>Category:</h2>
+            <div style={{ color: "white" }}> {products[id].category}</div>
+            <h2 style={{ color: "white" }}>Tags:</h2>
+            <div style={{ color: "white" }}>
+              {products[id].tag.map((i) => i + ", ")}
             </div>
-          </StyledInfoDiv>
-          <StyledInfoDivText>
-            <div>
-              <h2 style={{ color: "white" }}>Product name:</h2>
-              <div style={{ color: "white" }}> {products[id].title}</div>
-              <h2 style={{ color: "white" }}>Price:</h2>
-              <div style={{ color: "white" }}> {products[id].price}</div>
-              <h2 style={{ color: "white" }}>Category:</h2>
-              <div style={{ color: "white" }}> {products[id].category}</div>
-              <h2 style={{ color: "white" }}>Tags:</h2>
-              <div style={{ color: "white" }}>
-                {products[id].tag.map((i) => i + ", ")}
-              </div>
-              <div style={{ paddingTop: "20px" }}>
-                <MUIButton
-                  variant="contained"
-                  onClick={() => AddItemToShoppingCart(id)}
-                >
-                  {" "}
-                  Add item to cart{" "}
-                </MUIButton>
-                <TextField
-                  focused
-                  margin="dense"
-                  id="item-quantity"
-                  label="Quantity"
-                  type="number"
-                  variant="outlined"
-                  color="white"
-                  sx={{ width: 150 }}
-                  inputProps={{ style: { color: "white" } }}
-                  value={value}
-                  onChange={(e) => {
-                    var value = parseInt(e.target.value, 10);
-                    if (isNaN(value)) {
-                      value = 1;
-                    }
+            <div style={{ paddingTop: "20px" }}>
+              <MUIButton
+                variant="contained"
+                onClick={() => AddItemToShoppingCart(id)}
+              >
+                {" "}
+                Add item to cart{" "}
+              </MUIButton>
+              <TextField
+                focused
+                margin="dense"
+                id="item-quantity"
+                label="Quantity"
+                type="number"
+                variant="outlined"
+                color="white"
+                sx={{ width: 150 }}
+                inputProps={{ style: { color: "white" } }}
+                value={value}
+                onChange={(e) => {
+                  var value = parseInt(e.target.value, 10);
+                  if (isNaN(value)) {
+                    value = 1;
+                  }
 
-                    if (value > 100) value = 100;
-                    if (value < 1) value = 1;
+                  if (value > 100) value = 100;
+                  if (value < 1) value = 1;
 
-                    setValue(value);
-                  }}
-                />
-              </div>
+                  setValue(value);
+                }}
+              />
             </div>
-          </StyledInfoDivText>
-        </StyledPageDiv>
-        <StyledPageDiv>
-          <StyledInfoDivText2>
-            <div>
-              <h1 style={{ color: "white" }}>Termék leírása</h1>
-              <div style={{ color: "white" }}>{products[id].body}</div>
-            </div>
-          </StyledInfoDivText2>
-        </StyledPageDiv>
-      </ThemeProvider>
+          </div>
+        </StyledInfoDivText>
+      </StyledPageDiv>
+      <StyledPageDiv>
+        <StyledInfoDivText2>
+          <div>
+            <h1 style={{ color: "white" }}>Termék leírása</h1>
+            <div style={{ color: "white" }}>{products[id].body}</div>
+          </div>
+        </StyledInfoDivText2>
+      </StyledPageDiv>
     </>
   );
 };
