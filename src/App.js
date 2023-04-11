@@ -10,17 +10,17 @@ import ProfilePage from "./pages/profile-page/ProfilePage";
 import { styled } from "@mui/material";
 import SearchPage from "./pages/search-page/SearchPage";
 import ShopPage from "./pages/shop-page/ShopPage";
+import CheckoutPage from "./pages/checkout-page/CheckoutPage";
 
 const StyledFontDiv = styled("div")({
-  fontFamily: "Roboto"
+  fontFamily: "Roboto",
 });
-
 
 function App() {
   return (
     <>
-    <StyledFontDiv>
-    <BrowserRouter>
+      <StyledFontDiv>
+        <BrowserRouter>
           <Header />
           <Routes>
             <Route path="/" element={<MainPage />} />
@@ -29,12 +29,13 @@ function App() {
             <Route path="/Contact" element={<ContactPage />} />
             <Route path="/Search" element={<SearchPage />} />
             <Route path="/Shop" element={<ShopPage />} />
+            <Route path="/Checkout" element={<CheckoutPage />} />
             <Route path="/Profile:id" element={<ProfilePage />} />
             <Route path="/Product/:id" element={<ProductPage />} />
           </Routes>
         </BrowserRouter>
-      <Footer />
-    </StyledFontDiv>
+        <Footer />
+      </StyledFontDiv>
     </>
   );
 }
