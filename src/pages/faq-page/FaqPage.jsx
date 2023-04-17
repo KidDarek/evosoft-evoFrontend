@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
-import { userQuestions } from "../../DataBaseLoader";
 import AddQuestionButton from "./AddQuestionButton";
-import React, { Fragment, useState } from "react";
+import {
+  UserQuestionContext,
+  UserQuestionContextProvider,
+} from "../../context-providers/UserQuestionContext";
+import React, { Fragment, useState, useContext } from "react";
 
 const StyledHeader = styled("h1")({
   color: "white",
@@ -41,8 +44,10 @@ const StyledPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
 });
 
-const FaqPage = (props) => {
+const FaqPage = () => {
   const [questionAdded, setIndex] = useState(true);
+
+  const { userQuestions } = useContext(UserQuestionContext);
 
   return (
     <>
@@ -50,15 +55,15 @@ const FaqPage = (props) => {
       <StyledPageDiv>
         <StyledHeader>Frequently Asked Questions</StyledHeader>
       </StyledPageDiv>
-      {userQuestions.map((question, index) => (
-        <Fragment key={index}>
+      {userQuestions.map((userQuestion) => (
+        <Fragment key={userQuestion.id}>
           <StyledPageDiv>
             <StyledQuestionContainer>
-              <StyledQuestion>{question.question}</StyledQuestion>
+              <StyledQuestion>{userQuestion.question}</StyledQuestion>
             </StyledQuestionContainer>
           </StyledPageDiv>
           <StyledPageDiv>
-            <StyledAnswer>{question.answer}</StyledAnswer>
+            <StyledAnswer>{userQuestion.answer}</StyledAnswer>
           </StyledPageDiv>
         </Fragment>
       ))}
@@ -70,4 +75,10 @@ const FaqPage = (props) => {
   );
 };
 
-export default FaqPage;
+const FaqPageWithContext = () => (
+  <UserQuestionContextProvider>
+    <FaqPage />
+  </UserQuestionContextProvider>
+);
+
+export default FaqPageWithContext;

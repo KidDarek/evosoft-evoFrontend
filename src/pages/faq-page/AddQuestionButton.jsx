@@ -1,6 +1,5 @@
-import React from "react";
-import { useState } from "react";
-import { userQuestions } from "../../db";
+import React, { useState, useContext } from "react";
+import { UserQuestionContext } from "../../context-providers/UserQuestionContext";
 import MUIButton from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -8,6 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import styled from "@emotion/styled";
+import { v4 as uuidv4 } from "uuid";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -18,11 +18,11 @@ const StyledPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
 });
 
-const AddQuestionButton = (props) => {
+const AddQuestionButton = () => {
   const [open, setOpen] = useState(false);
+  const { addUserQuestion } = useContext(UserQuestionContext);
 
   const handleClickOpen = () => {
-    props.setIndex(false);
     setOpen(true);
   };
 
@@ -30,15 +30,19 @@ const AddQuestionButton = (props) => {
     setOpen(false);
   };
 
-  const addQuestion = () => {
+  const addQuestion = async () => {
     const questionField = document.getElementById("QuestionField");
     const question = questionField.value;
     if (question === "") {
       return;
     }
-    const id = userQuestions.length;
-    userQuestions.push({ id, question });
-    props.setIndex(true);
+    const id = uuidv4();
+    await addUserQuestion({
+      id,
+      question: question,
+      answer: "atleast10charlongstring",
+      userId: id,
+    });
     setOpen(false);
   };
 
