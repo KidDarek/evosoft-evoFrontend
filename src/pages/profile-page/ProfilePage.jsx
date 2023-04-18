@@ -1,6 +1,6 @@
 import { Avatar, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { users } from "../../db";
+import { users } from "../../DataBaseLoader";
 import React, { useState } from "react";
 import PurchaseHistoryButton from "./PurchaseHistoryButton";
 
@@ -65,7 +65,7 @@ const StyledTable = styled("table")({
   borderRadius: "15px",
   color: "white",
   padding: "20px 20px 20px 24px",
-  fontWeight: 'bold'
+  fontWeight: "bold",
 });
 
 const StyledPurchaseHistory = styled("div")({
@@ -85,9 +85,14 @@ const ProfilePage = () => {
         <StyledTable>
           <tbody>
             <tr>
-              <td rowspan="5">
+              <td rowSpan="5">
                 <Avatar
-                  sx={{ width: 128, height: 128, bgcolor: "#ff0055", fontSize: 100 }}
+                  sx={{
+                    width: 128,
+                    height: 128,
+                    bgcolor: "#ff0055",
+                    fontSize: 100,
+                  }}
                 >
                   {users[id - 1].name[0].toUpperCase()}
                 </Avatar>

@@ -1,8 +1,7 @@
 import React, { Fragment } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../../db";
-//import { products } from "../../../db";
+import { products } from "../../../DataBaseLoader";
 
 const StyledCardContainer = styled("div")({
   width: "300px",

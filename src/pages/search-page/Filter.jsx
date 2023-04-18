@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "@mui/material/Slider";
 import { styled } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { products } from "../../db";
+import { products } from "../../DataBaseLoader";
 
 const StyledFilterBox = styled("div")({
   backgroundColor: "#00cc99",
@@ -23,8 +23,8 @@ const StyledFilterBox = styled("div")({
     },
   },
   animation: "filterpopin 0.7s 1 ease",
-  position: "static"
-})
+  position: "static",
+});
 
 const StyledFilterHider = styled("div")({
   "@keyframes filtertextfieldanimation": {
@@ -38,8 +38,10 @@ const StyledFilterHider = styled("div")({
     },
   },
   animation: "filtertextfieldanimation 0.5s 1 ease",
-  position: "static"
-})
+  position: "static",
+});
+
+
 
 const Filter = (props) => {
   const {
@@ -47,8 +49,9 @@ const Filter = (props) => {
     setSelectedTags,
     selectedPriceRange,
     setSelectedPriceRange,
+    INITIAL_MIN_PRICE_VALUE,
+    INITIAL_MAX_PRICE_VALUE,
   } = props;
-
 
   // Get all distinct tags from products
   const tags = new Set();
@@ -70,11 +73,27 @@ const Filter = (props) => {
     setSelectedPriceRange(newPriceRange);
   };
 
-  const handleTextFieldInput = () => {
-    setSelectedPriceRange([
-      document.getElementById("outlined-min").value,
-      document.getElementById("outlined-max").value,
-    ]);
+  const validateMinPriceInput = (e) => {
+    let value = parseInt(e.target.value, 10);
+    value = clampValue(value, INITIAL_MIN_PRICE_VALUE, INITIAL_MAX_PRICE_VALUE);
+    value = clampValue(value, INITIAL_MIN_PRICE_VALUE, selectedPriceRange[1]);
+    setSelectedPriceRange([value, selectedPriceRange[1]]);
+  };
+
+  const validateMaxPriceInput = (e) => {
+    let value = parseInt(e.target.value, 10);
+    value = clampValue(value, INITIAL_MIN_PRICE_VALUE, INITIAL_MAX_PRICE_VALUE);
+    value = clampValue(value, selectedPriceRange[0], INITIAL_MAX_PRICE_VALUE);
+    setSelectedPriceRange([selectedPriceRange[0], value]);
+  }
+
+  const clampValue = (value, min, max) => {
+    if (isNaN(value)) {
+      value = min;
+    }
+    if (value > max) value = max;
+    if (value < min) value = min;
+    return value;
   };
 
   return (
@@ -119,10 +138,11 @@ const Filter = (props) => {
             <TextField
               id="outlined-min"
               label="Min price"
+              type="number"
               variant="outlined"
               value={selectedPriceRange[0]}
               style={{ width: "35%" }}
-              onChange={handleTextFieldInput}
+              onChange={(e) => { validateMinPriceInput(e) }}
             />
             <label
               style={{ width: "50%", height: "50px", margin: "0px 10px" }}
@@ -130,10 +150,11 @@ const Filter = (props) => {
             <TextField
               id="outlined-max"
               label="Max price"
+              type="number"
               variant="outlined"
               value={selectedPriceRange[1]}
               style={{ width: "35%" }}
-              onChange={handleTextFieldInput}
+              onChange={(e) => { validateMaxPriceInput(e) }}
             />
           </div>
           <div>
@@ -142,7 +163,8 @@ const Filter = (props) => {
               value={selectedPriceRange}
               valueLabelDisplay="auto"
               onChange={handlePriceRangeChange}
-              max={9999}
+              min={INITIAL_MIN_PRICE_VALUE}
+              max={INITIAL_MAX_PRICE_VALUE}
               disableSwap
             />
           </div>
