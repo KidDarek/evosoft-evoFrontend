@@ -56,7 +56,7 @@ const StyledPicAnimation = styled("div")({
       transform: "translateX(0%) translateY(-20%) scale(0.7,0.7)",
     },
     to: {
-      transform: "translateX(-175%) translateY(-20%) scale(0.7,0.7)",
+      transform: "translateX(-185%) translateY(-20%) scale(0.7,0.7)",
     },
   },
   animation: "PicAnim 5s 1 ease",
