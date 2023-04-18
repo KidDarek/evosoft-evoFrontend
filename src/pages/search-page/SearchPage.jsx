@@ -39,8 +39,8 @@ const StyledProductDiv = styled("div")({
   position: "static",
 });
 
-const INITIAL_MIN_PRICE_VALUE = 0;
-const INITIAL_MAX_PRICE_VALUE = 9999;
+var INITIAL_MIN_PRICE_VALUE = 0;
+var INITIAL_MAX_PRICE_VALUE = 9999;
 
 const SearchPage = () => {
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -85,6 +85,22 @@ const SearchPage = () => {
     setSearchString(e.target.value);
   };
 
+  const priceRangeOfProducts = () => {
+    let minPrice = products[0].price;
+    let maxPrice = minPrice;
+    for (let i = 0; i < products.length; i++) {
+      if (minPrice > products[i].price) {
+        minPrice = products[i].price;
+      }
+      if (maxPrice < products[i].price) {
+        maxPrice = products[i].price;
+      }
+    }
+    return [minPrice, maxPrice];
+  }
+  const initialPriceRange = priceRangeOfProducts();
+  INITIAL_MIN_PRICE_VALUE = initialPriceRange[0];
+  INITIAL_MAX_PRICE_VALUE = initialPriceRange[1];
   return (
     <>
       <StyledPadding>
