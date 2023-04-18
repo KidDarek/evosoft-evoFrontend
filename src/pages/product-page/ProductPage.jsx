@@ -172,7 +172,6 @@ const ProductPage = (props) => {
                     alt="kep" />
                 </StyledPicAnimation>
               }
-              <StyledImage src={products[id].imageUri} alt="kep" />
             </div>
           </StyledInfoDiv>
           <StyledInfoDivText>
@@ -196,13 +195,6 @@ const ProductPage = (props) => {
                   }, 5000);
                 }}>
                   Add item to cart </MUIButton>
-                <MUIButton
-                  variant="contained"
-                  onClick={() => AddItemToShoppingCart(id)}
-                >
-                  {" "}
-                  Add item to cart{" "}
-                </MUIButton>
                 <TextField
                   focused
                   margin="dense"
