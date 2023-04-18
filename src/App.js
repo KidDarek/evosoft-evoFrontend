@@ -11,10 +11,13 @@ import { styled } from "@mui/material";
 import SearchPage from "./pages/search-page/SearchPage";
 import ShopPage from "./pages/shop-page/ShopPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CheckoutPage from "./pages/checkout-page/CheckoutPage";
+
 
 const StyledFontDiv = styled("div")({
-  fontFamily: "Roboto"
+  fontFamily: "Roboto",
 });
+
 
 const MainTheme = createTheme({
   palette: {
@@ -45,6 +48,11 @@ function App() {
     <ThemeProvider theme={MainTheme}>
     <StyledFontDiv>
     <BrowserRouter>
+function App() {
+  return (
+    <>
+      <StyledFontDiv>
+        <BrowserRouter>
           <Header />
           <Routes>
             <Route path="/" element={<MainPage />} />
@@ -53,6 +61,7 @@ function App() {
             <Route path="/Contact" element={<ContactPage />} />
             <Route path="/Search" element={<SearchPage />} />
             <Route path="/Shop" element={<ShopPage />} />
+            <Route path="/Checkout" element={<CheckoutPage />} />
             <Route path="/Profile:id" element={<ProfilePage />} />
             <Route path="/Product/:id" element={<ProductPage />} />
           </Routes>
@@ -60,6 +69,9 @@ function App() {
       <Footer />
     </StyledFontDiv>
     </ThemeProvider>
+        <Footer />
+      </StyledFontDiv>
+    </>
   );
 }
 
