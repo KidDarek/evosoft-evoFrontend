@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 //import { forwardRef, useImperativeHandle, useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -7,11 +7,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { users } from "../../DataBaseLoader";
+import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
 import { IconButton, Snackbar } from "@mui/material";
+import * as uuid from "uuid";
 
 const SignUpPopup = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
+  const { addUser } = useContext(UserContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,7 +37,7 @@ const SignUpPopup = (props) => {
       handleSignUpRequest();
     }
   };
-  const handleSignUpRequest = () => {
+  const handleSignUpRequest = async () => {
     const nameTextField = document.getElementById("sign-up-name");
     const emailTextField = document.getElementById("sign-up-email");
     const passwordTextField = document.getElementById("sign-up-password");
@@ -46,9 +49,9 @@ const SignUpPopup = (props) => {
     const name = nameTextField.value;
     const password = passwordTextField.value;
     const role = "user";
-    const id = users[users.length - 1].id + 1;
-    const obj = { id, name, email, password, role };
-    users.push(obj);
+    const id = uuid.v4();
+    const user = { id, name, email, password, role };
+    await (addUser(user))
     setOpen(false);
   };
 
@@ -139,4 +142,10 @@ const SignUpPopup = (props) => {
     </div>
   );
 };
-export default SignUpPopup;
+
+const WrappedSignUpPopup = () => (
+  <UserContextProvider>
+    <SignUpPopup />
+  </UserContextProvider>
+);
+export default WrappedSignUpPopup;

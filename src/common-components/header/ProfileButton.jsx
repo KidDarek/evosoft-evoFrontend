@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from 'react-router-dom';
-import { users } from '../../db';
+import { users } from "../../DataBaseLoader";
 
 const ProfileButton = (props) => {
 
