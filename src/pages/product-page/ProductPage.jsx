@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { products, users } from "../../DataBaseLoader";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
+import SimilarProdCard from "./SimilarProdCard";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -236,6 +237,12 @@ const ProductPage = (props) => {
               <div style={{ color: "white" }}>{products[id].body}</div>
             </div>
           </StyledInfoDivText2>
+        </StyledPageDiv>
+        <StyledPageDiv>
+          <SimilarProdCard></SimilarProdCard>
+          <SimilarProdCard></SimilarProdCard>
+          <SimilarProdCard></SimilarProdCard>
+          <SimilarProdCard></SimilarProdCard>
         </StyledPageDiv>
       </ThemeProvider>
     </>
