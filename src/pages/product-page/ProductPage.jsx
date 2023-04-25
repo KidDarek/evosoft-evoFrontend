@@ -13,6 +13,7 @@ const StyledPageDiv = styled("div")({
   height: "100%",
   padding: "10px 25px 10px 25px",
   backgroundColor: "#00EFB3",
+  width: "100%"
 });
 
 const StyledAnimation = styled("div")({
@@ -239,10 +240,13 @@ const ProductPage = (props) => {
           </StyledInfoDivText2>
         </StyledPageDiv>
         <StyledPageDiv>
-          <SimilarProdCard></SimilarProdCard>
-          <SimilarProdCard></SimilarProdCard>
-          <SimilarProdCard></SimilarProdCard>
-          <SimilarProdCard></SimilarProdCard>
+          <h1 style={{ color: "white" }}>Hasonló termékek</h1>
+        </StyledPageDiv>
+        <StyledPageDiv>
+          <SimilarProdCard ID={id}></SimilarProdCard>
+        </StyledPageDiv>
+        <StyledPageDiv>
+          <h1 style={{ color: "white" }}>Értékelések</h1>
         </StyledPageDiv>
       </ThemeProvider>
     </>
