@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
+import React, { useContext } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../DataBaseLoader";
+import { ProductContext, ProductContextProvider } from "../../context-providers/ProductContext";
 
 const StyledCardContainer = styled("div")({
   display: "flex",
@@ -41,44 +41,52 @@ const StyledTable = styled("table")({
 
 const MiniCard = (props) => {
   const navigate = useNavigate();
+  const { getProductById } = useContext(ProductContext);
+  const product = getProductById(props.id);
 
   const navigateToProductPage = () => {
     navigate(`/Product/${props.id}`);
   };
 
-  return products.map((product, i) =>
-    product.id === props.id ? (
-      <Fragment key={i}>
-        <StyledCardContainer>
-          <StyledTable onClick={navigateToProductPage}>
-            <tbody>
-              <tr>
-                <td rowSpan="3">
-                  <img
-                    src={product.imageUri}
-                    alt=""
-                    overflow="hidden"
-                    height="100px"
-                    width="150px"
-                    align="middle"
-                  ></img>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <StyledH3>{product.title}</StyledH3>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <StyledP>{product.body}</StyledP>
-                </td>
-              </tr>
-            </tbody>
-          </StyledTable>
-        </StyledCardContainer>
-      </Fragment>
-    ) : null
+  return (
+    <StyledCardContainer>
+      <StyledTable onClick={navigateToProductPage}>
+        <tbody>
+          <tr>
+            <td rowSpan="3">
+              <img
+                src={product.imageUri}
+                alt=""
+                overflow="hidden"
+                height="100px"
+                width="150px"
+                align="middle"
+              ></img>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <StyledH3>{product.title}</StyledH3>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <StyledP>{product.body}</StyledP>
+            </td>
+          </tr>
+        </tbody>
+      </StyledTable>
+    </StyledCardContainer>
   );
 };
-export default MiniCard;
+
+function MiniCardWithProps(props) {
+  return (
+    <ProductContextProvider>
+      <MiniCard id={props.id} />
+    </ProductContextProvider>
+  );
+}
+
+export default MiniCardWithProps;
+

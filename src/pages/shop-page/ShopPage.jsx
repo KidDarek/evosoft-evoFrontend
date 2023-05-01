@@ -2,8 +2,9 @@ import { Button, createTheme, styled } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../DataBaseLoader";
-import MiniCard from "./MiniCard";
+import { ProductContext, ProductContextProvider } from "../../context-providers/ProductContext";
+import MiniCardWithProps from "./MiniCard";
+import { useContext } from "react";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -83,6 +84,8 @@ const CalculateTotal = () => {
 const ShopPage = () => {
   const navigate = useNavigate();
 
+  const { products } = useContext(ProductContext);
+
   const navigateToCheckoutPage = () => {
     navigate(`/Checkout`);
   };
@@ -111,7 +114,7 @@ const ShopPage = () => {
                     <div key={id}>
                       <tr valign="middle">
                         <td>
-                          <MiniCard id={id} />
+                          <MiniCardWithProps id={id} />
                         </td>
                         <td rowSpan="3" width="17%">
                           <StyledDiv>x{quantity}</StyledDiv>
@@ -166,4 +169,12 @@ const ShopPage = () => {
   );
 };
 
-export default ShopPage;
+function App() {
+  return (
+    <ProductContextProvider>
+      <ShopPage />
+    </ProductContextProvider>
+  );
+}
+
+export default App;

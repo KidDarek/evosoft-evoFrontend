@@ -5,7 +5,7 @@ import Footer from "./common-components/footer/Footer";
 import ContactPage from "./pages/contact-page/ContactPage";
 import FaqPage from "./pages/faq-page/FaqPage";
 import AboutUsPage from "./pages/about-us-page/AboutUsPage";
-import ProductPage from "./pages/product-page/ProductPage";
+import ProductPageWithContext from "./pages/product-page/ProductPage";
 import ProfilePage from "./pages/profile-page/ProfilePage";
 import { styled } from "@mui/material";
 import SearchPage from "./pages/search-page/SearchPage";
@@ -31,7 +31,7 @@ function App() {
             <Route path="/Shop" element={<ShopPage />} />
             <Route path="/Checkout" element={<CheckoutPage />} />
             <Route path="/Profile:id" element={<ProfilePage />} />
-            <Route path="/Product/:id" element={<ProductPage />} />
+            <Route path="/Product/:id" element={<ProductPageWithContext />} />
           </Routes>
         </BrowserRouter>
         <Footer />

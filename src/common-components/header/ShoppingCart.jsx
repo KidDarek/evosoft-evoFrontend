@@ -4,7 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../DataBaseLoader";
+import { products } from "../../db";
 import { styled } from "@mui/system";
 
 const StyledClearText = styled("div")({

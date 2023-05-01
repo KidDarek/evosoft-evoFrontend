@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "@mui/material";
 import CardSmall from "./CardSmall";
 import CardBig from "./CardBig";
-import { products } from "../../../DataBaseLoader";
+import { products } from "../../../db";
 
 const StyledBannerDiv = styled("div")({
   display: "flex",

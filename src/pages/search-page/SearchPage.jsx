@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { styled, Grid } from "@mui/material";
-import { products } from "../../DataBaseLoader";
-import Card from "../main-page/best-deals/Card";
+import { ProductContext, ProductContextProvider } from "../../context-providers/ProductContext";
 import Filter from "./Filter";
+import CardWithProps from "../main-page/best-deals/Card";
 
 const StyledPadding = styled("div")({
   backgroundColor: "#00EFB3",
@@ -43,6 +43,7 @@ var INITIAL_MIN_PRICE_VALUE = 0;
 var INITIAL_MAX_PRICE_VALUE = 9999;
 
 const SearchPage = () => {
+  const { products } = useContext(ProductContext);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -62,7 +63,7 @@ const SearchPage = () => {
 
     if (selectedTags.length > 0) {
       filtered = filtered.filter((product) => {
-        return selectedTags.every((tag) => product.tag.includes(tag));
+        return selectedTags.every((tags) => product.tags.includes(tags));
       });
     }
 
@@ -75,7 +76,7 @@ const SearchPage = () => {
       });
     }
     setFilteredProducts(filtered);
-  }, [selectedTags, searchString, selectedPriceRange]);
+  }, [selectedTags, searchString, selectedPriceRange, products]);
 
   useEffect(() => {
     filterProducts();
@@ -86,7 +87,7 @@ const SearchPage = () => {
   };
 
   const priceRangeOfProducts = () => {
-    let minPrice = products[0].price;
+    let minPrice = 0;
     let maxPrice = minPrice;
     for (let i = 0; i < products.length; i++) {
       if (minPrice > products[i].price) {
@@ -130,7 +131,7 @@ const SearchPage = () => {
                 ) : (
                   filteredProducts.map((product) => (
                     <Grid item xs="auto" md="auto" key={product.id}>
-                      <Card id={product.id} />
+                      <CardWithProps id={product.id} />
                     </Grid>
                   ))
                 )}
@@ -143,4 +144,13 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+function App() {
+  return (
+    <ProductContextProvider>
+      <SearchPage />
+    </ProductContextProvider>
+  );
+}
+
+export default App;
+

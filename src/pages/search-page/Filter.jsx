@@ -1,8 +1,8 @@
-import React from "react";
+import { useContext } from 'react';
 import Slider from "@mui/material/Slider";
 import { styled } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { products } from "../../DataBaseLoader";
+import { ProductContext, ProductContextProvider } from "../../context-providers/ProductContext";
 
 const StyledFilterBox = styled("div")({
   backgroundColor: "#00cc99",
@@ -44,6 +44,9 @@ const StyledFilterHider = styled("div")({
 
 
 const Filter = (props) => {
+
+  const { products } = useContext(ProductContext);
+
   const {
     selectedTags,
     setSelectedTags,
@@ -54,11 +57,11 @@ const Filter = (props) => {
   } = props;
 
   // Get all distinct tags from products
-  const tags = new Set();
+  const setTags = new Set();
   products.forEach((product) => {
-    product.tag.forEach((tag) => tags.add(tag));
+    product.tags.forEach((tag) => setTags.add(tag));
   });
-  const uniqueTags = [...tags];
+  const uniqueTags = [...setTags];
 
   const handleCheckboxChange = (e) => {
     if (e.target.checked) {
@@ -174,4 +177,26 @@ const Filter = (props) => {
   );
 };
 
-export default Filter;
+function FilterWithProps({
+  selectedTags,
+  setSelectedTags,
+  selectedPriceRange,
+  setSelectedPriceRange,
+  INITIAL_MIN_PRICE_VALUE,
+  INITIAL_MAX_PRICE_VALUE,
+}) {
+  return (
+    <ProductContextProvider>
+      <Filter
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
+        selectedPriceRange={selectedPriceRange}
+        setSelectedPriceRange={setSelectedPriceRange}
+        INITIAL_MIN_PRICE_VALUE={INITIAL_MIN_PRICE_VALUE}
+        INITIAL_MAX_PRICE_VALUE={INITIAL_MAX_PRICE_VALUE}
+      />
+    </ProductContextProvider>
+  );
+}
+
+export default FilterWithProps;

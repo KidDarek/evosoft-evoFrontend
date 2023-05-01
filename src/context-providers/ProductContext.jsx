@@ -1,7 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import ProductAPI from "../api/ProductAPI";
 
-export const ProductContext = createContext();
+export const ProductContext = createContext({ products: [] });
 
 export const ProductContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
@@ -10,6 +10,10 @@ export const ProductContextProvider = ({ children }) => {
     const products = await ProductAPI.getAll();
     setProducts(products);
   };
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
 
   const getProductById = async (id) => {
     return await ProductAPI.getById(id);
