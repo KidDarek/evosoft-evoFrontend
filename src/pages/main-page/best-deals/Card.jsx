@@ -1,7 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { ProductContextProvider, ProductContext } from "../../../context-providers/ProductContext";
+import {
+  ProductContextProvider,
+  ProductContext,
+} from "../../../context-providers/ProductContext";
 
 const StyledCardContainer = styled("div")({
   width: "300px",
@@ -44,53 +47,48 @@ const StyledH2ForPrice = styled("h2")({
 
 const Card = (props) => {
   const navigate = useNavigate();
-  const { getProductById } = useContext(ProductContext);
 
   const navigateToProductPage = () => {
     navigate(`/Product/${props.id}`);
   };
 
+  const { getProductById } = useContext(ProductContext);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const getProduct = async () => {
+    async function fetchProduct() {
       const product = await getProductById(props.id);
       setProduct(product);
-    };
-    getProduct();
+    }
+
+    fetchProduct();
   }, [getProductById, props.id]);
 
   if (!product) {
-    return null;
+    return <div>Loading...</div>;
   }
 
   return (
-    <StyledCardContainer onClick={navigateToProductPage}>
-      <div>
-        <img
-          src={product.imageUri}
-          alt=""
-          overflow="hidden"
-          height="200px"
-        ></img>
-      </div>
-      <StyledCardContent>
-        <StyledCardTitle>
-          <StyledH3>{product.title}</StyledH3>
-        </StyledCardTitle>
-        <StyledP>{product.body}</StyledP>
-        <StyledH2ForPrice>{"$" + product.price}</StyledH2ForPrice>
-      </StyledCardContent>
-    </StyledCardContainer>
-  );
-};
-
-const CardWithContext = (props) => {
-  return (
     <ProductContextProvider>
-      <Card {...props} />
+      <StyledCardContainer onClick={navigateToProductPage}>
+        <div>
+          <img
+            src={product.imageUri}
+            alt=""
+            overflow="hidden"
+            height="200px"
+          ></img>
+        </div>
+        <StyledCardContent>
+          <StyledCardTitle>
+            <StyledH3>{product.title}</StyledH3>
+          </StyledCardTitle>
+          <StyledP>{product.body}</StyledP>
+          <StyledH2ForPrice>{"$" + product.price}</StyledH2ForPrice>
+        </StyledCardContent>
+      </StyledCardContainer>
     </ProductContextProvider>
   );
 };
 
-export default CardWithContext;
+export default Card;

@@ -1,6 +1,9 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
 import { styled, Grid } from "@mui/material";
-import { ProductContext, ProductContextProvider } from "../../context-providers/ProductContext";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
 import Filter from "./Filter";
 import CardWithProps from "../main-page/best-deals/Card";
 
@@ -98,7 +101,7 @@ const SearchPage = () => {
       }
     }
     return [minPrice, maxPrice];
-  }
+  };
   const initialPriceRange = priceRangeOfProducts();
   INITIAL_MIN_PRICE_VALUE = initialPriceRange[0];
   INITIAL_MAX_PRICE_VALUE = initialPriceRange[1];
@@ -153,4 +156,3 @@ function App() {
 }
 
 export default App;
-

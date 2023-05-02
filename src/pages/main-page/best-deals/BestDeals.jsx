@@ -1,8 +1,11 @@
 import { Grid } from "@mui/material";
 import React, { Fragment, useContext } from "react";
 import { styled } from "@mui/material";
-import { ProductContext, ProductContextProvider } from "../../../context-providers/ProductContext";
-import CardWithContext from "./Card";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../../context-providers/ProductContext";
+import Card from "./Card";
 
 const StyledPadding = styled("div")({
   paddingLeft: "9rem",
@@ -52,7 +55,7 @@ const ReturnTwoRandomProductByCategory = () => {
         {products.map((product) =>
           product.category === category ? (
             <Grid item xs="auto" md="auto" key={product.id}>
-              <CardWithContext id={product.id} />
+              <Card id={product.id} />
             </Grid>
           ) : null
         )}
@@ -64,17 +67,13 @@ const ReturnTwoRandomProductByCategory = () => {
 const BestDealsPage = () => {
   return (
     <>
-      <StyledPadding>
-        <ReturnTwoRandomProductByCategory />
-      </StyledPadding>
+      <ProductContextProvider>
+        <StyledPadding>
+          <ReturnTwoRandomProductByCategory />
+        </StyledPadding>
+      </ProductContextProvider>
     </>
   );
 };
 
-export default function WrappedBestDealsPage() {
-  return (
-    <ProductContextProvider>
-      <BestDealsPage />
-    </ProductContextProvider>
-  );
-};
+export default BestDealsPage;

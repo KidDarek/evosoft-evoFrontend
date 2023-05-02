@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { products, users } from "../../db";
+import { users } from "../../db";
 import {
   ProductContext,
   ProductContextProvider,
@@ -100,15 +100,30 @@ const AddItemToShoppingCart = (id) => {
   localStorage.setItem("shoppingItems", JSON.stringify(shoppingItems));
 };
 
-const ProductPage = (props) => {
+const ProductPage = () => {
   const [value, setValue] = React.useState("1");
 
   let accountRole = users[0].role;
   console.log(accountRole);
 
   const params = useParams();
+
   const { getProductById } = useContext(ProductContext);
-  const product = getProductById(params.id);
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    async function fetchProduct() {
+      const id = params.id;
+      const product = await getProductById(id);
+      setProduct(product);
+    }
+
+    fetchProduct();
+  }, [getProductById, params.id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
