@@ -63,16 +63,17 @@ const AnswerQuestionPage = () => {
               </StyledPageDiv>
               <StyledPageDiv>
                 <StyledButtonTable>
-                  <tbody>
-                    <tr>
-                      <td width="50%">
-                        <AnswerQuestionButton id={userQuestion.id} />
-                      </td>
-                      <td style={{ width: "50%", textAlign: "right" }}>
-                        <DeleteQuestionButton id={userQuestion.id} />
-                      </td>
-                    </tr>
-                  </tbody>
+                  <td width="50%">
+                    <AnswerQuestionButton id={userQuestion.id} />
+                  </td>
+                  <td
+                    style={{
+                      width: "50%",
+                      textAlign: "right",
+                    }}
+                  >
+                    <DeleteQuestionButton id={userQuestion.id} />
+                  </td>
                 </StyledButtonTable>
               </StyledPageDiv>
             </Fragment>
