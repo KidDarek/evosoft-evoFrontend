@@ -84,8 +84,22 @@ const AddItemToShoppingCart = (id) => {
       : JSON.parse(localStorage.getItem("shoppingItems"));
   const itemQuantityInput = document.getElementById("item-quantity");
   const quantity = parseInt(itemQuantityInput.value);
+
   const { getProductById } = useContext(ProductContext);
-  const product = getProductById(id);
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const product = await getProductById(id);
+      setProduct(product);
+    };
+    fetchProduct();
+  }, [id, getProductById]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
   const price = product.price;
   if (quantity === 0) {
     return;
@@ -112,14 +126,12 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    async function fetchProduct() {
-      const id = params.id;
-      const product = await getProductById(id);
+    const fetchProduct = async () => {
+      const product = await getProductById(params.id);
       setProduct(product);
-    }
-
+    };
     fetchProduct();
-  }, [getProductById, params.id]);
+  }, [params.id, getProductById]);
 
   if (!product) {
     return <div>Loading...</div>;

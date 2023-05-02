@@ -1,7 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { ProductContext, ProductContextProvider } from "../../context-providers/ProductContext";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
 
 const StyledCardContainer = styled("div")({
   display: "flex",
@@ -41,8 +44,22 @@ const StyledTable = styled("table")({
 
 const MiniCard = (props) => {
   const navigate = useNavigate();
+
   const { getProductById } = useContext(ProductContext);
-  const product = getProductById(props.id);
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    async function fetchProduct() {
+      const product = await getProductById(props.id);
+      setProduct(product);
+    }
+
+    fetchProduct();
+  }, [getProductById, props.id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   const navigateToProductPage = () => {
     navigate(`/Product/${props.id}`);
@@ -89,4 +106,3 @@ function MiniCardWithProps(props) {
 }
 
 export default MiniCardWithProps;
-

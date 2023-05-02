@@ -16,7 +16,8 @@ export const ProductContextProvider = ({ children }) => {
   }, []);
 
   const getProductById = async (id) => {
-    return await ProductAPI.getById(id);
+    const product = await ProductAPI.getById(id);
+    return product;
   };
 
   const addProduct = async (product) => {

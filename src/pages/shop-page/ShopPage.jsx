@@ -2,7 +2,10 @@ import { Button, createTheme, styled } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ProductContext, ProductContextProvider } from "../../context-providers/ProductContext";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
 import MiniCardWithProps from "./MiniCard";
 import { useContext } from "react";
 
