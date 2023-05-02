@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { products, users } from "../../DataBaseLoader";
+import { products } from "../../DataBaseLoader";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
 import SimilarProdCard from "./SimilarProdCard";
@@ -147,15 +147,15 @@ const AddItemToShoppingCart = (id) => {
 };
 
 const ProductPage = (props) => {
-  const [value, setValue] = React.useState("1");
-  const [isAnimationused, setAnimationUsage] = useState(false);
-
-
-  let accountRole = users[0].role;
-  console.log(accountRole);
-
   const params = useParams();
   const id = params.id;
+
+  const [value, setValue] = React.useState("1");
+  const [isAnimationused, setAnimationUsage] = useState(false);
+  const [ProductInfo, setProductInfo] = useState([products[id].title, products[id].price, products[id].category, products[id].tag], products[id].body);
+
+
+  let role = 0;
   return (
     <>
       <ThemeProvider theme={BasicTheme}>
@@ -179,25 +179,63 @@ const ProductPage = (props) => {
           <StyledInfoDivText>
             <div>
               <h2 style={{ color: "white" }}>Product name:</h2>
-              <div style={{ color: "white" }}> {products[id].title}</div>
+              {role === 0 ? <div style={{ color: "white" }}> {products[id].title}</div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="product-name"
+                  label="ProductInfo[0]"
+                  variant="outlined"
+                  color="white"
+                  value={ProductInfo[0]}
+                  sx={{ width: 280 }}
+                />}
+
               <h2 style={{ color: "white" }}>Price:</h2>
-              <div style={{ color: "white" }}> {products[id].price}</div>
+              {role === 0 ? <div style={{ color: "white" }}> {products[id].price}$</div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="price"
+                  label="Price"
+                  variant="outlined"
+                  color="white"
+                  value={ProductInfo[1]}
+                  sx={{ width: 280 }} />}
               <h2 style={{ color: "white" }}>Category:</h2>
-              <div style={{ color: "white" }}> {products[id].category}</div>
+              {role === 0 ? <div style={{ color: "white" }}> {products[id].category}</div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="category"
+                  label="Category"
+                  variant="outlined"
+                  color="white"
+                  value={ProductInfo[2]}
+                  sx={{ width: 280 }} />}
               <h2 style={{ color: "white" }}>Tags:</h2>
-              <div style={{ color: "white" }}>
+              {role === 0 ? <div style={{ color: "white" }}>
                 {products[id].tag.map((i) => i + ", ")}
-              </div>
+              </div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="tags"
+                  label="Tags"
+                  variant="outlined"
+                  color="white"
+                  value={ProductInfo[3].map((i) => i + ", ")}
+                  sx={{ width: 280 }} />}
               <div style={{ paddingTop: "20px" }}>
-                <MUIButton variant="contained" onClick={() => {
+                {role === 0 ? <MUIButton variant="contained" color="red" onClick={() => {
                   AddItemToShoppingCart(id);
                   setAnimationUsage(true);
                   setTimeout(() => {
                     setAnimationUsage(false)
                   }, 5000);
                 }}>
-                  Add item to cart </MUIButton>
-                <TextField
+                  Add item to cart </MUIButton> : <MUIButton variant="contained" color="red" >Change Information</MUIButton>}
+                {role === 0 ? <TextField
                   focused
                   margin="dense"
                   id="item-quantity"
@@ -219,7 +257,7 @@ const ProductPage = (props) => {
 
                     setValue(value);
                   }}
-                />
+                /> : <div></div>}
               </div>
             </div>
           </StyledInfoDivText>
@@ -233,20 +271,29 @@ const ProductPage = (props) => {
         </StyledPageDiv>
         <StyledPageDiv>
           <StyledInfoDivText2>
-            <div>
-              <h1 style={{ color: "white" }}>Termék leírása</h1>
-              <div style={{ color: "white" }}>{products[id].body}</div>
+            <div style={{ width: "100%" }}>
+              <h1 style={{ color: "white" }}>Product description</h1>
+              {role === 0 ? <div style={{ color: "white" }}>{products[id].body}</div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="description"
+                  label="Description"
+                  variant="outlined"
+                  color="white"
+                  value={products[id].body}
+                  sx={{ width: "100%" }} />}
             </div>
           </StyledInfoDivText2>
         </StyledPageDiv>
         <StyledPageDiv>
-          <h1 style={{ color: "white" }}>Hasonló termékek</h1>
+          <h1 style={{ color: "white" }}>Similar products</h1>
         </StyledPageDiv>
         <StyledPageDiv>
           <SimilarProdCard ID={id}></SimilarProdCard>
         </StyledPageDiv>
         <StyledPageDiv>
-          <h1 style={{ color: "white" }}>Értékelések</h1>
+          <h1 style={{ color: "white" }}>Ratings</h1>
         </StyledPageDiv>
       </ThemeProvider>
     </>

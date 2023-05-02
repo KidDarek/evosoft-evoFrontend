@@ -23,7 +23,7 @@ function SimilarProdCard(props) {
     return (
         products.map((product, i) => (
             <Fragment key={i}>
-                {product.category === products[props.ID].category ? (
+                {product.category === products[props.ID].category && product.id !== products[props.ID].id ? (
                     <StyledProdCard>
                         <StyledImg src={product.imageUri} alt="Picture" />
                     </StyledProdCard>
