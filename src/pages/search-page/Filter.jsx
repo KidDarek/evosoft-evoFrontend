@@ -1,17 +1,19 @@
 import React from "react";
 import Slider from "@mui/material/Slider";
-import { styled } from "@mui/material";
+import { styled, Chip, Checkbox } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { products } from "../../DataBaseLoader";
 
 const StyledFilterBox = styled("div")({
   backgroundColor: "#00cc99",
   justifyContent: "start",
-  marginLeft: "10px",
+  marginLeft: "15px",
   marginTop: "83px",
   border: "3px solid #00a568",
-  width: "30%",
+  width: "23%",
   height: "100%",
+  color: "white",
+  padding: "0.4%",
   "@keyframes filterpopin": {
     from: {
       transform: "translateX(-100%)",
@@ -41,8 +43,6 @@ const StyledFilterHider = styled("div")({
   position: "static",
 });
 
-
-
 const Filter = (props) => {
   const {
     selectedTags,
@@ -60,11 +60,11 @@ const Filter = (props) => {
   });
   const uniqueTags = [...tags];
 
-  const handleCheckboxChange = (e) => {
-    if (e.target.checked) {
-      setSelectedTags([...selectedTags, e.target.value]);
+  const handleCheckboxChange = (tag) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
     } else {
-      setSelectedTags(selectedTags.filter((tag) => tag !== e.target.value));
+      setSelectedTags([...selectedTags, tag]);
     }
   };
 
@@ -85,7 +85,7 @@ const Filter = (props) => {
     value = clampValue(value, INITIAL_MIN_PRICE_VALUE, INITIAL_MAX_PRICE_VALUE);
     value = clampValue(value, selectedPriceRange[0], INITIAL_MAX_PRICE_VALUE);
     setSelectedPriceRange([selectedPriceRange[0], value]);
-  }
+  };
 
   const clampValue = (value, min, max) => {
     if (isNaN(value)) {
@@ -100,7 +100,8 @@ const Filter = (props) => {
     <StyledFilterBox>
       <StyledFilterHider>
         {/*Searchbar*/}
-        <div style={{ padding: "10px" }}>
+        <div style={{ padding: "0px 10px 10px 10px" }}>
+          <h3>Search</h3>
           <form>
             <TextField
               id="outlined-search"
@@ -108,31 +109,36 @@ const Filter = (props) => {
               variant="outlined"
               onChange={props.handleSearch}
               style={{ width: "100%" }}
+              InputLabelProps={{
+                sx: { color: "white" },
+              }}
             />
           </form>
         </div>
         {/*TagSelector*/}
-        <div style={{ padding: "10px" }}>
-          <div>Tags:</div>
-          <div style={{ width: "100%" }}>
+        <div style={{ padding: "0px 10px 0px 10px" }}>
+          <h3>Tags:</h3>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
             {uniqueTags.map((tag) => (
-              <div
-                key={tag}
-                style={{ display: "inline-block", margin: "10px" }}
-              >
-                <input
-                  type="checkbox"
-                  value={tag}
-                  checked={selectedTags.includes(tag)}
-                  onChange={handleCheckboxChange}
+              <div key={tag}>
+                <Chip
+                  label={tag}
+                  variant={selectedTags.includes(tag) ? "default" : "outlined"}
+                  onClick={() => handleCheckboxChange(tag)}
+                  style={{ color: "white", borderColor: "grey" }}
                 />
-                <label htmlFor={tag}>{tag}</label>
+                <Checkbox
+                  id={tag}
+                  checked={selectedTags.includes(tag)}
+                  onChange={() => handleCheckboxChange(tag)}
+                  style={{ display: "none" }}
+                />
               </div>
             ))}
           </div>
         </div>
         {/** Price range /*/}
-        <div style={{ width: "90%", padding: "15px" }}>
+        <div style={{ padding: "15px" }}>
           <h3>Price range</h3>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <TextField
@@ -141,8 +147,18 @@ const Filter = (props) => {
               type="number"
               variant="outlined"
               value={selectedPriceRange[0]}
-              style={{ width: "35%" }}
-              onChange={(e) => { validateMinPriceInput(e) }}
+              style={{ width: "35%", color: "white" }}
+              onChange={(e) => {
+                validateMinPriceInput(e);
+              }}
+              InputLabelProps={{
+                sx: { color: "white" },
+              }}
+              InputProps={{
+                sx: {
+                  color: "white",
+                },
+              }}
             />
             <label
               style={{ width: "50%", height: "50px", margin: "0px 10px" }}
@@ -154,10 +170,20 @@ const Filter = (props) => {
               variant="outlined"
               value={selectedPriceRange[1]}
               style={{ width: "35%" }}
-              onChange={(e) => { validateMaxPriceInput(e) }}
+              onChange={(e) => {
+                validateMaxPriceInput(e);
+              }}
+              InputLabelProps={{
+                sx: { color: "white" },
+              }}
+              InputProps={{
+                sx: {
+                  color: "white",
+                },
+              }}
             />
           </div>
-          <div>
+          <div style={{ padding: "5px 10px 0px 10px" }}>
             <Slider
               getAriaLabel={() => "Price Range"}
               value={selectedPriceRange}
