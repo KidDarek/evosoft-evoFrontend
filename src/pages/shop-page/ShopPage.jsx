@@ -84,7 +84,7 @@ const CalculateTotal = () => {
   }
 };
 
-const ShopPage = () => {
+const ShopPageInside = () => {
   const navigate = useNavigate();
 
   const { products } = useContext(ProductContext);
@@ -172,12 +172,14 @@ const ShopPage = () => {
   );
 };
 
-function App() {
+const ShopPage = () => {
   return (
-    <ProductContextProvider>
-      <ShopPage />
-    </ProductContextProvider>
+    <>
+      <ProductContextProvider>
+        <ShopPageInside />
+      </ProductContextProvider>
+    </>
   );
-}
+};
 
-export default App;
+export default ShopPage;

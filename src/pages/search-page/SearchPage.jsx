@@ -45,7 +45,7 @@ const StyledProductDiv = styled("div")({
 var INITIAL_MIN_PRICE_VALUE = 0;
 var INITIAL_MAX_PRICE_VALUE = 9999;
 
-const SearchPage = () => {
+const SearchPageInside = () => {
   const { products } = useContext(ProductContext);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
@@ -54,6 +54,28 @@ const SearchPage = () => {
     INITIAL_MIN_PRICE_VALUE,
     INITIAL_MAX_PRICE_VALUE,
   ]);
+
+  // NEW CODE SNIPPET
+  useEffect(() => {
+    const priceRangeOfProducts = () => {
+      let minPrice = 0;
+      let maxPrice = minPrice;
+      for (let i = 0; i < products.length; i++) {
+        if (minPrice > products[i].price) {
+          minPrice = products[i].price;
+        }
+        if (maxPrice < products[i].price) {
+          maxPrice = products[i].price;
+        }
+      }
+      return [minPrice, maxPrice];
+    };
+
+    if (products.length > 0) {
+      const priceRange = priceRangeOfProducts();
+      setSelectedPriceRange([priceRange[0], priceRange[1]]);
+    }
+  }, [products]);
 
   const filterProducts = useCallback(() => {
     let filtered = [...products];
@@ -89,61 +111,53 @@ const SearchPage = () => {
     setSearchString(e.target.value);
   };
 
-  const priceRangeOfProducts = () => {
-    let minPrice = 0;
-    let maxPrice = minPrice;
-    for (let i = 0; i < products.length; i++) {
-      if (minPrice > products[i].price) {
-        minPrice = products[i].price;
-      }
-      if (maxPrice < products[i].price) {
-        maxPrice = products[i].price;
-      }
-    }
-    return [minPrice, maxPrice];
-  };
-  const initialPriceRange = priceRangeOfProducts();
-  INITIAL_MIN_PRICE_VALUE = initialPriceRange[0];
-  INITIAL_MAX_PRICE_VALUE = initialPriceRange[1];
+  return (
+    <>
+      <StyledPadding>
+        <StyledDiv>
+          <StyledContent>
+            <Filter
+              handleSearch={handleSearch}
+              selectedTags={selectedTags}
+              setSelectedTags={setSelectedTags}
+              selectedPriceRange={selectedPriceRange}
+              setSelectedPriceRange={setSelectedPriceRange}
+              filterProducts={filterProducts}
+              INITIAL_MIN_PRICE_VALUE={INITIAL_MIN_PRICE_VALUE}
+              INITIAL_MAX_PRICE_VALUE={INITIAL_MAX_PRICE_VALUE}
+            />
+            <StyledProductDiv>
+              <Grid
+                container
+                spacing={10}
+                justifyContent="center"
+                marginTop={1}
+                marginBottom={5}
+                paddingBottom={5}
+              >
+                {filteredProducts.length === 0 ? (
+                  <div>No product satisfies your filters</div>
+                ) : (
+                  filteredProducts.map((product) => (
+                    <Grid item xs="auto" md="auto" key={product.id}>
+                      <CardWithProps id={product.id} />
+                    </Grid>
+                  ))
+                )}
+              </Grid>
+            </StyledProductDiv>
+          </StyledContent>
+        </StyledDiv>
+      </StyledPadding>
+    </>
+  );
+};
+
+const SearchPage = () => {
   return (
     <>
       <ProductContextProvider>
-        <StyledPadding>
-          <StyledDiv>
-            <StyledContent>
-              <Filter
-                handleSearch={handleSearch}
-                selectedTags={selectedTags}
-                setSelectedTags={setSelectedTags}
-                selectedPriceRange={selectedPriceRange}
-                setSelectedPriceRange={setSelectedPriceRange}
-                filterProducts={filterProducts}
-                INITIAL_MIN_PRICE_VALUE={INITIAL_MIN_PRICE_VALUE}
-                INITIAL_MAX_PRICE_VALUE={INITIAL_MAX_PRICE_VALUE}
-              />
-              <StyledProductDiv>
-                <Grid
-                  container
-                  spacing={10}
-                  justifyContent="center"
-                  marginTop={1}
-                  marginBottom={5}
-                  paddingBottom={5}
-                >
-                  {filteredProducts.length === 0 ? (
-                    <div>No product satisfies your filters</div>
-                  ) : (
-                    filteredProducts.map((product) => (
-                      <Grid item xs="auto" md="auto" key={product.id}>
-                        <CardWithProps id={product.id} />
-                      </Grid>
-                    ))
-                  )}
-                </Grid>
-              </StyledProductDiv>
-            </StyledContent>
-          </StyledDiv>
-        </StyledPadding>
+        <SearchPageInside />
       </ProductContextProvider>
     </>
   );

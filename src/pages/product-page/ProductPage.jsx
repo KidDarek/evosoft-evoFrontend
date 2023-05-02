@@ -114,7 +114,7 @@ const AddItemToShoppingCart = (id) => {
   localStorage.setItem("shoppingItems", JSON.stringify(shoppingItems));
 };
 
-const ProductPage = () => {
+const ProductPageInside = () => {
   const [value, setValue] = React.useState("1");
 
   let accountRole = users[0].role;
@@ -203,6 +203,16 @@ const ProductPage = () => {
             </StyledInfoDivText2>
           </StyledPageDiv>
         </ThemeProvider>
+      </ProductContextProvider>
+    </>
+  );
+};
+
+const ProductPage = () => {
+  return (
+    <>
+      <ProductContextProvider>
+        <ProductPageInside />
       </ProductContextProvider>
     </>
   );
