@@ -6,10 +6,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { users } from "../../DataBaseLoader";
 import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
 import { IconButton, Snackbar } from "@mui/material";
-import * as uuid from "uuid";
 
 const SignUpPopup = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -49,8 +47,7 @@ const SignUpPopup = (props) => {
     const name = nameTextField.value;
     const password = passwordTextField.value;
     const role = "user";
-    const id = uuid.v4();
-    const user = { id, name, email, password, role };
+    const user = { name, email, password, role };
     await (addUser(user))
     setOpen(false);
   };

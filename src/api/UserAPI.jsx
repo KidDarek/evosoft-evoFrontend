@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5232/Users";
+const BASE_URL = "http://localhost:5232/User";
 
 class UserAPI {
   static async getAll() {
@@ -18,6 +18,16 @@ class UserAPI {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
+    });
+  }
+
+  static async login(userData) {
+    await fetch(`${BASE_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     });
   }
 
