@@ -152,10 +152,10 @@ const ProductPage = (props) => {
 
   const [value, setValue] = React.useState("1");
   const [isAnimationused, setAnimationUsage] = useState(false);
-  const [ProductInfo, setProductInfo] = useState([products[id].title, products[id].price, products[id].category, products[id].tag], products[id].body);
+  //const [ProductInfo, setProductInfo] = useState([products[id].title, products[id].price, products[id].category, products[id].tag], products[id].body);
 
 
-  let role = 0;
+  let role = 1;
   return (
     <>
       <ThemeProvider theme={BasicTheme}>
@@ -184,10 +184,10 @@ const ProductPage = (props) => {
                   focused
                   margin="dense"
                   id="product-name"
-                  label="ProductInfo[0]"
+                  label="Product name"
                   variant="outlined"
                   color="white"
-                  value={ProductInfo[0]}
+                  //value={ProductInfo[0]}
                   sx={{ width: 280 }}
                 />}
 
@@ -200,7 +200,7 @@ const ProductPage = (props) => {
                   label="Price"
                   variant="outlined"
                   color="white"
-                  value={ProductInfo[1]}
+                  //value={ProductInfo[1]}
                   sx={{ width: 280 }} />}
               <h2 style={{ color: "white" }}>Category:</h2>
               {role === 0 ? <div style={{ color: "white" }}> {products[id].category}</div> :
@@ -211,7 +211,7 @@ const ProductPage = (props) => {
                   label="Category"
                   variant="outlined"
                   color="white"
-                  value={ProductInfo[2]}
+                  //value={ProductInfo[2]}
                   sx={{ width: 280 }} />}
               <h2 style={{ color: "white" }}>Tags:</h2>
               {role === 0 ? <div style={{ color: "white" }}>
@@ -224,7 +224,7 @@ const ProductPage = (props) => {
                   label="Tags"
                   variant="outlined"
                   color="white"
-                  value={ProductInfo[3].map((i) => i + ", ")}
+                  //value={ProductInfo[3].map((i) => i + ", ")}
                   sx={{ width: 280 }} />}
               <div style={{ paddingTop: "20px" }}>
                 {role === 0 ? <MUIButton variant="contained" color="red" onClick={() => {
@@ -281,7 +281,7 @@ const ProductPage = (props) => {
                   label="Description"
                   variant="outlined"
                   color="white"
-                  value={products[id].body}
+                  //value={products[id].body}
                   sx={{ width: "100%" }} />}
             </div>
           </StyledInfoDivText2>
