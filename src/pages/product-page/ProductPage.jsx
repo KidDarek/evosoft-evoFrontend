@@ -167,7 +167,7 @@ const ProductPageInside = () => {
               <div>
                 <MUIButton
                   variant="contained"
-                  onClick={() => AddItemToShoppingCart(id)}
+                  onClick={() => addItemToShoppingCart(product, value)}
                 >
                   {" "}
                   Add item to cart{" "}

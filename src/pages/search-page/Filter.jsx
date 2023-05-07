@@ -69,7 +69,7 @@ const Filter = (props) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
     } else {
-      setSelectedTags(selectedTags.filter((tags) => tags !== e.target.value));
+      setSelectedTags([...selectedTags, tag]);
     }
   };
 
@@ -129,7 +129,9 @@ const Filter = (props) => {
                 <div key={tag}>
                   <Chip
                     label={tag}
-                    variant={selectedTags.includes(tag) ? "default" : "outlined"}
+                    variant={
+                      selectedTags.includes(tag) ? "default" : "outlined"
+                    }
                     onClick={() => handleCheckboxChange(tag)}
                     style={{ color: "white", borderColor: "grey" }}
                   />
