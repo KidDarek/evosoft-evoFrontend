@@ -6,6 +6,10 @@ import {
   ProductContext,
   ProductContextProvider,
 } from "../../context-providers/ProductContext";
+import {
+  CartItemsContext,
+  CartItemsContextProvider,
+} from "../../context-providers/CartItemsContext";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
 
@@ -77,43 +81,6 @@ const BasicTheme = createTheme({
   },
 });
 
-const AddItemToShoppingCart = (id) => {
-  let shoppingItems =
-    JSON.parse(localStorage.getItem("shoppingItems")) === null
-      ? []
-      : JSON.parse(localStorage.getItem("shoppingItems"));
-  const itemQuantityInput = document.getElementById("item-quantity");
-  const quantity = parseInt(itemQuantityInput.value);
-
-  const { getProductById } = useContext(ProductContext);
-  const [product, setProduct] = useState(null);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const product = await getProductById(id);
-      setProduct(product);
-    };
-    fetchProduct();
-  }, [id, getProductById]);
-
-  if (!product) {
-    return <div>Loading...</div>;
-  }
-
-  const price = product.price;
-  if (quantity === 0) {
-    return;
-  }
-  for (let index = 0; index < shoppingItems.length; index++) {
-    if (shoppingItems[index].id === id) {
-      return;
-    }
-  }
-  const shoppingItem = { id, quantity, price };
-  shoppingItems.push(shoppingItem);
-  localStorage.setItem("shoppingItems", JSON.stringify(shoppingItems));
-};
-
 const ProductPageInside = () => {
   const [value, setValue] = React.useState("1");
 
@@ -123,6 +90,7 @@ const ProductPageInside = () => {
   const params = useParams();
 
   const { getProductById } = useContext(ProductContext);
+  const { addToCart } = useContext(CartItemsContext);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -137,73 +105,77 @@ const ProductPageInside = () => {
     return <div>Loading...</div>;
   }
 
+  const addItemToShoppingCart = (product, value) => {
+    product.quantity = value;
+
+    addToCart(product); // Call the addToCart function from the CartItemsContext
+  };
+
   return (
     <>
-      <ProductContextProvider>
-        <ThemeProvider theme={BasicTheme}>
-          <StyledPageDiv>
-            <StyledInfoDiv>
-              <div>
-                <StyledImage src={product.imageUri} alt="kep" />
+      <ThemeProvider theme={BasicTheme}>
+        <StyledPageDiv>
+          <StyledInfoDiv>
+            <div>
+              <StyledImage src={product.imageUri} alt="kep" />
+            </div>
+          </StyledInfoDiv>
+          <StyledInfoDivText>
+            <div>
+              <h2 style={{ color: "white" }}>Product name:</h2>
+              <div style={{ color: "white" }}> {product.title}</div>
+              <h2 style={{ color: "white" }}>Price:</h2>
+              <div style={{ color: "white" }}> {product.price}</div>
+              <h2 style={{ color: "white" }}>Category:</h2>
+              <div style={{ color: "white" }}> {product.category}</div>
+              <h2 style={{ color: "white" }}>Tags:</h2>
+              <div style={{ color: "white" }}>
+                {product.tags.map((i) => i + ", ")}
               </div>
-            </StyledInfoDiv>
-            <StyledInfoDivText>
-              <div>
-                <h2 style={{ color: "white" }}>Product name:</h2>
-                <div style={{ color: "white" }}> {product.title}</div>
-                <h2 style={{ color: "white" }}>Price:</h2>
-                <div style={{ color: "white" }}> {product.price}</div>
-                <h2 style={{ color: "white" }}>Category:</h2>
-                <div style={{ color: "white" }}> {product.category}</div>
-                <h2 style={{ color: "white" }}>Tags:</h2>
-                <div style={{ color: "white" }}>
-                  {product.tags.map((i) => i + ", ")}
-                </div>
-                <div style={{ paddingTop: "20px" }}>
-                  <MUIButton
-                    variant="contained"
-                    onClick={() => AddItemToShoppingCart(product.id)}
-                  >
-                    {" "}
-                    Add item to cart{" "}
-                  </MUIButton>
-                  <TextField
-                    focused
-                    margin="dense"
-                    id="item-quantity"
-                    label="Quantity"
-                    type="number"
-                    variant="outlined"
-                    color="white"
-                    sx={{ width: 150 }}
-                    inputProps={{ style: { color: "white" } }}
-                    value={value}
-                    onChange={(e) => {
-                      var value = parseInt(e.target.value, 10);
-                      if (isNaN(value)) {
-                        value = 1;
-                      }
+              <div style={{ paddingTop: "20px" }}>
+                <MUIButton
+                  variant="contained"
+                  onClick={() => addItemToShoppingCart(product, value)}
+                >
+                  {" "}
+                  Add item to cart{" "}
+                </MUIButton>
+                <TextField
+                  focused
+                  margin="dense"
+                  id="item-quantity"
+                  label="Quantity"
+                  type="number"
+                  variant="outlined"
+                  color="white"
+                  sx={{ width: 150 }}
+                  inputProps={{ style: { color: "white" } }}
+                  value={value}
+                  onChange={(e) => {
+                    var value = parseInt(e.target.value, 10);
+                    if (isNaN(value)) {
+                      value = 1;
+                    }
 
-                      if (value > 100) value = 100;
-                      if (value < 1) value = 1;
+                    if (value > 100) value = 100;
+                    if (value < 1) value = 1;
 
-                      setValue(value);
-                    }}
-                  />
-                </div>
+                    setValue(value);
+                  }}
+                />
               </div>
-            </StyledInfoDivText>
-          </StyledPageDiv>
-          <StyledPageDiv>
-            <StyledInfoDivText2>
-              <div>
-                <h1 style={{ color: "white" }}>Termék leírása</h1>
-                <div style={{ color: "white" }}>{product.body}</div>
-              </div>
-            </StyledInfoDivText2>
-          </StyledPageDiv>
-        </ThemeProvider>
-      </ProductContextProvider>
+            </div>
+          </StyledInfoDivText>
+        </StyledPageDiv>
+        <StyledPageDiv>
+          <StyledInfoDivText2>
+            <div>
+              <h1 style={{ color: "white" }}>Termék leírása</h1>
+              <div style={{ color: "white" }}>{product.body}</div>
+            </div>
+          </StyledInfoDivText2>
+        </StyledPageDiv>
+      </ThemeProvider>
     </>
   );
 };
@@ -212,7 +184,9 @@ const ProductPage = () => {
   return (
     <>
       <ProductContextProvider>
-        <ProductPageInside />
+        <CartItemsContextProvider>
+          <ProductPageInside />
+        </CartItemsContextProvider>
       </ProductContextProvider>
     </>
   );

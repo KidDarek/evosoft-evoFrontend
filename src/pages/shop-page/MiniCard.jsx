@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
@@ -45,6 +45,10 @@ const StyledTable = styled("table")({
 const MiniCard = (props) => {
   const navigate = useNavigate();
 
+  const navigateToProductPage = () => {
+    navigate(`/Product/${props.id}`);
+  };
+
   const { getProductById } = useContext(ProductContext);
   const [product, setProduct] = useState(null);
 
@@ -61,48 +65,37 @@ const MiniCard = (props) => {
     return <div>Loading...</div>;
   }
 
-  const navigateToProductPage = () => {
-    navigate(`/Product/${props.id}`);
-  };
-
-  return (
-    <StyledCardContainer>
-      <StyledTable onClick={navigateToProductPage}>
-        <tbody>
-          <tr>
-            <td rowSpan="3">
-              <img
-                src={product.imageUri}
-                alt=""
-                overflow="hidden"
-                height="100px"
-                width="150px"
-                align="middle"
-              ></img>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <StyledH3>{product.title}</StyledH3>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <StyledP>{product.body}</StyledP>
-            </td>
-          </tr>
-        </tbody>
-      </StyledTable>
-    </StyledCardContainer>
-  );
-};
-
-function MiniCardWithProps(props) {
   return (
     <ProductContextProvider>
-      <MiniCard id={props.id} />
+      <StyledCardContainer>
+        <StyledTable onClick={navigateToProductPage}>
+          <tbody>
+            <tr>
+              <td rowSpan="3">
+                <img
+                  src={product.imageUri}
+                  alt=""
+                  overflow="hidden"
+                  height="100px"
+                  width="150px"
+                  align="middle"
+                ></img>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <StyledH3>{product.title}</StyledH3>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <StyledP>{product.body}</StyledP>
+              </td>
+            </tr>
+          </tbody>
+        </StyledTable>
+      </StyledCardContainer>
     </ProductContextProvider>
   );
-}
-
-export default MiniCardWithProps;
+};
+export default MiniCard;

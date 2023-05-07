@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { styled } from "@mui/material";
 import CardSmall from "./CardSmall";
 import CardBig from "./CardBig";
-import { products } from "../../../db";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../../context-providers/ProductContext";
 
 const StyledBannerDiv = styled("div")({
   display: "flex",
@@ -58,38 +61,83 @@ const StyledMediumDiv = styled("div")({
   height: "400px",
 });
 
-const SetNewBanner = () => {
-  const [bannerIndex, setIndex] = useState(0);
-
-  if (bannerIndex === -9) {
-    setIndex(0);
+// Fisher-Yates shuffle algorithm
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
   }
+  return newArray;
+}
+
+const SetNewBanner = () => {
+  const { products } = useContext(ProductContext);
+  const [shuffledProducts, setShuffledProducts] = useState([]);
+
+  useEffect(() => {
+    setShuffledProducts(shuffleArray(products));
+  }, [products]);
+
+  const [startIndex, setStartIndex] = useState(0);
+
+  const handleLeftArrowClick = () => {
+    setStartIndex((prevIndex) => {
+      const newIndex = prevIndex - 1;
+      if (newIndex < 0) {
+        return shuffledProducts.length - 1;
+      }
+      return newIndex;
+    });
+  };
+
+  const handleRightArrowClick = () => {
+    setStartIndex((prevIndex) => {
+      const newIndex = prevIndex + 1;
+      if (newIndex >= shuffledProducts.length) {
+        return 0;
+      }
+      return newIndex;
+    });
+  };
+
+  const visibleProducts = [
+    shuffledProducts[
+      (startIndex + shuffledProducts.length - 1) % shuffledProducts.length
+    ],
+    shuffledProducts[startIndex],
+    shuffledProducts[(startIndex + 1) % shuffledProducts.length],
+  ];
 
   return (
-    <StyledBannerColors>
-      <StyledBannerDiv>
-        <StyledLeftButton
-          onClick={() => setIndex(bannerIndex - 1)}
-        ></StyledLeftButton>
-        <StyledSmallDiv></StyledSmallDiv>
-        <CardSmall id={(products.length + bannerIndex) % products.length} />
-        <StyledMediumDiv></StyledMediumDiv>
-        <CardBig id={(products.length + bannerIndex + 1) % products.length} />
-        <StyledMediumDiv></StyledMediumDiv>
-        <CardSmall id={(products.length + bannerIndex + 2) % products.length} />
-        <StyledSmallDiv></StyledSmallDiv>
-        <StyledRightButton
-          onClick={() => setIndex(bannerIndex + 1)}
-        ></StyledRightButton>
-      </StyledBannerDiv>
-    </StyledBannerColors>
+    <div>
+      <StyledBannerColors>
+        <StyledBannerDiv>
+          <StyledLeftButton onClick={handleLeftArrowClick}>
+            {"<"}
+          </StyledLeftButton>
+          <StyledSmallDiv></StyledSmallDiv>
+          {visibleProducts[0]?.id && <CardSmall id={visibleProducts[0].id} />}
+          <StyledMediumDiv></StyledMediumDiv>
+          {visibleProducts[1]?.id && <CardBig id={visibleProducts[1].id} />}
+          <StyledMediumDiv></StyledMediumDiv>
+          {visibleProducts[2]?.id && <CardSmall id={visibleProducts[2].id} />}
+          <StyledSmallDiv></StyledSmallDiv>
+          <StyledRightButton onClick={handleRightArrowClick}>
+            {">"}
+          </StyledRightButton>
+        </StyledBannerDiv>
+      </StyledBannerColors>
+    </div>
   );
 };
 
 const Banner = () => {
   return (
     <>
-      <SetNewBanner />
+      <ProductContextProvider>
+        <SetNewBanner />
+      </ProductContextProvider>
     </>
   );
 };
