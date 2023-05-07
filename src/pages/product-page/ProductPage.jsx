@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { products, users } from "../../DataBaseLoader";
+import { products } from "../../DataBaseLoader";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider } from "@mui/material";
+import SimilarProdCard from "./SimilarProdCard";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -12,7 +13,56 @@ const StyledPageDiv = styled("div")({
   height: "100%",
   padding: "10px 25px 10px 25px",
   backgroundColor: "#00EFB3",
+  width: "100%"
 });
+
+const StyledAnimation = styled("div")({
+  display: "flex",
+  justifyContent: "end",
+  transform: "scale(-4,4)",
+  "@keyframes cartAnim": {
+    from: {
+      transform: "translateY(-10000%) scale(-4,4)",
+
+    },
+    "6%": {
+      transform: "translateX(0%) translateY(100%) scale(-4,4)",
+    },
+    "6.3%": {
+      transform: "translateX(0%) translateY(200%) scale(-12,1)",
+    },
+    "8%": {
+      transform: "translateX(0%) translateY(200%) scale(-12,1)",
+    },
+    "13%": {
+      transform: "translateX(0%) translateY(0%) scale(-4,4)",
+    },
+    "60%": {
+      transform: "scale(-40,40)",
+    },
+    to: {
+      transform: "translateX(-10000%) scale(-40,40)",
+    },
+  },
+  animation: "cartAnim 5s 1 ease",
+  position: "static"
+})
+
+const StyledPicAnimation = styled("div")({
+  transform: "scale(0.7,0.7)",
+  "@keyframes PicAnim": {
+    from: {
+      transform: "translateY(0%) scale(0.7,0.7)",
+    },
+    "66%": {
+      transform: "translateX(0%) translateY(-20%) scale(0.7,0.7)",
+    },
+    to: {
+      transform: "translateX(-185%) translateY(-20%) scale(0.7,0.7)",
+    },
+  },
+  animation: "PicAnim 5s 1 ease",
+})
 
 const StyledInfoDiv = styled("div")({
   width: "60%",
@@ -81,6 +131,7 @@ const AddItemToShoppingCart = (id) => {
   const itemQuantityInput = document.getElementById("item-quantity");
   const quantity = parseInt(itemQuantityInput.value);
   const price = products[id].price;
+
   if (quantity === 0) {
     return;
   }
@@ -96,43 +147,95 @@ const AddItemToShoppingCart = (id) => {
 };
 
 const ProductPage = (props) => {
-  const [value, setValue] = React.useState("1");
-
-  let accountRole = users[0].role;
-  console.log(accountRole);
-
   const params = useParams();
   const id = params.id;
+
+  const [value, setValue] = React.useState("1");
+  const [isAnimationused, setAnimationUsage] = useState(false);
+  //const [ProductInfo, setProductInfo] = useState([products[id].title, products[id].price, products[id].category, products[id].tag], products[id].body);
+
+
+  let role = 1;
   return (
     <>
       <ThemeProvider theme={BasicTheme}>
         <StyledPageDiv>
           <StyledInfoDiv>
             <div>
-              <StyledImage src={products[id].imageUri} alt="kep" />
+              {!isAnimationused && <StyledImage
+                src={products[id].imageUri}
+                alt="kep"
+
+              />}
+              {isAnimationused &&
+                <StyledPicAnimation>
+                  <StyledImage
+                    src={products[id].imageUri}
+                    alt="kep" />
+                </StyledPicAnimation>
+              }
             </div>
           </StyledInfoDiv>
           <StyledInfoDivText>
             <div>
               <h2 style={{ color: "white" }}>Product name:</h2>
-              <div style={{ color: "white" }}> {products[id].title}</div>
-              <h2 style={{ color: "white" }}>Price:</h2>
-              <div style={{ color: "white" }}> {products[id].price}</div>
-              <h2 style={{ color: "white" }}>Category:</h2>
-              <div style={{ color: "white" }}> {products[id].category}</div>
-              <h2 style={{ color: "white" }}>Tags:</h2>
-              <div style={{ color: "white" }}>
-                {products[id].tag.map((i) => i + ", ")}
-              </div>
-              <div style={{ paddingTop: "20px" }}>
-                <MUIButton
-                  variant="contained"
-                  onClick={() => AddItemToShoppingCart(id)}
-                >
-                  {" "}
-                  Add item to cart{" "}
-                </MUIButton>
+              {role === 0 ? <div style={{ color: "white" }}> {products[id].title}</div> :
                 <TextField
+                  focused
+                  margin="dense"
+                  id="product-name"
+                  label="Product name"
+                  variant="outlined"
+                  color="white"
+                  //value={ProductInfo[0]}
+                  sx={{ width: 280 }}
+                />}
+
+              <h2 style={{ color: "white" }}>Price:</h2>
+              {role === 0 ? <div style={{ color: "white" }}> {products[id].price}$</div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="price"
+                  label="Price"
+                  variant="outlined"
+                  color="white"
+                  //value={ProductInfo[1]}
+                  sx={{ width: 280 }} />}
+              <h2 style={{ color: "white" }}>Category:</h2>
+              {role === 0 ? <div style={{ color: "white" }}> {products[id].category}</div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="category"
+                  label="Category"
+                  variant="outlined"
+                  color="white"
+                  //value={ProductInfo[2]}
+                  sx={{ width: 280 }} />}
+              <h2 style={{ color: "white" }}>Tags:</h2>
+              {role === 0 ? <div style={{ color: "white" }}>
+                {products[id].tag.map((i) => i + ", ")}
+              </div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="tags"
+                  label="Tags"
+                  variant="outlined"
+                  color="white"
+                  //value={ProductInfo[3].map((i) => i + ", ")}
+                  sx={{ width: 280 }} />}
+              <div style={{ paddingTop: "20px" }}>
+                {role === 0 ? <MUIButton variant="contained" color="red" onClick={() => {
+                  AddItemToShoppingCart(id);
+                  setAnimationUsage(true);
+                  setTimeout(() => {
+                    setAnimationUsage(false)
+                  }, 5000);
+                }}>
+                  Add item to cart </MUIButton> : <MUIButton variant="contained" color="red" >Change Information</MUIButton>}
+                {role === 0 ? <TextField
                   focused
                   margin="dense"
                   id="item-quantity"
@@ -154,18 +257,43 @@ const ProductPage = (props) => {
 
                     setValue(value);
                   }}
-                />
+                /> : <div></div>}
               </div>
             </div>
           </StyledInfoDivText>
+          {!isAnimationused}
+          {isAnimationused &&
+            <StyledAnimation>
+              {<img src="/images/ShoppingCart.png" alt='ShoppingCart.png' style={{ width: "25px", height: "25px" }}></img>}
+            </StyledAnimation>
+          }
+
         </StyledPageDiv>
         <StyledPageDiv>
           <StyledInfoDivText2>
-            <div>
-              <h1 style={{ color: "white" }}>Termék leírása</h1>
-              <div style={{ color: "white" }}>{products[id].body}</div>
+            <div style={{ width: "100%" }}>
+              <h1 style={{ color: "white" }}>Product description</h1>
+              {role === 0 ? <div style={{ color: "white" }}>{products[id].body}</div> :
+                <TextField
+                  focused
+                  margin="dense"
+                  id="description"
+                  label="Description"
+                  variant="outlined"
+                  color="white"
+                  //value={products[id].body}
+                  sx={{ width: "100%" }} />}
             </div>
           </StyledInfoDivText2>
+        </StyledPageDiv>
+        <StyledPageDiv>
+          <h1 style={{ color: "white" }}>Similar products</h1>
+        </StyledPageDiv>
+        <StyledPageDiv>
+          <SimilarProdCard ID={id}></SimilarProdCard>
+        </StyledPageDiv>
+        <StyledPageDiv>
+          <h1 style={{ color: "white" }}>Ratings</h1>
         </StyledPageDiv>
       </ThemeProvider>
     </>
