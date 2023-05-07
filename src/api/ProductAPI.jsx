@@ -1,5 +1,5 @@
 class ProductAPI {
-  static BASE_URL = `${process.env.BACKEND_ADDRESS}/Products`;
+  static BASE_URL = "http://localhost:5232/Products";
 
   static async getAll() {
     const response = await fetch(this.BASE_URL);
@@ -31,3 +31,5 @@ class ProductAPI {
     });
   }
 }
+
+export default ProductAPI;

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Slider from "@mui/material/Slider";
 import { styled } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { products } from "../../DataBaseLoader";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
 
 const StyledFilterBox = styled("div")({
   backgroundColor: "#00cc99",
@@ -41,8 +44,6 @@ const StyledFilterHider = styled("div")({
   position: "static",
 });
 
-
-
 const Filter = (props) => {
   const {
     selectedTags,
@@ -53,18 +54,20 @@ const Filter = (props) => {
     INITIAL_MAX_PRICE_VALUE,
   } = props;
 
+  const { products } = useContext(ProductContext);
+
   // Get all distinct tags from products
-  const tags = new Set();
+  const setTags = new Set();
   products.forEach((product) => {
-    product.tag.forEach((tag) => tags.add(tag));
+    product.tags.forEach((tags) => setTags.add(tags));
   });
-  const uniqueTags = [...tags];
+  const uniqueTags = [...setTags];
 
   const handleCheckboxChange = (e) => {
     if (e.target.checked) {
       setSelectedTags([...selectedTags, e.target.value]);
     } else {
-      setSelectedTags(selectedTags.filter((tag) => tag !== e.target.value));
+      setSelectedTags(selectedTags.filter((tags) => tags !== e.target.value));
     }
   };
 
@@ -85,7 +88,7 @@ const Filter = (props) => {
     value = clampValue(value, INITIAL_MIN_PRICE_VALUE, INITIAL_MAX_PRICE_VALUE);
     value = clampValue(value, selectedPriceRange[0], INITIAL_MAX_PRICE_VALUE);
     setSelectedPriceRange([selectedPriceRange[0], value]);
-  }
+  };
 
   const clampValue = (value, min, max) => {
     if (isNaN(value)) {
@@ -97,80 +100,86 @@ const Filter = (props) => {
   };
 
   return (
-    <StyledFilterBox>
-      <StyledFilterHider>
-        {/*Searchbar*/}
-        <div style={{ padding: "10px" }}>
-          <form>
-            <TextField
-              id="outlined-search"
-              label="Search something..."
-              variant="outlined"
-              onChange={props.handleSearch}
-              style={{ width: "100%" }}
-            />
-          </form>
-        </div>
-        {/*TagSelector*/}
-        <div style={{ padding: "10px" }}>
-          <div>Tags:</div>
-          <div style={{ width: "100%" }}>
-            {uniqueTags.map((tag) => (
-              <div
-                key={tag}
-                style={{ display: "inline-block", margin: "10px" }}
-              >
-                <input
-                  type="checkbox"
-                  value={tag}
-                  checked={selectedTags.includes(tag)}
-                  onChange={handleCheckboxChange}
-                />
-                <label htmlFor={tag}>{tag}</label>
-              </div>
-            ))}
+    <ProductContextProvider>
+      <StyledFilterBox>
+        <StyledFilterHider>
+          {/*Searchbar*/}
+          <div style={{ padding: "10px" }}>
+            <form>
+              <TextField
+                id="outlined-search"
+                label="Search something..."
+                variant="outlined"
+                onChange={props.handleSearch}
+                style={{ width: "100%" }}
+              />
+            </form>
           </div>
-        </div>
-        {/** Price range /*/}
-        <div style={{ width: "90%", padding: "15px" }}>
-          <h3>Price range</h3>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <TextField
-              id="outlined-min"
-              label="Min price"
-              type="number"
-              variant="outlined"
-              value={selectedPriceRange[0]}
-              style={{ width: "35%" }}
-              onChange={(e) => { validateMinPriceInput(e) }}
-            />
-            <label
-              style={{ width: "50%", height: "50px", margin: "0px 10px" }}
-            ></label>
-            <TextField
-              id="outlined-max"
-              label="Max price"
-              type="number"
-              variant="outlined"
-              value={selectedPriceRange[1]}
-              style={{ width: "35%" }}
-              onChange={(e) => { validateMaxPriceInput(e) }}
-            />
+          {/*TagSelector*/}
+          <div style={{ padding: "10px" }}>
+            <div>Tags:</div>
+            <div style={{ width: "100%" }}>
+              {uniqueTags.map((tags) => (
+                <div
+                  key={tags}
+                  style={{ display: "inline-block", margin: "10px" }}
+                >
+                  <input
+                    type="checkbox"
+                    value={tags}
+                    checked={selectedTags.includes(tags)}
+                    onChange={handleCheckboxChange}
+                  />
+                  <label htmlFor={tags}>{tags}</label>
+                </div>
+              ))}
+            </div>
           </div>
-          <div>
-            <Slider
-              getAriaLabel={() => "Price Range"}
-              value={selectedPriceRange}
-              valueLabelDisplay="auto"
-              onChange={handlePriceRangeChange}
-              min={INITIAL_MIN_PRICE_VALUE}
-              max={INITIAL_MAX_PRICE_VALUE}
-              disableSwap
-            />
+          {/** Price range /*/}
+          <div style={{ width: "90%", padding: "15px" }}>
+            <h3>Price range</h3>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <TextField
+                id="outlined-min"
+                label="Min price"
+                type="number"
+                variant="outlined"
+                value={selectedPriceRange[0]}
+                style={{ width: "35%" }}
+                onChange={(e) => {
+                  validateMinPriceInput(e);
+                }}
+              />
+              <label
+                style={{ width: "50%", height: "50px", margin: "0px 10px" }}
+              ></label>
+              <TextField
+                id="outlined-max"
+                label="Max price"
+                type="number"
+                variant="outlined"
+                value={selectedPriceRange[1]}
+                style={{ width: "35%" }}
+                onChange={(e) => {
+                  validateMaxPriceInput(e);
+                }}
+              />
+            </div>
+            <div>
+              <Slider
+                getAriaLabel={() => "Price Range"}
+                value={selectedPriceRange}
+                valueLabelDisplay="auto"
+                onChange={handlePriceRangeChange}
+                min={INITIAL_MIN_PRICE_VALUE}
+                max={INITIAL_MAX_PRICE_VALUE}
+                disableSwap
+              />
+            </div>
           </div>
-        </div>
-      </StyledFilterHider>
-    </StyledFilterBox>
+        </StyledFilterHider>
+      </StyledFilterBox>
+    </ProductContextProvider>
   );
 };
 
