@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useLocation } from "react-router-dom";
 import { Button, createTheme, styled } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
+import {
+  CartItemsContext,
+  CartItemsContextProvider,
+} from "../../context-providers/CartItemsContext";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -47,22 +52,12 @@ const BasicTheme = createTheme({
   },
 });
 
-let shoppingItems;
-const RefreshShoppingItems = () => {
-  shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) ?? [];
-};
+const CheckoutPageInside = () => {
+  const { cartItems } = useContext(CartItemsContext);
 
-let total;
-const CalculateTotal = () => {
-  total = 0;
-  for (let i = 0; i < shoppingItems.length; i++) {
-    total += shoppingItems[i].quantity * shoppingItems[i].price;
-  }
-};
+  const location = useLocation();
+  const grandTotal = location.state?.grandTotal;
 
-const CheckoutPage = () => {
-  RefreshShoppingItems();
-  CalculateTotal();
   return (
     <>
       <ThemeProvider theme={BasicTheme}>
@@ -150,7 +145,7 @@ const CheckoutPage = () => {
               </tr>
             </tbody>
           </StyledTable>
-          {shoppingItems.length !== 0 ? (
+          {cartItems.length !== 0 ? (
             <StyledTable>
               <tbody>
                 <tr>
@@ -184,7 +179,7 @@ const CheckoutPage = () => {
                 </tr>
                 <tr style={{ fontWeight: "bold" }}>
                   <td>Grand total: </td>
-                  <td align="right">${total + 5} </td>
+                  <td align="right">${grandTotal} </td>
                 </tr>
                 <tr>
                   <td colSpan="3" align="center">
@@ -202,6 +197,16 @@ const CheckoutPage = () => {
           ) : null}
         </StyledPageDiv>
       </ThemeProvider>
+    </>
+  );
+};
+
+const CheckoutPage = () => {
+  return (
+    <>
+      <CartItemsContextProvider>
+        <CheckoutPageInside />
+      </CartItemsContextProvider>
     </>
   );
 };

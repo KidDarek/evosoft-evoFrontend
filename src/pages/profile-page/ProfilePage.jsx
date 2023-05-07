@@ -1,6 +1,6 @@
 import { Avatar, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { users } from "../../DataBaseLoader";
+import { users } from "../../db";
 import React, { useState } from "react";
 import PurchaseHistoryButton from "./PurchaseHistoryButton";
 

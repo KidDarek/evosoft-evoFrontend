@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { users } from "../../DataBaseLoader";
+import { users } from "../../db";
 import SignUpButton from "./SignUpButton";
 import { IconButton, Snackbar } from "@mui/material";
 
