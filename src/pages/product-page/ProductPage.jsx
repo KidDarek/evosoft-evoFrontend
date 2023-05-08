@@ -11,14 +11,14 @@ import {
   CartItemsContextProvider,
 } from "../../context-providers/CartItemsContext";
 import MUIButton from "@mui/material/Button";
-import { createTheme, TextField, ThemeProvider } from "@mui/material";
+import { createTheme, TextField, ThemeProvider, Chip } from "@mui/material";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  padding: "10px 25px 10px 25px",
+  padding: "20px 25px 10px 25px",
   backgroundColor: "#00EFB3",
 });
 
@@ -31,26 +31,26 @@ const StyledInfoDiv = styled("div")({
 });
 
 const StyledInfoDivText = styled("div")({
-  width: "300px",
+  width: "16%",
   alignItems: "start",
   display: "flex",
-  paddingLeft: "10px",
+  paddingLeft: "15px",
+  paddingRight: "10px",
   justifyContent: "start",
-  height: "800px",
-  marginRight: "75px",
-  marginLeft: "10px",
-  paddingTop: "10px",
-  paddingBottom: "10px",
+  height: "745px",
+  margin: "0px 75px 0px 15px",
   backgroundColor: "#00cc99",
 });
 
 const StyledInfoDivText2 = styled("div")({
   width: "79%",
   marginRight: "75px",
+  marginTop: "-15px",
   alignItems: "start",
   display: "flex",
   justifyContent: "start",
   height: "100%",
+  padding: "0px 0px 20px 15px",
   backgroundColor: "#00cc99",
 });
 
@@ -129,17 +129,17 @@ const ProductPageInside = () => {
               <h2 style={{ color: "white" }}>Category:</h2>
               <div style={{ color: "white" }}> {product.category}</div>
               <h2 style={{ color: "white" }}>Tags:</h2>
-              <div style={{ color: "white" }}>
-                {product.tags.map((i) => i + ", ")}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+                {product.tags.map((tag) => (
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    variant="outlined"
+                    style={{ color: "white", borderColor: "white" }}
+                  />
+                ))}
               </div>
-              <div style={{ paddingTop: "20px" }}>
-                <MUIButton
-                  variant="contained"
-                  onClick={() => addItemToShoppingCart(product, value)}
-                >
-                  {" "}
-                  Add item to cart{" "}
-                </MUIButton>
+              <div style={{ paddingTop: "20px", paddingBottom: "15px" }}>
                 <TextField
                   focused
                   margin="dense"
@@ -164,13 +164,22 @@ const ProductPageInside = () => {
                   }}
                 />
               </div>
+              <div>
+                <MUIButton
+                  variant="contained"
+                  onClick={() => addItemToShoppingCart(product, value)}
+                >
+                  {" "}
+                  Add item to cart{" "}
+                </MUIButton>
+              </div>
             </div>
           </StyledInfoDivText>
         </StyledPageDiv>
         <StyledPageDiv>
           <StyledInfoDivText2>
             <div>
-              <h1 style={{ color: "white" }}>Termék leírása</h1>
+              <h1 style={{ color: "white" }}>Product description</h1>
               <div style={{ color: "white" }}>{product.body}</div>
             </div>
           </StyledInfoDivText2>
