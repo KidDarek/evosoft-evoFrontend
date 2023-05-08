@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { users } from "../../db";
 import {
   ProductContext,
@@ -12,6 +12,12 @@ import {
 } from "../../context-providers/CartItemsContext";
 import MUIButton from "@mui/material/Button";
 import { createTheme, TextField, ThemeProvider, Chip } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -82,15 +88,25 @@ const BasicTheme = createTheme({
 });
 
 const ProductPageInside = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("1");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   let accountRole = users[0].role;
   console.log(accountRole);
 
   const params = useParams();
 
-  const { getProductById } = useContext(ProductContext);
-  const { addToCart } = useContext(CartItemsContext);
+  const { getProductById, removeProduct } = useContext(ProductContext);
+  const { cartItems, addToCart, removeFromCart } = useContext(CartItemsContext);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -109,6 +125,17 @@ const ProductPageInside = () => {
     product.quantity = value;
 
     addToCart(product); // Call the addToCart function from the CartItemsContext
+  };
+
+  const deleteProduct = async (id) => {
+    const inCart = cartItems.find((item) => item.id === id);
+    if (inCart) {
+      removeFromCart(id);
+      console.log("Hello");
+    }
+    await removeProduct(id);
+    handleClose();
+    navigate(`/Search`);
   };
 
   return (
@@ -164,7 +191,7 @@ const ProductPageInside = () => {
                   }}
                 />
               </div>
-              <div>
+              <div style={{ paddingBottom: "15px" }}>
                 <MUIButton
                   variant="contained"
                   onClick={() => addItemToShoppingCart(product, value)}
@@ -173,6 +200,39 @@ const ProductPageInside = () => {
                   Add item to cart{" "}
                 </MUIButton>
               </div>
+              <div>
+                <MUIButton
+                  sx={{ bgcolor: "#ff0000" }}
+                  variant="contained"
+                  onClick={handleClickOpen}
+                >
+                  {" "}
+                  Delete product{" "}
+                </MUIButton>
+                <Dialog open={open} onClose={handleClose}>
+                  <DialogTitle id="alertDialogTitle">
+                    {"Are you sure you want to delete " + product.title + "?"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      Once you delete this product, all associated data will be
+                      permanently removed from the system. This action cannot be
+                      undone.
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      color="red"
+                      onClick={() => deleteProduct(product.id)}
+                      autoFocus
+                    >
+                      Delete
+                    </Button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
+              <div></div>
             </div>
           </StyledInfoDivText>
         </StyledPageDiv>

@@ -168,9 +168,7 @@ const Filter = (props) => {
                   },
                 }}
               />
-              <label
-                style={{ width: "50%", height: "50px", margin: "0px 10px" }}
-              ></label>
+              <label style={{ width: "40%" }}></label>
               <TextField
                 id="outlined-max"
                 label="Max price"
