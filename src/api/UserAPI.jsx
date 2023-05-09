@@ -22,13 +22,14 @@ class UserAPI {
   }
 
   static async login(userData) {
-    await fetch(`${BASE_URL}/login`, {
+    const response = await fetch(`${BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
-    });
+    })
+    return await response.json();
   }
 
   static async remove(id) {

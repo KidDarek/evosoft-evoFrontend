@@ -1,10 +1,9 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from 'react-router-dom';
-import { users } from "../../DataBaseLoader";
 
 const ProfileButton = (props) => {
 
@@ -12,10 +11,10 @@ const ProfileButton = (props) => {
 
     const navigateToProfilePage = () => {
         handleClose();
-        navigate(`/Profile${props.logInID}`);
+        navigate(`/Profile${props.loggedInUser.id}`);
     };
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const open = Boolean(anchorEl);
 
@@ -28,10 +27,11 @@ const ProfileButton = (props) => {
     };
 
     const logOut = () => {
-        props.setLoggedin(false);
+        props.setLoggedInUser(null);
         handleClose();
         navigate("/");
     };
+
 
     return (
         <div>
@@ -42,7 +42,7 @@ const ProfileButton = (props) => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>{props.logInID ? users[props.logInID - 1].name[0].toUpperCase() : "P"}</Avatar>
+                <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>{props.loggedInUser.name[0]}</Avatar>
             </Button>
             <Menu
                 id="basic-menu"
@@ -59,4 +59,5 @@ const ProfileButton = (props) => {
         </div>
     );
 }
+
 export default ProfileButton;

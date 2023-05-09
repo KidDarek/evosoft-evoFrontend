@@ -5,7 +5,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { users } from "../../DataBaseLoader";
 import SignUpButton from "./SignUpButton";
 import { IconButton, Snackbar } from "@mui/material";
 import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
@@ -13,7 +12,7 @@ import { UserContext, UserContextProvider } from "../../context-providers/UserCo
 const LoginButton = (props) => {
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
-  const { loginUser } = useContext(UserContext);
+  const { loginUser, loggedInUser } = useContext(UserContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,17 +40,15 @@ const LoginButton = (props) => {
     const emailTextField = document.getElementById("log-in-email");
     const passwordTextField = document.getElementById("log-in-password");
     const email = emailTextField.value;
+    const name = undefined;
     const password = passwordTextField.value;
-    const logInData = { email, password };
-    if (validEmail(email)) {
-      const id = logIn(logInData);
-      if (id >= 0) {
-        props.setLoginID(id);
-      }
-    } else {
+    const logInData = { email, name, password };
+    const success = logIn(logInData);
+    if (!success) {
       handleSnackOpen();
       return;
     }
+    props.setLoggedInUser(loggedInUser);
     setOpen(false);
   };
 
@@ -76,24 +73,11 @@ const LoginButton = (props) => {
 
   const logIn = (logInData) => {
     loginUser(logInData);
-    /*for (let index = 0; index < users.length; index++) {
-      if (
-        logInData.email === users[index].email &&
-        logInData.password === users[index].password
-      ) {
-        props.setLoggedin(true);
-        return index + 1;
-      }
-    }*/
-    return -1;
-  };
-
-  const validEmail = (emailText) => {
-    const validRegex = /^[A-z0-9.-_]+@[A-z0-9.-_]+\.[A-z]+$/;
-    if (emailText.match(validRegex)) {
-      return true;
+    console.log(loggedInUser)
+    if (loggedInUser?.id === undefined) {
+      return false;
     }
-    return false;
+    return true;
   };
 
   return (
@@ -130,7 +114,7 @@ const LoginButton = (props) => {
         </DialogContent>
         <DialogActions>
           <SignUpButton theme={props.theme} />
-          <Button onClick={handleClickClose}>Cancel</Button>
+          <Button color="red" onClick={handleClickClose}>Cancel</Button>
           <Button onClick={handleLogInRequest}>Log in</Button>
         </DialogActions>
         <Snackbar
@@ -145,9 +129,9 @@ const LoginButton = (props) => {
   );
 };
 
-const WrappedLoginPopup = () => (
+const WrappedLoginButton = (props) => (
   <UserContextProvider>
-    <LoginButton />
+    <LoginButton theme={props.theme} setLoggedInUser={props.setLoggedInUser} />
   </UserContextProvider>
 );
-export default WrappedLoginPopup;
+export default WrappedLoginButton;

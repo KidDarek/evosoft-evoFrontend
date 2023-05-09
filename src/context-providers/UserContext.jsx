@@ -5,6 +5,7 @@ const UserContext = createContext([]);
 
 function UserContextProvider({ children }) {
   const [users, setUsers] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState({});
 
   useEffect(() => {
     async function fetchUsers() {
@@ -16,7 +17,7 @@ function UserContextProvider({ children }) {
 
   async function getUserById(id) {
     const user = await UserAPI.getById(id);
-    return user || null;
+    return await user.json();
   }
 
   async function addUser(user) {
@@ -24,9 +25,14 @@ function UserContextProvider({ children }) {
     setUsers([...users, user]);
   }
 
+
   async function loginUser(userData) {
     const user = await UserAPI.login(userData);
-    return user;
+    if (user.id === undefined) {
+      return false;
+    }
+    setLoggedInUser(user);
+    return true;
   }
 
   async function removeUser(id) {
@@ -43,7 +49,7 @@ function UserContextProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ users, addUser, removeUser, updateUser, getUserById, loginUser }}
+      value={{ loggedInUser, users, addUser, removeUser, updateUser, getUserById, loginUser }}
     >
       {children}
     </UserContext.Provider>

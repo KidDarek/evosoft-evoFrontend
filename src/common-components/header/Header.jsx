@@ -65,9 +65,8 @@ const BasicTheme = createTheme({
 
 
 const Header = (props) => {
-  const [loggedIn, setLoggedin] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState({});
 
-  const [logInID, setLoginID] = useState(null);
 
   const navigate = useNavigate();
 
@@ -92,47 +91,47 @@ const Header = (props) => {
   };
 
   return (
-    <>
-      <ThemeProvider theme={BasicTheme}>
-        <StyledHeader>
-          <StyledLogo src="/images/evosoftlogo.png" alt="logo" onClick={navigateToMainPage} />
-          <StyledSearchDiv>
-            <MUIButton variant="contained" color="red" sx={{ width: 1 }} onClick={navigateToSearchPage}>
-              Go to search page
-            </MUIButton>
-          </StyledSearchDiv>
-          <Card />
-          <StyledLinks>
+    <ThemeProvider theme={BasicTheme}>
+      <StyledHeader>
+        <StyledLogo src="/images/evosoftlogo.png" alt="logo" onClick={navigateToMainPage} />
+        <StyledSearchDiv>
+          <MUIButton variant="contained" color="red" sx={{ width: 1 }} onClick={navigateToSearchPage}>
+            Go to search page
+          </MUIButton>
+        </StyledSearchDiv>
+        <Card />
+        <StyledLinks>
 
-            <MUIButton
-              variant="contained"
-              onClick={navigateToFaqPage}
-              color="red"
-            >
-              FAQ
-            </MUIButton>
-            <MUIButton
-              variant="contained"
-              onClick={navigateToAboutUsPage}
-              color="red"
-            >
-              About Us
-            </MUIButton>
-            <MUIButton
-              variant="contained"
-              onClick={navigateToContactUsPage}
-              color="red"
-            >
-              Contact
-            </MUIButton>
-            {!loggedIn && <LoginButton theme={BasicTheme} setLoggedin={setLoggedin} setLoginID={setLoginID}> Log in / Sign up</LoginButton>}
-            {loggedIn && <ProfileButton setLoggedin={setLoggedin} logInID={logInID} />}
-            <ShoppingCart />
-          </StyledLinks>
-        </StyledHeader>
-      </ThemeProvider>
-    </>
+          <MUIButton
+            variant="contained"
+            onClick={navigateToFaqPage}
+            color="red"
+          >
+            FAQ
+          </MUIButton>
+          <MUIButton
+            variant="contained"
+            onClick={navigateToAboutUsPage}
+            color="red"
+          >
+            About Us
+          </MUIButton>
+          <MUIButton
+            variant="contained"
+            onClick={navigateToContactUsPage}
+            color="red"
+          >
+            Contact
+          </MUIButton>
+          {loggedInUser?.id === undefined && <LoginButton theme={BasicTheme} setLoggedInUser={setLoggedInUser}> Log in / Sign up</LoginButton>}
+          {loggedInUser?.id !== undefined && <ProfileButton setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} />}
+          <ShoppingCart />
+        </StyledLinks>
+      </StyledHeader>
+    </ThemeProvider>
+
   );
 };
+
 
 export default Header;
