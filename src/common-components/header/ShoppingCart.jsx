@@ -24,9 +24,16 @@ const StyledShopText = styled("div")({
   margin: "auto",
 });
 
-const StyledNothingText = styled("div")({
-  margin: "2px",
-  fontSize: "13px",
+const StyledEmptyCartText = styled("div")({
+  textAlign: "center",
+  width: "100%",
+  margin: "auto",
+  fontFamily: "Roboto",
+});
+
+const StyledEmptyMainText = styled("div")({
+  fontWeight: "bold",
+  fontSize: "17px",
 });
 
 const StyledButton = styled("button")({
@@ -122,9 +129,21 @@ const ShoppingCartInside = () => {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        style={{ width: "auto" }}
       >
         {products.length === 0 ? (
-          <StyledNothingText>{"Nothing here :("}</StyledNothingText>
+          <StyledEmptyCartText>
+            <img
+              src="/images/sadEmptyCart.png"
+              alt="An empty cart"
+              style={{ width: "27%" }}
+            />
+            <StyledEmptyMainText>Your cart is empty</StyledEmptyMainText>
+            <div style={{ margin: "4px 10px 2px 10px" }}>
+              Looks like you have not added <br></br>
+              anything to your cart.
+            </div>
+          </StyledEmptyCartText>
         ) : (
           products.map((product, index) => {
             const { id, quantity } = cartItems[index];
