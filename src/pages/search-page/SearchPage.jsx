@@ -1,8 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { styled, Grid } from "@mui/material";
-import { products } from "../../DataBaseLoader";
-import Card from "../main-page/best-deals/Card";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
 import Filter from "./Filter";
+import CardWithProps from "../main-page/best-deals/Card";
 
 const StyledPadding = styled("div")({
   backgroundColor: "#00EFB3",
@@ -42,7 +45,8 @@ const StyledProductDiv = styled("div")({
 var INITIAL_MIN_PRICE_VALUE = 0;
 var INITIAL_MAX_PRICE_VALUE = 9999;
 
-const SearchPage = () => {
+const SearchPageInside = () => {
+  const { products } = useContext(ProductContext);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -50,6 +54,28 @@ const SearchPage = () => {
     INITIAL_MIN_PRICE_VALUE,
     INITIAL_MAX_PRICE_VALUE,
   ]);
+
+  // NEW CODE SNIPPET
+  useEffect(() => {
+    const priceRangeOfProducts = () => {
+      let minPrice = 0;
+      let maxPrice = minPrice;
+      for (let i = 0; i < products.length; i++) {
+        if (minPrice > products[i].price) {
+          minPrice = products[i].price;
+        }
+        if (maxPrice < products[i].price) {
+          maxPrice = products[i].price;
+        }
+      }
+      return [minPrice, maxPrice];
+    };
+
+    if (products.length > 0) {
+      const priceRange = priceRangeOfProducts();
+      setSelectedPriceRange([priceRange[0], priceRange[1]]);
+    }
+  }, [products]);
 
   const filterProducts = useCallback(() => {
     let filtered = [...products];
@@ -62,7 +88,7 @@ const SearchPage = () => {
 
     if (selectedTags.length > 0) {
       filtered = filtered.filter((product) => {
-        return selectedTags.every((tag) => product.tag.includes(tag));
+        return selectedTags.every((tags) => product.tags.includes(tags));
       });
     }
 
@@ -75,7 +101,7 @@ const SearchPage = () => {
       });
     }
     setFilteredProducts(filtered);
-  }, [selectedTags, searchString, selectedPriceRange]);
+  }, [selectedTags, searchString, selectedPriceRange, products]);
 
   useEffect(() => {
     filterProducts();
@@ -85,22 +111,6 @@ const SearchPage = () => {
     setSearchString(e.target.value);
   };
 
-  const priceRangeOfProducts = () => {
-    let minPrice = products[0].price;
-    let maxPrice = minPrice;
-    for (let i = 0; i < products.length; i++) {
-      if (minPrice > products[i].price) {
-        minPrice = products[i].price;
-      }
-      if (maxPrice < products[i].price) {
-        maxPrice = products[i].price;
-      }
-    }
-    return [minPrice, maxPrice];
-  }
-  const initialPriceRange = priceRangeOfProducts();
-  INITIAL_MIN_PRICE_VALUE = initialPriceRange[0];
-  INITIAL_MAX_PRICE_VALUE = initialPriceRange[1];
   return (
     <>
       <StyledPadding>
@@ -130,7 +140,7 @@ const SearchPage = () => {
                 ) : (
                   filteredProducts.map((product) => (
                     <Grid item xs="auto" md="auto" key={product.id}>
-                      <Card id={product.id} />
+                      <CardWithProps id={product.id} />
                     </Grid>
                   ))
                 )}
@@ -139,6 +149,16 @@ const SearchPage = () => {
           </StyledContent>
         </StyledDiv>
       </StyledPadding>
+    </>
+  );
+};
+
+const SearchPage = () => {
+  return (
+    <>
+      <ProductContextProvider>
+        <SearchPageInside />
+      </ProductContextProvider>
     </>
   );
 };

@@ -1,7 +1,10 @@
-import React, { Fragment } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../DataBaseLoader";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
 
 const StyledCardContainer = styled("div")({
   display: "flex",
@@ -46,39 +49,53 @@ const MiniCard = (props) => {
     navigate(`/Product/${props.id}`);
   };
 
-  return products.map((product, i) =>
-    product.id === props.id ? (
-      <Fragment key={i}>
-        <StyledCardContainer>
-          <StyledTable onClick={navigateToProductPage}>
-            <tbody>
-              <tr>
-                <td rowSpan="3">
-                  <img
-                    src={product.imageUri}
-                    alt=""
-                    overflow="hidden"
-                    height="100px"
-                    width="150px"
-                    align="middle"
-                  ></img>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <StyledH3>{product.title}</StyledH3>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <StyledP>{product.body}</StyledP>
-                </td>
-              </tr>
-            </tbody>
-          </StyledTable>
-        </StyledCardContainer>
-      </Fragment>
-    ) : null
+  const { getProductById } = useContext(ProductContext);
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    async function fetchProduct() {
+      const product = await getProductById(props.id);
+      setProduct(product);
+    }
+
+    fetchProduct();
+  }, [getProductById, props.id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <ProductContextProvider>
+      <StyledCardContainer>
+        <StyledTable onClick={navigateToProductPage}>
+          <tbody>
+            <tr>
+              <td rowSpan="3">
+                <img
+                  src={product.imageUri}
+                  alt=""
+                  overflow="hidden"
+                  height="100px"
+                  width="150px"
+                  align="middle"
+                ></img>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <StyledH3>{product.title}</StyledH3>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <StyledP>{product.body}</StyledP>
+              </td>
+            </tr>
+          </tbody>
+        </StyledTable>
+      </StyledCardContainer>
+    </ProductContextProvider>
   );
 };
 export default MiniCard;
