@@ -11,7 +11,7 @@ import {
   CartItemsContextProvider,
 } from "../../context-providers/CartItemsContext";
 import MUIButton from "@mui/material/Button";
-import { createTheme, TextField, ThemeProvider, Chip } from "@mui/material";
+import { TextField, Chip } from "@mui/material";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -64,22 +64,6 @@ const StyledImage = styled("img")({
   marginRight: "auto",
 });
 
-const BasicTheme = createTheme({
-  palette: {
-    green: {
-      main: "#00cc99",
-      contrastText: "#fff",
-    },
-    red: {
-      main: "#ff0055",
-      dark: "#990033",
-      contrastText: "#fff",
-    },
-    white: {
-      main: "#FFFFFF",
-    },
-  },
-});
 
 const ProductPageInside = () => {
   const [value, setValue] = React.useState("1");
@@ -113,7 +97,6 @@ const ProductPageInside = () => {
 
   return (
     <>
-      <ThemeProvider theme={BasicTheme}>
         <StyledPageDiv>
           <StyledInfoDiv>
             <div>
@@ -157,8 +140,10 @@ const ProductPageInside = () => {
                       value = 1;
                     }
 
-                    if (value > 100) value = 100;
-                    if (value < 1) value = 1;
+
+                  if (value > 100) value = 100;
+                  if (value < 1) value = 1;
+
 
                     setValue(value);
                   }}
@@ -181,10 +166,19 @@ const ProductPageInside = () => {
             <div>
               <h1 style={{ color: "white" }}>Product description</h1>
               <div style={{ color: "white" }}>{product.body}</div>
+
             </div>
-          </StyledInfoDivText2>
-        </StyledPageDiv>
-      </ThemeProvider>
+          </div>
+        </StyledInfoDivText>
+      </StyledPageDiv>
+      <StyledPageDiv>
+        <StyledInfoDivText2>
+          <div>
+            <h1 style={{ color: "white" }}>Termék leírása</h1>
+            <div style={{ color: "white" }}>{products[id].body}</div>
+          </div>
+        </StyledInfoDivText2>
+      </StyledPageDiv>
     </>
   );
 };
