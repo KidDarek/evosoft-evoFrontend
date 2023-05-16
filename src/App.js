@@ -46,11 +46,6 @@ const MainTheme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={MainTheme}>
-    <StyledFontDiv>
-    <BrowserRouter>
-function App() {
-  return (
-    <>
       <StyledFontDiv>
         <BrowserRouter>
           <Header />
@@ -68,10 +63,9 @@ function App() {
         </BrowserRouter>
       <Footer />
     </StyledFontDiv>
-    </ThemeProvider>
         <Footer />
-      </StyledFontDiv>
-    </>
+    </ThemeProvider>
+  
   );
 }
 
