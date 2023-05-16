@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-//import { forwardRef, useImperativeHandle, useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -35,7 +34,8 @@ const SignUpPopup = (props) => {
       handleSignUpRequest();
     }
   };
-  const handleSignUpRequest = async () => {
+
+  async function handleSignUpRequest() {
     const nameTextField = document.getElementById("sign-up-name");
     const emailTextField = document.getElementById("sign-up-email");
     const passwordTextField = document.getElementById("sign-up-password");

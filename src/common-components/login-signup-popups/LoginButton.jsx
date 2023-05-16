@@ -12,7 +12,7 @@ import { UserContext, UserContextProvider } from "../../context-providers/UserCo
 const LoginButton = (props) => {
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
-  const { loginUser, loggedInUser } = useContext(UserContext);
+  const { loginUser } = useContext(UserContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,19 +36,19 @@ const LoginButton = (props) => {
     }
   };
 
-  const handleLogInRequest = () => {
+  async function handleLogInRequest() {
     const emailTextField = document.getElementById("log-in-email");
     const passwordTextField = document.getElementById("log-in-password");
     const email = emailTextField.value;
     const name = undefined;
     const password = passwordTextField.value;
     const logInData = { email, name, password };
-    const success = logIn(logInData);
-    if (!success) {
+    const user = await loginUser(logInData);
+    if (user === null) {
       handleSnackOpen();
       return;
     }
-    props.setLoggedInUser(loggedInUser);
+    props.setLoggedInUser(user);
     setOpen(false);
   };
 
@@ -70,15 +70,6 @@ const LoginButton = (props) => {
       ></IconButton>
     </React.Fragment>
   );
-
-  const logIn = (logInData) => {
-    loginUser(logInData);
-    console.log(loggedInUser)
-    if (loggedInUser?.id === undefined) {
-      return false;
-    }
-    return true;
-  };
 
   return (
     <div>
@@ -121,7 +112,7 @@ const LoginButton = (props) => {
           open={openSnack}
           autoHideDuration={6000}
           onClose={handleSnackClose}
-          message="Not a valid Email"
+          message="Email or password is incorrect"
           action={snackAction}
         />
       </Dialog>

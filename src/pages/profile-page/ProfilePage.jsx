@@ -85,11 +85,15 @@ const ProfilePage = () => {
   useEffect(() => {
     async function fetchUser() {
       const user = await getUserById(id);
-      setUser(user.json());
+      setUser(user);
     }
+
     fetchUser();
-  });
-  console.log(user)
+  }, [getUserById, id]);
+
+  if (user?.id === undefined) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <StyledPageDiv>
