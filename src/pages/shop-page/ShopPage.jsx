@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, createTheme, styled } from "@mui/material";
+import { ThemeProvider } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import {
   ProductContext,
@@ -56,6 +57,22 @@ const StyledSmallTable = styled("table")({
   fontSize: "22px",
 });
 
+const BasicTheme = createTheme({
+  palette: {
+    green: {
+      main: "#00EFB3",
+      contrastText: "#fff",
+    },
+    red: {
+      main: "#ff0055",
+      dark: "#990033",
+      contrastText: "#fff",
+    },
+    white: {
+      main: "#FFFFFF",
+    },
+  },
+});
 
 const ShopPageInside = () => {
   const navigate = useNavigate();
@@ -90,6 +107,7 @@ const ShopPageInside = () => {
 
   return (
     <>
+      <ThemeProvider theme={BasicTheme}>
         <StyledPageDiv>
           <StyledBigTable>
             <tbody>
@@ -156,6 +174,7 @@ const ShopPageInside = () => {
             </StyledSmallTable>
           ) : null}
         </StyledPageDiv>
+      </ThemeProvider>
     </>
   );
 };
