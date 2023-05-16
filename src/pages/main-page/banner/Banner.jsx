@@ -16,6 +16,48 @@ const StyledBannerDiv = styled("div")({
   width: "100%",
 });
 
+const SmallCardRightAnimation = styled("div")({
+  "@keyframes smallright": {
+    from: {
+      transform: "scale(1,1)",
+      paddingright: "0%",
+    },
+    to: {
+      transform: "scale(1.58,1.58)",
+      paddingright: "10%",
+    },
+  },
+  animation: "smallright 3s 1 ease",
+})
+
+const SmallCardLeftAnimation = styled("div")({
+  "@keyframes smallleft": {
+    from: {
+      transform: "scale(1,1)",
+      paddingleft: "0%",
+    },
+    to: {
+      transform: "scale(1.58,1.58)",
+      paddingleft: "10%",
+    },
+  },
+  animation: "smallleft 3s 1 ease",
+})
+
+const BigCardLeftAnimation = styled("div")({
+  "@keyframes smallleft": {
+    from: {
+      transform: "scale(1.58,1.58)",
+      paddingleft: "0%",
+    },
+    to: {
+      transform: "scale(1 , 1)",
+      paddingleft: "10%",
+    },
+  },
+  animation: "smallleft 3s 1 ease",
+})
+
 const StyledBannerColors = styled("div")({
   background: "linear-gradient(-45deg, #ff0055, #0003cc, #0066CD, #00cc99)",
   backgroundSize: "200% 200%",
@@ -103,7 +145,7 @@ const SetNewBanner = () => {
 
   const visibleProducts = [
     shuffledProducts[
-      (startIndex + shuffledProducts.length - 1) % shuffledProducts.length
+    (startIndex + shuffledProducts.length - 1) % shuffledProducts.length
     ],
     shuffledProducts[startIndex],
     shuffledProducts[(startIndex + 1) % shuffledProducts.length],
