@@ -97,76 +97,66 @@ const ProductPageInside = () => {
 
   return (
     <>
-        <StyledPageDiv>
-          <StyledInfoDiv>
-            <div>
-              <StyledImage src={product.imageUri} alt="kep" />
-            </div>
-          </StyledInfoDiv>
-          <StyledInfoDivText>
-            <div>
-              <h2 style={{ color: "white" }}>Product name:</h2>
-              <div style={{ color: "white" }}> {product.title}</div>
-              <h2 style={{ color: "white" }}>Price:</h2>
-              <div style={{ color: "white" }}> {product.price}</div>
-              <h2 style={{ color: "white" }}>Category:</h2>
-              <div style={{ color: "white" }}> {product.category}</div>
-              <h2 style={{ color: "white" }}>Tags:</h2>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                {product.tags.map((tag) => (
-                  <Chip
-                    key={tag}
-                    label={tag}
-                    variant="outlined"
-                    style={{ color: "white", borderColor: "white" }}
-                  />
-                ))}
-              </div>
-              <div style={{ paddingTop: "20px", paddingBottom: "15px" }}>
-                <TextField
-                  focused
-                  margin="dense"
-                  id="item-quantity"
-                  label="Quantity"
-                  type="number"
+      <StyledPageDiv>
+        <StyledInfoDiv>
+          <div>
+            <StyledImage src={product.imageUri} alt="kep" />
+          </div>
+        </StyledInfoDiv>
+        <StyledInfoDivText>
+          <div>
+            <h2 style={{ color: "white" }}>Product name:</h2>
+            <div style={{ color: "white" }}> {product.title}</div>
+            <h2 style={{ color: "white" }}>Price:</h2>
+            <div style={{ color: "white" }}> {product.price}</div>
+            <h2 style={{ color: "white" }}>Category:</h2>
+            <div style={{ color: "white" }}> {product.category}</div>
+            <h2 style={{ color: "white" }}>Tags:</h2>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+              {product.tags.map((tag) => (
+                <Chip
+                  key={tag}
+                  label={tag}
                   variant="outlined"
-                  color="white"
-                  sx={{ width: 150 }}
-                  inputProps={{ style: { color: "white" } }}
-                  value={value}
-                  onChange={(e) => {
-                    var value = parseInt(e.target.value, 10);
-                    if (isNaN(value)) {
-                      value = 1;
-                    }
+                  style={{ color: "white", borderColor: "white" }}
+                />
+              ))}
+            </div>
+            <div style={{ paddingTop: "20px", paddingBottom: "15px" }}>
+              <TextField
+                focused
+                margin="dense"
+                id="item-quantity"
+                label="Quantity"
+                type="number"
+                variant="outlined"
+                color="white"
+                sx={{ width: 150 }}
+                inputProps={{ style: { color: "white" } }}
+                value={value}
+                onChange={(e) => {
+                  var value = parseInt(e.target.value, 10);
+                  if (isNaN(value)) {
+                    value = 1;
+                  }
 
 
                   if (value > 100) value = 100;
                   if (value < 1) value = 1;
 
 
-                    setValue(value);
-                  }}
-                />
-              </div>
-              <div>
-                <MUIButton
-                  variant="contained"
-                  onClick={() => addItemToShoppingCart(product, value)}
-                >
-                  {" "}
-                  Add item to cart{" "}
-                </MUIButton>
-              </div>
+                  setValue(value);
+                }}
+              />
             </div>
-          </StyledInfoDivText>
-        </StyledPageDiv>
-        <StyledPageDiv>
-          <StyledInfoDivText2>
             <div>
-              <h1 style={{ color: "white" }}>Product description</h1>
-              <div style={{ color: "white" }}>{product.body}</div>
-
+              <MUIButton
+                variant="contained"
+                onClick={() => addItemToShoppingCart(product, value)}
+              >
+                {" "}
+                Add item to cart{" "}
+              </MUIButton>
             </div>
           </div>
         </StyledInfoDivText>
@@ -174,8 +164,9 @@ const ProductPageInside = () => {
       <StyledPageDiv>
         <StyledInfoDivText2>
           <div>
-            <h1 style={{ color: "white" }}>Termék leírása</h1>
-            <div style={{ color: "white" }}>{products[id].body}</div>
+            <h1 style={{ color: "white" }}>Product description</h1>
+            <div style={{ color: "white" }}>{product.body}</div>
+
           </div>
         </StyledInfoDivText2>
       </StyledPageDiv>

@@ -48,11 +48,6 @@ function App() {
     <ThemeProvider theme={MainTheme}>
     <StyledFontDiv>
     <BrowserRouter>
-function App() {
-  return (
-    <>
-      <StyledFontDiv>
-        <BrowserRouter>
           <Header />
           <Routes>
             <Route path="/" element={<MainPage />} />
@@ -68,10 +63,8 @@ function App() {
         </BrowserRouter>
       <Footer />
     </StyledFontDiv>
-    </ThemeProvider>
         <Footer />
-      </StyledFontDiv>
-    </>
+        </ThemeProvider>
   );
 }
 
