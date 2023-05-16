@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, styled } from "@mui/material";
 import MUIButton from "@mui/material/Button";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LoginButton from "../login-signup-popups/LoginButton";
 import ProfileButton from "./ProfileButton";
 import ShoppingCart from "./ShoppingCart";
+
 
 const StyledHeader = styled("div")({
   backgroundColor: "#00cc99",
@@ -39,29 +39,7 @@ const StyledLinks = styled("div")({
   gap: "30px",
 });
 
-const BasicTheme = createTheme({
-  palette: {
-    green: {
-      main: "#00cc99",
-      contrastText: "#fff",
-    },
-    red: {
-      main: "#ff0055",
-      dark: "#990033",
-      contrastText: "#fff",
-    },
-    white: {
-      main: "#FFFFFF",
-    },
-  },
-  typography: {
 
-    button: {
-      fontSize: 16,
-      fontWeight: 700,
-    },
-  },
-});
 
 
 const Header = (props) => {
@@ -91,7 +69,7 @@ const Header = (props) => {
   };
 
   return (
-    <ThemeProvider theme={BasicTheme}>
+    <>
       <StyledHeader>
         <StyledLogo src="/images/evosoftlogo.png" alt="logo" onClick={navigateToMainPage} />
         <StyledSearchDiv>
@@ -128,8 +106,7 @@ const Header = (props) => {
           <ShoppingCart />
         </StyledLinks>
       </StyledHeader>
-    </ThemeProvider>
-
+    </>
   );
 };
 
