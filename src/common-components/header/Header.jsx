@@ -124,8 +124,8 @@ const Header = (props) => {
             >
               Contact
             </MUIButton>
-            {!loggedIn && <LoginButton theme={BasicTheme} setLoggedin={setLoggedin} setLoginID={setLoginID}> Log in / Sign up</LoginButton>}
-            {loggedIn && <ProfileButton setLoggedin={setLoggedin} logInID={logInID} />}
+            {loggedInUser?.id === undefined && <LoginButton theme={BasicTheme} setLoggedInUser={setLoggedInUser}> Log in / Sign up</LoginButton>}
+            {loggedInUser?.id !== undefined && <ProfileButton setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} />}
             <ShoppingCart />
           </StyledLinks>
         </StyledHeader>
