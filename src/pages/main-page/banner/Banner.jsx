@@ -45,17 +45,31 @@ const SmallCardLeftAnimation = styled("div")({
 })
 
 const BigCardLeftAnimation = styled("div")({
-  "@keyframes smallleft": {
+  "@keyframes biglleft": {
     from: {
-      transform: "scale(1.58,1.58)",
+      transform: "scale(1 , 1)",
       paddingleft: "0%",
     },
     to: {
-      transform: "scale(1 , 1)",
+      transform: "scale(0.42 , 0.42)",
       paddingleft: "10%",
     },
   },
-  animation: "smallleft 3s 1 ease",
+  animation: "biglleft 3s 1 ease",
+})
+
+const BigCardRightAnimation = styled("div")({
+  "@keyframes bigright": {
+    from: {
+      transform: "scale(1 , 1)",
+      paddingright: "0%",
+    },
+    to: {
+      transform: "scale(0.42 , 0.42)",
+      paddingright: "10%",
+    },
+  },
+  animation: "bigright 3s 1 ease",
 })
 
 const StyledBannerColors = styled("div")({
