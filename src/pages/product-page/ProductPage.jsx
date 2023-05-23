@@ -11,7 +11,7 @@ import {
   CartItemsContextProvider,
 } from "../../context-providers/CartItemsContext";
 import MUIButton from "@mui/material/Button";
-import { createTheme, TextField, ThemeProvider, Chip } from "@mui/material";
+import { TextField, Chip } from "@mui/material";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -64,23 +64,6 @@ const StyledImage = styled("img")({
   marginRight: "auto",
 });
 
-const BasicTheme = createTheme({
-  palette: {
-    green: {
-      main: "#00cc99",
-      contrastText: "#fff",
-    },
-    red: {
-      main: "#ff0055",
-      dark: "#990033",
-      contrastText: "#fff",
-    },
-    white: {
-      main: "#FFFFFF",
-    },
-  },
-});
-
 const ProductPageInside = () => {
   const [value, setValue] = React.useState("1");
 
@@ -113,78 +96,76 @@ const ProductPageInside = () => {
 
   return (
     <>
-      <ThemeProvider theme={BasicTheme}>
-        <StyledPageDiv>
-          <StyledInfoDiv>
-            <div>
-              <StyledImage src={product.imageUri} alt="kep" />
-            </div>
-          </StyledInfoDiv>
-          <StyledInfoDivText>
-            <div>
-              <h2 style={{ color: "white" }}>Product name:</h2>
-              <div style={{ color: "white" }}> {product.title}</div>
-              <h2 style={{ color: "white" }}>Price:</h2>
-              <div style={{ color: "white" }}> {product.price}</div>
-              <h2 style={{ color: "white" }}>Category:</h2>
-              <div style={{ color: "white" }}> {product.category}</div>
-              <h2 style={{ color: "white" }}>Tags:</h2>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                {product.tags.map((tag) => (
-                  <Chip
-                    key={tag}
-                    label={tag}
-                    variant="outlined"
-                    style={{ color: "white", borderColor: "white" }}
-                  />
-                ))}
-              </div>
-              <div style={{ paddingTop: "20px", paddingBottom: "15px" }}>
-                <TextField
-                  focused
-                  margin="dense"
-                  id="item-quantity"
-                  label="Quantity"
-                  type="number"
+      <StyledPageDiv>
+        <StyledInfoDiv>
+          <div>
+            <StyledImage src={product.imageUri} alt="kep" />
+          </div>
+        </StyledInfoDiv>
+        <StyledInfoDivText>
+          <div>
+            <h2 style={{ color: "white" }}>Product name:</h2>
+            <div style={{ color: "white" }}> {product.title}</div>
+            <h2 style={{ color: "white" }}>Price:</h2>
+            <div style={{ color: "white" }}> {product.price}</div>
+            <h2 style={{ color: "white" }}>Category:</h2>
+            <div style={{ color: "white" }}> {product.category}</div>
+            <h2 style={{ color: "white" }}>Tags:</h2>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+              {product.tags.map((tag) => (
+                <Chip
+                  key={tag}
+                  label={tag}
                   variant="outlined"
-                  color="white"
-                  sx={{ width: 150 }}
-                  inputProps={{ style: { color: "white" } }}
-                  value={value}
-                  onChange={(e) => {
-                    var value = parseInt(e.target.value, 10);
-                    if (isNaN(value)) {
-                      value = 1;
-                    }
-
-                    if (value > 100) value = 100;
-                    if (value < 1) value = 1;
-
-                    setValue(value);
-                  }}
+                  style={{ color: "white", borderColor: "white" }}
                 />
-              </div>
-              <div>
-                <MUIButton
-                  variant="contained"
-                  onClick={() => addItemToShoppingCart(product, value)}
-                >
-                  {" "}
-                  Add item to cart{" "}
-                </MUIButton>
-              </div>
+              ))}
             </div>
-          </StyledInfoDivText>
-        </StyledPageDiv>
-        <StyledPageDiv>
-          <StyledInfoDivText2>
+            <div style={{ paddingTop: "20px", paddingBottom: "15px" }}>
+              <TextField
+                focused
+                margin="dense"
+                id="item-quantity"
+                label="Quantity"
+                type="number"
+                variant="outlined"
+                color="white"
+                sx={{ width: 150 }}
+                inputProps={{ style: { color: "white" } }}
+                value={value}
+                onChange={(e) => {
+                  var value = parseInt(e.target.value, 10);
+                  if (isNaN(value)) {
+                    value = 1;
+                  }
+
+                  if (value > 100) value = 100;
+                  if (value < 1) value = 1;
+
+                  setValue(value);
+                }}
+              />
+            </div>
             <div>
-              <h1 style={{ color: "white" }}>Product description</h1>
-              <div style={{ color: "white" }}>{product.body}</div>
+              <MUIButton
+                variant="contained"
+                onClick={() => addItemToShoppingCart(product, value)}
+              >
+                {" "}
+                Add item to cart{" "}
+              </MUIButton>
             </div>
-          </StyledInfoDivText2>
-        </StyledPageDiv>
-      </ThemeProvider>
+          </div>
+        </StyledInfoDivText>
+      </StyledPageDiv>
+      <StyledPageDiv>
+        <StyledInfoDivText2>
+          <div>
+            <h1 style={{ color: "white" }}>Product description</h1>
+            <div style={{ color: "white" }}>{product.body}</div>
+          </div>
+        </StyledInfoDivText2>
+      </StyledPageDiv>
     </>
   );
 };
