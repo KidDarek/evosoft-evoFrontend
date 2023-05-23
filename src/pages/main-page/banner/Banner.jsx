@@ -173,7 +173,7 @@ const SetNewBanner = () => {
             {"<"}
           </StyledLeftButton>
           <StyledSmallDiv></StyledSmallDiv>
-          {visibleProducts[0]?.id && <CardSmall id={visibleProducts[0].id} />}
+          {visibleProducts[0]?.id && <SmallCardLeftAnimation><CardSmall id={visibleProducts[0].id} /></SmallCardLeftAnimation>}
           <StyledMediumDiv></StyledMediumDiv>
           {visibleProducts[1]?.id && <CardBig id={visibleProducts[1].id} />}
           <StyledMediumDiv></StyledMediumDiv>
