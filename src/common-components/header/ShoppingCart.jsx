@@ -33,7 +33,12 @@ const StyledEmptyCartText = styled("div")({
 
 const StyledEmptyMainText = styled("div")({
   fontWeight: "bold",
-  fontSize: "17px",
+  fontSize: "15px",
+});
+
+const StyledEmptySideText = styled("div")({
+  margin: "2px 10px 1px 10px",
+  fontSize: "14px",
 });
 
 const StyledButton = styled("button")({
@@ -136,13 +141,13 @@ const ShoppingCartInside = () => {
             <img
               src="/images/sadEmptyCart.png"
               alt="An empty cart"
-              style={{ width: "27%" }}
+              style={{ width: "26%" }}
             />
             <StyledEmptyMainText>Your cart is empty</StyledEmptyMainText>
-            <div style={{ margin: "4px 10px 2px 10px" }}>
+            <StyledEmptySideText>
               Looks like you have not added <br></br>
               anything to your cart.
-            </div>
+            </StyledEmptySideText>
           </StyledEmptyCartText>
         ) : (
           products.map((product, index) => {
