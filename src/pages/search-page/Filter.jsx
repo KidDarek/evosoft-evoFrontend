@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import Slider from "@mui/material/Slider";
 import { styled, Chip, Checkbox } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { useNavigate } from "react-router-dom";
+import MUIButton from "@mui/material/Button";
 import {
   ProductContext,
   ProductContextProvider,
@@ -61,6 +63,10 @@ const Filter = (props) => {
   } = props;
 
   const { products } = useContext(ProductContext);
+  const navigateToAddProductPage = () => {
+    navigate(`/AddProduct`);
+  };
+  const navigate = useNavigate();
 
   // Get all distinct tags from products
   const setTags = new Set();
@@ -207,6 +213,16 @@ const Filter = (props) => {
               />
             </StyledDivWithPadding>
           </div>
+          {/*New product*/}
+          <StyledDivWithPadding>
+            <MUIButton
+              variant="contained"
+              onClick={() => navigateToAddProductPage()}
+            >
+              {" "}
+              Add new product{" "}
+            </MUIButton>
+          </StyledDivWithPadding>
         </StyledFilterHider>
       </StyledFilterBox>
     </ProductContextProvider>

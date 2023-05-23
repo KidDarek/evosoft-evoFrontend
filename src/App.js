@@ -11,6 +11,7 @@ import { styled } from "@mui/material";
 import SearchPage from "./pages/search-page/SearchPage";
 import ShopPage from "./pages/shop-page/ShopPage";
 import CheckoutPage from "./pages/checkout-page/CheckoutPage";
+import AddProductPageWithContext from "./pages/product-page/AddProductPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const StyledFontDiv = styled("div")({
@@ -33,7 +34,6 @@ const MainTheme = createTheme({
     },
   },
   typography: {
-
     button: {
       fontSize: 16,
       fontWeight: 700,
@@ -57,6 +57,7 @@ function App() {
             <Route path="/Checkout" element={<CheckoutPage />} />
             <Route path="/Profile:id" element={<ProfilePage />} />
             <Route path="/Product/:id" element={<ProductPageWithContext />} />
+            <Route path="/AddProduct" element={<AddProductPageWithContext />} />
           </Routes>
         </BrowserRouter>
         <Footer />
