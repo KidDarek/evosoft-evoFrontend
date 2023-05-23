@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
-import { products } from "../../DataBaseLoader";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 
 const StyledProdCard = styled("div")({
     height: "auto",
@@ -20,6 +19,9 @@ const StyledImg = styled("img")({
 
 
 function SimilarProdCard(props) {
+
+    const { products } = useContext(ProductContext);
+
     return (
         products.map((product, i) => (
             <Fragment key={i}>
