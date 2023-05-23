@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React, { Fragment, useContext } from "react";
 import {
     ProductContext,
-} from "../../../context-providers/ProductContext";
+} from "../../context-providers/ProductContext";
 
 const StyledProdCard = styled("div")({
     height: "auto",
