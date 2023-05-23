@@ -46,6 +46,10 @@ const StyledFilterHider = styled("div")({
   position: "static",
 });
 
+const StyledDivWithPadding = styled("div")({
+  padding: "0px 10px 10px 10px",
+});
+
 const Filter = (props) => {
   const {
     selectedTags,
@@ -106,7 +110,7 @@ const Filter = (props) => {
       <StyledFilterBox>
         <StyledFilterHider>
           {/*Searchbar*/}
-          <div style={{ padding: "0px 10px 10px 10px" }}>
+          <StyledDivWithPadding>
             <h3>Search</h3>
             <form>
               <TextField
@@ -120,9 +124,9 @@ const Filter = (props) => {
                 }}
               />
             </form>
-          </div>
+          </StyledDivWithPadding>
           {/*TagSelector*/}
-          <div style={{ padding: "0px 10px 0px 10px" }}>
+          <StyledDivWithPadding>
             <h3>Tags:</h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
               {uniqueTags.map((tag) => (
@@ -144,7 +148,7 @@ const Filter = (props) => {
                 </div>
               ))}
             </div>
-          </div>
+          </StyledDivWithPadding>
           {/** Price range /*/}
           <div style={{ padding: "15px" }}>
             <h3>Price range</h3>
@@ -191,7 +195,7 @@ const Filter = (props) => {
                 }}
               />
             </div>
-            <div style={{ padding: "5px 10px 0px 10px" }}>
+            <StyledDivWithPadding>
               <Slider
                 getAriaLabel={() => "Price Range"}
                 value={selectedPriceRange}
@@ -201,7 +205,7 @@ const Filter = (props) => {
                 max={INITIAL_MAX_PRICE_VALUE}
                 disableSwap
               />
-            </div>
+            </StyledDivWithPadding>
           </div>
         </StyledFilterHider>
       </StyledFilterBox>

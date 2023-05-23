@@ -34,6 +34,14 @@ const StyledTable = styled("table")({
   borderSpacing: "8px",
 });
 
+const StyledInput = styled("input")({
+  lineHeight: "20px",
+});
+
+const StyledLabel = styled("label")({
+  fontSize: "15px",
+});
+
 const CheckoutPageInside = () => {
   const { cartItems } = useContext(CartItemsContext);
 
@@ -68,59 +76,52 @@ const CheckoutPageInside = () => {
             </tr>
             <tr>
               <td>
-                <input
+                <StyledInput
                   type="text"
                   placeholder="First name"
-                  style={{ lineHeight: "20px" }}
                 />
               </td>
               <td>
-                <input
+                <StyledInput
                   type="text"
                   placeholder="Last name"
-                  style={{ lineHeight: "20px" }}
                 />
               </td>
             </tr>
             <tr>
               <td>
-                <input
+                <StyledInput
                   type="text"
                   placeholder="Email"
-                  style={{ lineHeight: "20px" }}
                 />
               </td>
               <td>
-                <input
+                <StyledInput
                   type="tel"
                   placeholder="Phone number"
-                  style={{ lineHeight: "20px" }}
                 />
               </td>
             </tr>
             <tr>
               <td>
-                <input
+                <StyledInput
                   type="text"
                   placeholder="Post code"
-                  style={{ lineHeight: "20px" }}
                 />
               </td>
               <td>
-                <input
+                <StyledInput
                   type="text"
                   placeholder="City"
-                  style={{ lineHeight: "20px" }}
                 />
               </td>
             </tr>
             <tr>
               <td colSpan="2">
-                <input
+                <StyledInput
                   type="text"
                   placeholder="Street, house number"
                   size="47"
-                  style={{ lineHeight: "20px" }}
                 />
               </td>
             </tr>
@@ -139,9 +140,9 @@ const CheckoutPageInside = () => {
                     checked="false"
                     name="acceptPolicy"
                   />
-                  <label for="acceptPolicy" style={{ fontSize: "15px" }}>
+                  <StyledLabel for="acceptPolicy">
                     I would like to get emails about the best deals.
-                  </label>
+                  </StyledLabel>
                 </td>
               </tr>
               <tr>
@@ -151,11 +152,11 @@ const CheckoutPageInside = () => {
                     checked="false"
                     name="acceptPolicy"
                   />
-                  <label for="acceptPolicy" style={{ fontSize: "15px" }}>
+                  <StyledLabel for="acceptPolicy">
                     I have read and accepted that my order involves a payment
                     obligation, with ordering I agree to Terms of Service and
                     Privacy Policy.
-                  </label>
+                  </StyledLabel>
                 </td>
               </tr>
               <tr style={{ fontWeight: "bold" }}>
