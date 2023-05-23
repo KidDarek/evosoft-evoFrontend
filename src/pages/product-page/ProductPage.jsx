@@ -64,6 +64,14 @@ const StyledImage = styled("img")({
   marginRight: "auto",
 });
 
+const StyledH2 = styled("h2")({
+  color: "white"
+});
+
+const StyledWhiteDiv = styled("div")({
+  color: "white"
+});
+
 const ProductPageInside = () => {
   const [value, setValue] = React.useState("1");
 
@@ -104,13 +112,13 @@ const ProductPageInside = () => {
         </StyledInfoDiv>
         <StyledInfoDivText>
           <div>
-            <h2 style={{ color: "white" }}>Product name:</h2>
-            <div style={{ color: "white" }}> {product.title}</div>
-            <h2 style={{ color: "white" }}>Price:</h2>
-            <div style={{ color: "white" }}> {product.price}</div>
-            <h2 style={{ color: "white" }}>Category:</h2>
-            <div style={{ color: "white" }}> {product.category}</div>
-            <h2 style={{ color: "white" }}>Tags:</h2>
+            <StyledH2 >Product name:</StyledH2>
+            <StyledWhiteDiv > {product.title}</StyledWhiteDiv>
+            <StyledH2 >Price:</StyledH2>
+            <StyledWhiteDiv > {product.price}</StyledWhiteDiv>
+            <StyledH2 >Category:</StyledH2>
+            <StyledWhiteDiv > {product.category}</StyledWhiteDiv>
+            <StyledH2 >Tags:</StyledH2>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
               {product.tags.map((tag) => (
                 <Chip
@@ -161,8 +169,8 @@ const ProductPageInside = () => {
       <StyledPageDiv>
         <StyledInfoDivText2>
           <div>
-            <h1 style={{ color: "white" }}>Product description</h1>
-            <div style={{ color: "white" }}>{product.body}</div>
+            <StyledH2>Product description</StyledH2>
+            <StyledWhiteDiv >{product.body}</StyledWhiteDiv>
           </div>
         </StyledInfoDivText2>
       </StyledPageDiv>
