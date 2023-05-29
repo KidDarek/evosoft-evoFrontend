@@ -1,12 +1,16 @@
-import { styled } from "@mui/material";
-import React, { useContext, useState } from "react";
-import { TextField } from "@mui/material";
+import {
+  Autocomplete,
+  TextField,
+  styled,
+  IconButton,
+  Snackbar,
+} from "@mui/material";
+import React, { useContext, useState, useEffect } from "react";
 import {
   ProductContext,
   ProductContextProvider,
 } from "../../context-providers/ProductContext";
 import MUIButton from "@mui/material/Button";
-import { IconButton, Snackbar } from "@mui/material";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -46,6 +50,12 @@ const StyledTextField = styled(TextField)({
     "&.Mui-focused fieldset": {
       borderColor: "white",
     },
+  },
+  "& .MuiAutocomplete-clearIndicator": {
+    color: "white",
+  },
+  "& .MuiAutocomplete-popupIndicator": {
+    color: "white",
   },
   variant: "outlined",
   width: "90%",
@@ -112,22 +122,49 @@ const AddProductPage = () => {
     setImage(file);
   }
 
-  const { addProduct } = useContext(ProductContext);
+  const { addProduct, products } = useContext(ProductContext);
+  const [uniqueCategories, setUniqueCategories] = useState([]);
+
+  useEffect(() => {
+    const setCategories = new Set();
+    products.forEach((product) => setCategories.add(product.category));
+    setUniqueCategories([...setCategories]);
+  }, [products]);
+
+  const [selectedOption, setSelectedOption] = React.useState(null);
+  const [inputValue, setInputValue] = React.useState("");
+
+  const handleChange = (event, value) => {
+    setSelectedOption(value);
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && inputValue.trim() !== "") {
+      const newCategory = inputValue.trim();
+      if (!uniqueCategories.includes(newCategory)) {
+        setUniqueCategories([...uniqueCategories, newCategory]);
+      }
+      setSelectedOption(newCategory);
+      setInputValue("");
+    }
+  };
 
   const addNewProduct = async () => {
     const titleField = document.getElementById("TitleField");
     const descriptionField = document.getElementById("DescriptionField");
     const priceField = document.getElementById("PriceField");
-    const categoryField = document.getElementById("CategoryField");
     const tagsField = document.getElementById("TagsField");
 
     const title = titleField.value;
     const description = descriptionField.value;
     const price = priceField.value;
-    const category = categoryField.value;
     const tags = tagsField.value.split(", ");
 
-    if (title === "" || description === "" || price === "" || category === "") {
+    if (title === "" || description === "" || price === "") {
       return;
     }
 
@@ -136,7 +173,7 @@ const AddProductPage = () => {
       imageUri: URL.createObjectURL(image),
       body: description,
       price: price,
-      category: category,
+      category: selectedOption,
       tags: tags,
     });
     handleSnackOpen();
@@ -169,7 +206,25 @@ const AddProductPage = () => {
             </tr>
             <tr>
               <td>
-                <StyledTextField label="Category" id="CategoryField" />
+                <Autocomplete
+                  options={uniqueCategories}
+                  value={selectedOption}
+                  onChange={handleChange}
+                  renderInput={(params) => (
+                    <StyledTextField
+                      {...params}
+                      label="Category"
+                      inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "off",
+                      }}
+                      fullWidth
+                      value={inputValue}
+                      onChange={handleInputChange}
+                      onKeyDown={handleKeyDown}
+                    />
+                  )}
+                />
               </td>
             </tr>
             <tr>
