@@ -231,10 +231,10 @@ const Filter = (props) => {
           </div>
           {/* Sorting */}
           <StyledSortBySection>
-            <div>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <FormControl
                 variant="outlined"
-                sx={{ minWidth: 120, marginRight: "16px" }}
+                sx={{ minWidth: 180, marginRight: "16px" }}
               >
                 <InputLabel id="sort-by-label">Sort By</InputLabel>
                 <Select
@@ -260,6 +260,7 @@ const Filter = (props) => {
                 }
                 label="Descending"
                 htmlFor="descending-checkbox"
+                style={{ marginLeft: "auto" }}
               />
             </div>
           </StyledSortBySection>
