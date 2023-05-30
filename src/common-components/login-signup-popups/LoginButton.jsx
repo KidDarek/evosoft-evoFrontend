@@ -44,7 +44,7 @@ const LoginButton = (props) => {
     const password = passwordTextField.value;
     const logInData = { email, name, password };
     const user = await loginUser(logInData);
-    if (user === null) {
+    if (user.id === undefined) {
       handleSnackOpen();
       return;
     }

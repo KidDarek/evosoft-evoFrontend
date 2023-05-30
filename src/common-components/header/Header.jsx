@@ -98,8 +98,8 @@ const Header = (props) => {
           >
             Contact
           </MUIButton>
-          {!loggedIn && <LoginButton setLoggedin={setLoggedin} setLoginID={setLoginID}> Log in / Sign up</LoginButton>}
-          {loggedIn && <ProfileButton setLoggedin={setLoggedin} logInID={logInID} />}
+          {loggedInUser?.id === undefined && <LoginButton setLoggedInUser={setLoggedInUser}> Log in / Sign up</LoginButton>}
+          {loggedInUser?.id !== undefined && <ProfileButton setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} />}
           <ShoppingCart />
         </StyledLinks>
       </StyledHeader>

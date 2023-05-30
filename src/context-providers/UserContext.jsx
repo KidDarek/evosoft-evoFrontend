@@ -20,17 +20,13 @@ function UserContextProvider({ children }) {
   }
 
   async function addUser(user) {
-    await UserAPI.add(user);
+    const result = await UserAPI.add(user);
     setUsers([...users, user]);
+    return result;
   }
 
-
   async function loginUser(userData) {
-    const user = await UserAPI.login(userData);
-    if (user.id === undefined) {
-      return null;
-    }
-    return user;
+    return await UserAPI.login(userData);
   }
 
   async function removeUser(id) {

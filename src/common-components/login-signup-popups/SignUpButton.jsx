@@ -10,7 +10,8 @@ import { IconButton, Snackbar } from "@mui/material";
 
 const SignUpPopup = (props) => {
   const [open, setOpen] = React.useState(false);
-  const [openSnack, setOpenSnack] = React.useState(false);
+  const [openSnackInvalid, setOpenSnackInvalid] = React.useState(false);
+  const [openSnackConflict, setOpenSnackConflict] = React.useState(false);
   const { addUser } = useContext(UserContext);
 
   const handleClickOpen = () => {
@@ -22,11 +23,12 @@ const SignUpPopup = (props) => {
   };
 
   const handleSnackClose = () => {
-    setOpenSnack(false);
+    setOpenSnackInvalid(false);
+    setOpenSnackConflict(false);
   };
 
-  const handleSnackOpen = () => {
-    setOpenSnack(true);
+  const handleSnackOpen = (setOpenSnackFunction) => {
+    setOpenSnackFunction(true);
   };
 
   const requestSignUp = (e) => {
@@ -41,14 +43,17 @@ const SignUpPopup = (props) => {
     const passwordTextField = document.getElementById("sign-up-password");
     const email = emailTextField.value;
     if (!validEmail(email)) {
-      handleSnackOpen();
+      handleSnackOpen(setOpenSnackInvalid);
       return;
     }
     const name = nameTextField.value;
     const password = passwordTextField.value;
     const role = "user";
     const user = { name, email, password, role };
-    await (addUser(user))
+    if (await (addUser(user))) {
+      handleSnackOpen(setOpenSnackConflict);
+      return;
+    }
     setOpen(false);
   };
 
@@ -129,10 +134,17 @@ const SignUpPopup = (props) => {
           <Button onClick={handleSignUpRequest}>Sign up</Button>
         </DialogActions>
         <Snackbar
-          open={openSnack}
+          open={openSnackInvalid}
           autoHideDuration={6000}
           onClose={handleSnackClose}
           message="Not a valid Email"
+          action={snackAction}
+        />
+        <Snackbar
+          open={openSnackConflict}
+          autoHideDuration={6000}
+          onClose={handleSnackClose}
+          message="Email is already used"
           action={snackAction}
         />
       </Dialog>

@@ -12,13 +12,14 @@ class UserAPI {
   }
 
   static async add(user) {
-    await fetch(BASE_URL, {
+    const response = await fetch(BASE_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
+    return response.status;
   }
 
   static async login(userData) {
