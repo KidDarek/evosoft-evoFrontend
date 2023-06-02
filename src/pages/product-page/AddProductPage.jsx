@@ -1,16 +1,11 @@
-import {
-  Autocomplete,
-  TextField,
-  styled,
-  IconButton,
-  Snackbar,
-} from "@mui/material";
+import { Autocomplete, TextField, styled, Chip, Checkbox } from "@mui/material";
 import React, { useContext, useState, useEffect } from "react";
 import {
   ProductContext,
   ProductContextProvider,
 } from "../../context-providers/ProductContext";
 import MUIButton from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -21,24 +16,71 @@ const StyledPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
 });
 
+const StyledTagsDiv = styled("div")({
+  display: "flex",
+  flexWrap: "wrap",
+  maxWidth: "90%",
+  paddingLeft: "5%",
+  gap: "7px",
+});
+
+const StyledChip = styled(Chip)`
+  && {
+    color: white;
+    border-color: white;
+    font-size: 15px;
+  }
+`;
+
+const StyledChipInput = styled(TextField)(({ theme }) => ({
+  maxWidth: "55%",
+  "& .MuiInputBase-input": {
+    color: "white",
+    opacity: 1,
+    minWidth: 0,
+    flexGrow: 1,
+    paddingLeft: 0,
+    paddingRight: 0,
+    margin: 0,
+    fontWeight: "bold",
+    "&::placeholder": {
+      opacity: 1,
+      fontWeight: "bold",
+    },
+  },
+  "& .MuiInputLabel-root": {
+    color: "white",
+    fontWeight: "bold",
+  },
+  "& fieldset": {
+    border: "none",
+    outline: "none",
+    padding: 0,
+    boxShadow: "none",
+    borderRadius: 0,
+  },
+}));
+
 const StyledTable = styled("table")({
   width: "25%",
   height: "auto",
   background: "#00cc99",
   borderRadius: "15px",
   color: "white",
-  padding: "20px 20px 20px 24px",
+  padding: "20px 15px 20px 15px",
   fontWeight: "bold",
   textAlign: "center",
-  borderSpacing: "10px",
+  borderSpacing: "14px",
 });
 
 const StyledTextField = styled(TextField)({
   "& .MuiInputBase-input": {
     color: "white",
+    fontWeight: "bold",
   },
   "& .MuiInputLabel-root": {
     color: "white",
+    fontWeight: "bold",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
@@ -62,7 +104,7 @@ const StyledTextField = styled(TextField)({
 });
 
 const StyledTitle = styled("div")({
-  fontSize: "25px",
+  fontSize: "28px",
   paddingBottom: "5px",
 });
 
@@ -72,57 +114,26 @@ const StyledImage = styled("img")({
   maxHeight: "45%",
 });
 
+const StyledDeleteIcon = styled("button")({
+  position: "absolute",
+  top: "5px",
+  right: "25px",
+  borderRadius: "15px",
+  fontSize: "20px",
+  background: "none",
+  color: "red",
+  cursor: "pointer",
+});
+
 const AddProductPage = () => {
-  const [openSnack, setOpenSnack] = React.useState(false);
-
-  const handleSnackOpen = () => {
-    setOpenSnack(true);
+  const navigate = useNavigate();
+  const navigateToSearchPage = () => {
+    navigate(`/Search`);
   };
-
-  const handleSnackClose = () => {
-    setOpenSnack(false);
-  };
-
-  const snackAction = (
-    <React.Fragment>
-      <MUIButton
-        color="red"
-        size="small"
-        variant="contained"
-        onClick={handleSnackClose}
-      >
-        Close
-      </MUIButton>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleSnackClose}
-      ></IconButton>
-    </React.Fragment>
-  );
-
-  const [image, setImage] = useState(null);
-
-  function handleDragEnter(e) {
-    e.preventDefault();
-  }
-
-  function handleDragOver(e) {
-    e.preventDefault();
-  }
-
-  function handleDragLeave(e) {
-    e.preventDefault();
-  }
-
-  function handleDrop(e) {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    setImage(file);
-  }
 
   const { addProduct, products } = useContext(ProductContext);
+
+  // Category
   const [uniqueCategories, setUniqueCategories] = useState([]);
 
   useEffect(() => {
@@ -153,16 +164,78 @@ const AddProductPage = () => {
     }
   };
 
+  // Tags
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [uniqueTags, setUniqueTags] = useState([]);
+
+  useEffect(() => {
+    const setTags = new Set();
+    products.forEach((product) => {
+      product.tags.forEach((tags) => setTags.add(tags));
+    });
+    setUniqueTags([...setTags]);
+  }, [products]);
+
+  const handleCheckboxChange = (tag) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+  // New tag
+  const [newTag, setNewTag] = useState("");
+  const [isAddNewClicked, setIsAddNewClicked] = useState(false);
+
+  const handleAddTag = (event) => {
+    if (event.key === "Enter" && newTag.trim() !== "") {
+      setSelectedTags([...selectedTags, newTag.trim()]);
+      setNewTag("");
+
+      if (!uniqueTags.includes(newTag.trim())) {
+        setUniqueTags([...uniqueTags, newTag.trim()]);
+        setIsAddNewClicked(false);
+      }
+    }
+  };
+
+  const handleAddNewClick = () => {
+    setIsAddNewClicked(true);
+  };
+
+  // Image drag&drop
+  const [image, setImage] = useState(null);
+
+  function handleDragEnter(e) {
+    e.preventDefault();
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+  }
+
+  function handleDragLeave(e) {
+    e.preventDefault();
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    setImage(file);
+  }
+
+  function handleDelete() {
+    setImage(null);
+  }
+
   const addNewProduct = async () => {
     const titleField = document.getElementById("TitleField");
     const descriptionField = document.getElementById("DescriptionField");
     const priceField = document.getElementById("PriceField");
-    const tagsField = document.getElementById("TagsField");
 
     const title = titleField.value;
     const description = descriptionField.value;
     const price = priceField.value;
-    const tags = tagsField.value.split(", ");
 
     if (title === "" || description === "" || price === "") {
       return;
@@ -174,9 +247,9 @@ const AddProductPage = () => {
       body: description,
       price: price,
       category: selectedOption,
-      tags: tags,
+      tags: selectedTags,
     });
-    handleSnackOpen();
+    navigateToSearchPage();
   };
 
   return (
@@ -229,10 +302,37 @@ const AddProductPage = () => {
             </tr>
             <tr>
               <td>
-                <StyledTextField
-                  label="Tags (comma-separated)"
-                  id="TagsField"
-                />
+                <StyledTagsDiv>
+                  {uniqueTags.map((tag) => (
+                    <div key={tag}>
+                      <StyledChip
+                        label={tag}
+                        variant={
+                          selectedTags.includes(tag) ? "default" : "outlined"
+                        }
+                        onClick={() => handleCheckboxChange(tag)}
+                      />
+                      <Checkbox
+                        id={tag}
+                        checked={selectedTags.includes(tag)}
+                        onChange={() => handleCheckboxChange(tag)}
+                        style={{ display: "none" }}
+                      />
+                    </div>
+                  ))}
+                  <StyledChip
+                    label={
+                      <StyledChipInput
+                        value={newTag}
+                        onChange={(e) => setNewTag(e.target.value)}
+                        onKeyDown={handleAddTag}
+                        onClick={handleAddNewClick}
+                        placeholder="+ Add new tag"
+                      />
+                    }
+                    variant={isAddNewClicked ? "default" : "outlined"}
+                  />
+                </StyledTagsDiv>
               </td>
             </tr>
             <tr>
@@ -244,7 +344,12 @@ const AddProductPage = () => {
                   onDrop={handleDrop}
                 >
                   {image ? (
-                    <StyledImage src={URL.createObjectURL(image)} />
+                    <div style={{ position: "relative" }}>
+                      <StyledImage src={URL.createObjectURL(image)} />
+                      <StyledDeleteIcon onClick={handleDelete}>
+                        X
+                      </StyledDeleteIcon>
+                    </div>
                   ) : (
                     <StyledImage
                       src="/images/dragAndDrop.png"
@@ -268,13 +373,6 @@ const AddProductPage = () => {
             </tr>
           </tbody>
         </StyledTable>
-        <Snackbar
-          open={openSnack}
-          autoHideDuration={6000}
-          onClose={handleSnackClose}
-          message="Product added!"
-          action={snackAction}
-        />
       </StyledPageDiv>
     </>
   );
