@@ -233,13 +233,13 @@ const ProductPageInside = () => {
             </div>
           </div>
         </StyledInfoDivText>
+        {!isAnimationused}
+        {isAnimationused &&
+          <StyledAnimation>
+            {<img src="/images/ShoppingCart.png" alt='ShoppingCart.png' style={{ width: "25px", height: "25px" }}></img>}
+          </StyledAnimation>
+        }
       </StyledPageDiv>
-      {!isAnimationused}
-      {isAnimationused &&
-        <StyledAnimation>
-          {<img src="/images/ShoppingCart.png" alt='ShoppingCart.png' style={{ width: "25px", height: "25px" }}></img>}
-        </StyledAnimation>
-      }
       <StyledPageDiv>
         <StyledInfoDivText2>
           <div>
