@@ -13,6 +13,54 @@ import {
 import MUIButton from "@mui/material/Button";
 import { TextField, Chip } from "@mui/material";
 
+const StyledAnimation = styled("div")({
+  display: "flex",
+  justifyContent: "end",
+  transform: "scale(-4,4)",
+  "@keyframes cartAnim": {
+    from: {
+      transform: "translateY(-10000%) scale(-4,4)",
+
+    },
+    "6%": {
+      transform: "translateX(0%) translateY(100%) scale(-4,4)",
+    },
+    "6.3%": {
+      transform: "translateX(0%) translateY(200%) scale(-12,1)",
+    },
+    "8%": {
+      transform: "translateX(0%) translateY(200%) scale(-12,1)",
+    },
+    "13%": {
+      transform: "translateX(0%) translateY(0%) scale(-4,4)",
+    },
+    "60%": {
+      transform: "scale(-40,40)",
+    },
+    to: {
+      transform: "translateX(-10000%) scale(-40,40)",
+    },
+  },
+  animation: "cartAnim 5s 1 ease",
+  position: "static"
+})
+
+const StyledPicAnimation = styled("div")({
+  transform: "scale(0.7,0.7)",
+  "@keyframes PicAnim": {
+    from: {
+      transform: "translateY(0%) scale(0.7,0.7)",
+    },
+    "66%": {
+      transform: "translateX(0%) translateY(-20%) scale(0.7,0.7)",
+    },
+    to: {
+      transform: "translateX(-185%) translateY(-20%) scale(0.7,0.7)",
+    },
+  },
+  animation: "PicAnim 5s 1 ease",
+})
+
 const StyledPageDiv = styled("div")({
   display: "flex",
   alignItems: "center",
