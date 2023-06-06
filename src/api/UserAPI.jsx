@@ -1,4 +1,4 @@
-const BASE_URL = `${process.env.BACKEND_ADDRESS}/Users`;
+const BASE_URL = "http://localhost:5232/User";
 
 class UserAPI {
   static async getAll() {
@@ -12,13 +12,25 @@ class UserAPI {
   }
 
   static async add(user) {
-    await fetch(BASE_URL, {
+    const response = await fetch(BASE_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
+    return response.status;
+  }
+
+  static async login(userData) {
+    const response = await fetch(`${BASE_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+    return await response.json();
   }
 
   static async remove(id) {

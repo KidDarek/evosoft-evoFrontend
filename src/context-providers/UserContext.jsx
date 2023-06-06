@@ -16,12 +16,17 @@ function UserContextProvider({ children }) {
 
   async function getUserById(id) {
     const user = await UserAPI.getById(id);
-    return user || null;
+    return user;
   }
 
   async function addUser(user) {
-    await UserAPI.add(user);
+    const result = await UserAPI.add(user);
     setUsers([...users, user]);
+    return result;
+  }
+
+  async function loginUser(userData) {
+    return await UserAPI.login(userData);
   }
 
   async function removeUser(id) {
@@ -38,7 +43,7 @@ function UserContextProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ users, addUser, removeUser, updateUser, getUserById }}
+      value={{ users, addUser, removeUser, updateUser, getUserById, loginUser }}
     >
       {children}
     </UserContext.Provider>

@@ -1,8 +1,8 @@
 import { Avatar, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { users } from "../../db";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PurchaseHistoryButton from "./PurchaseHistoryButton";
+import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -79,6 +79,21 @@ const ProfilePage = () => {
 
   const params = useParams();
   const id = params.id;
+  const { getUserById } = useContext(UserContext);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await getUserById(id);
+      setUser(user);
+    }
+
+    fetchUser();
+  }, [getUserById, id]);
+
+  if (user?.id === undefined) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <StyledPageDiv>
@@ -94,21 +109,21 @@ const ProfilePage = () => {
                     fontSize: 100,
                   }}
                 >
-                  {users[id - 1].name[0].toUpperCase()}
+                  {user.name[0].toUpperCase()}
                 </Avatar>
               </td>
             </tr>
             <tr>
               <td>Name:</td>
-              <td>{users[id - 1].name}</td>
+              <td>{user.name}</td>
             </tr>
             <tr>
               <td>Email:</td>
-              <td>{users[id - 1].email}</td>
+              <td>{user.email}</td>
             </tr>
             <tr>
               <td>Role:</td>
-              <td>{users[id - 1].role}</td>
+              <td>{user.role}</td>
             </tr>
             <tr>
               <td>Status:</td>
@@ -131,4 +146,9 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+const WrappedProfilePage = (props) => (
+  <UserContextProvider>
+    <ProfilePage id={props.id} />
+  </UserContextProvider>
+);
+export default WrappedProfilePage;
