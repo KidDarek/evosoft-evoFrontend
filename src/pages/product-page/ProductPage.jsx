@@ -122,6 +122,7 @@ const StyledWhiteDiv = styled("div")({
 
 const ProductPageInside = () => {
   const [value, setValue] = React.useState("1");
+  const [isAnimationused, setAnimationUsage] = useState(false);
 
   let accountRole = users[0].role;
   console.log(accountRole);
