@@ -155,9 +155,22 @@ const ProductPageInside = () => {
     <>
       <StyledPageDiv>
         <StyledInfoDiv>
-          <div>
-            <StyledImage src={product.imageUri} alt="kep" />
-          </div>
+          <StyledInfoDiv>
+            <div>
+              {!isAnimationused && <StyledImage
+                src={product.imageUri}
+                alt="kep"
+
+              />}
+              {isAnimationused &&
+                <StyledPicAnimation>
+                  <StyledImage
+                    src={product.imageUri}
+                    alt="kep" />
+                </StyledPicAnimation>
+              }
+            </div>
+          </StyledInfoDiv>
         </StyledInfoDiv>
         <StyledInfoDivText>
           <div>
