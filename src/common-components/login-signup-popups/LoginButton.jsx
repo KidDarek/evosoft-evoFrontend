@@ -14,6 +14,7 @@ const LoginButton = (props) => {
   const [openSnack, setOpenSnack] = React.useState(false);
   const { loginUser } = useContext(UserContext);
 
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -44,7 +45,7 @@ const LoginButton = (props) => {
     const password = passwordTextField.value;
     const logInData = { email, name, password };
     const user = await loginUser(logInData);
-    if (user.id === undefined) {
+    if (user === null) {
       handleSnackOpen();
       return;
     }
@@ -120,9 +121,11 @@ const LoginButton = (props) => {
   );
 };
 
-const WrappedLoginButton = (props) => (
-  <UserContextProvider>
-    <LoginButton theme={props.theme} setLoggedInUser={props.setLoggedInUser} />
-  </UserContextProvider>
-);
+const WrappedLoginButton = (props) => {
+  return (
+    <UserContextProvider>
+      <LoginButton theme={props.theme} setLoggedInUser={props.setLoggedInUser} />
+    </UserContextProvider>
+  )
+};
 export default WrappedLoginButton;

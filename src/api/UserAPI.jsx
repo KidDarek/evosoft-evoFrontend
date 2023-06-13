@@ -30,7 +30,10 @@ class UserAPI {
       },
       body: JSON.stringify(userData),
     })
-    return await response.json();
+    if (response.ok) {
+      return response.json();
+    }
+    return null;
   }
 
   static async remove(id) {
