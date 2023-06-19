@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { users } from "../../db";
 import {
   ProductContext,
@@ -12,6 +12,12 @@ import {
 } from "../../context-providers/CartItemsContext";
 import MUIButton from "@mui/material/Button";
 import { TextField, Chip } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledAnimation = styled("div")({
   display: "flex",
@@ -20,7 +26,6 @@ const StyledAnimation = styled("div")({
   "@keyframes cartAnim": {
     from: {
       transform: "translateY(-10000%) scale(-4,4)",
-
     },
     "6%": {
       transform: "translateX(0%) translateY(100%) scale(-4,4)",
@@ -42,8 +47,8 @@ const StyledAnimation = styled("div")({
     },
   },
   animation: "cartAnim 5s 1 ease",
-  position: "static"
-})
+  position: "static",
+});
 
 const StyledPicAnimation = styled("div")({
   transform: "scale(0.7,0.7)",
@@ -59,7 +64,7 @@ const StyledPicAnimation = styled("div")({
     },
   },
   animation: "PicAnim 5s 1 ease",
-})
+});
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -113,24 +118,34 @@ const StyledImage = styled("img")({
 });
 
 const StyledH2 = styled("h2")({
-  color: "white"
+  color: "white",
 });
 
 const StyledWhiteDiv = styled("div")({
-  color: "white"
+  color: "white",
 });
 
 const ProductPageInside = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("1");
   const [isAnimationused, setAnimationUsage] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   let accountRole = users[0].role;
   console.log(accountRole);
 
   const params = useParams();
 
-  const { getProductById } = useContext(ProductContext);
-  const { addToCart } = useContext(CartItemsContext);
+  const { getProductById, removeProduct } = useContext(ProductContext);
+  const { cartItems, addToCart, removeFromCart } = useContext(CartItemsContext);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -151,36 +166,43 @@ const ProductPageInside = () => {
     addToCart(product); // Call the addToCart function from the CartItemsContext
   };
 
+  const deleteProduct = async (id) => {
+    const inCart = cartItems.find((item) => item.id === id);
+    if (inCart) {
+      removeFromCart(id);
+      console.log("Hello");
+    }
+    await removeProduct(id);
+    handleClose();
+    navigate(`/Search`);
+  };
+
   return (
     <>
       <StyledPageDiv>
         <StyledInfoDiv>
           <StyledInfoDiv>
             <div>
-              {!isAnimationused && <StyledImage
-                src={product.imageUri}
-                alt="kep"
-
-              />}
-              {isAnimationused &&
+              {!isAnimationused && (
+                <StyledImage src={product.imageUri} alt="kep" />
+              )}
+              {isAnimationused && (
                 <StyledPicAnimation>
-                  <StyledImage
-                    src={product.imageUri}
-                    alt="kep" />
+                  <StyledImage src={product.imageUri} alt="kep" />
                 </StyledPicAnimation>
-              }
+              )}
             </div>
           </StyledInfoDiv>
         </StyledInfoDiv>
         <StyledInfoDivText>
           <div>
-            <StyledH2 >Product name:</StyledH2>
-            <StyledWhiteDiv > {product.title}</StyledWhiteDiv>
-            <StyledH2 >Price:</StyledH2>
-            <StyledWhiteDiv > {product.price}</StyledWhiteDiv>
-            <StyledH2 >Category:</StyledH2>
-            <StyledWhiteDiv > {product.category}</StyledWhiteDiv>
-            <StyledH2 >Tags:</StyledH2>
+            <StyledH2>Product name:</StyledH2>
+            <StyledWhiteDiv> {product.title}</StyledWhiteDiv>
+            <StyledH2>Price:</StyledH2>
+            <StyledWhiteDiv> {product.price}</StyledWhiteDiv>
+            <StyledH2>Category:</StyledH2>
+            <StyledWhiteDiv> {product.category}</StyledWhiteDiv>
+            <StyledH2>Tags:</StyledH2>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
               {product.tags.map((tag) => (
                 <Chip
@@ -223,7 +245,7 @@ const ProductPageInside = () => {
                   addItemToShoppingCart(product, value);
                   setAnimationUsage(true);
                   setTimeout(() => {
-                    setAnimationUsage(false)
+                    setAnimationUsage(false);
                   }, 5000);
                 }}
               >
@@ -231,20 +253,58 @@ const ProductPageInside = () => {
                 Add item to cart{" "}
               </MUIButton>
             </div>
+            <div>
+              <MUIButton
+                sx={{ bgcolor: "#ff0000", marginTop: "20px" }}
+                variant="contained"
+                onClick={handleClickOpen}
+              >
+                {" "}
+                Delete product{" "}
+              </MUIButton>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle id="alertDialogTitle">
+                  {"Are you sure you want to delete " + product.title + "?"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Once you delete this product, all associated data will be
+                    permanently removed from the system. This action cannot be
+                    undone.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    color="red"
+                    onClick={() => deleteProduct(product.id)}
+                    autoFocus
+                  >
+                    Delete
+                  </Button>
+                  <Button onClick={handleClose}>Cancel</Button>
+                </DialogActions>
+              </Dialog>
+            </div>
           </div>
         </StyledInfoDivText>
         {!isAnimationused}
-        {isAnimationused &&
+        {isAnimationused && (
           <StyledAnimation>
-            {<img src="/images/ShoppingCart.png" alt='ShoppingCart.png' style={{ width: "25px", height: "25px" }}></img>}
+            {
+              <img
+                src="/images/ShoppingCart.png"
+                alt="ShoppingCart.png"
+                style={{ width: "25px", height: "25px" }}
+              ></img>
+            }
           </StyledAnimation>
-        }
+        )}
       </StyledPageDiv>
       <StyledPageDiv>
         <StyledInfoDivText2>
           <div>
             <StyledH2>Product description</StyledH2>
-            <StyledWhiteDiv >{product.body}</StyledWhiteDiv>
+            <StyledWhiteDiv>{product.body}</StyledWhiteDiv>
           </div>
         </StyledInfoDivText2>
       </StyledPageDiv>
