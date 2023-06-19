@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5232/User";
+const BASE_URL = `${process.env.REACT_APP_BACKEND_ADDRESS}/User`;
 
 class UserAPI {
   static async getAll() {
@@ -29,7 +29,7 @@ class UserAPI {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
-    })
+    });
     if (response.ok) {
       return response.json();
     }

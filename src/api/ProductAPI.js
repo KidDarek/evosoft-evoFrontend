@@ -1,5 +1,5 @@
 class ProductAPI {
-  static BASE_URL = "http://localhost:5232/Products";
+  static BASE_URL = `${process.env.REACT_APP_BACKEND_ADDRESS}/Products`;
 
   static async getAll() {
     const response = await fetch(this.BASE_URL);
