@@ -12,6 +12,7 @@ import SearchPage from "./pages/search-page/SearchPage";
 import ShopPage from "./pages/shop-page/ShopPage";
 import CheckoutPage from "./pages/checkout-page/CheckoutPage";
 import AddProductPageWithContext from "./pages/product-page/AddProductPage";
+import AnswerQuestionPage from "./pages/answer-question-page/AnswerQuestionPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const StyledFontDiv = styled("div")({
@@ -55,6 +56,7 @@ function App() {
             <Route path="/Search" element={<SearchPage />} />
             <Route path="/Shop" element={<ShopPage />} />
             <Route path="/Checkout" element={<CheckoutPage />} />
+            <Route path="/AnswerQuestion" element={<AnswerQuestionPage />} />
             <Route path="/Profile:id" element={<ProfilePage />} />
             <Route path="/Product/:id" element={<ProductPageWithContext />} />
             <Route path="/AddProduct" element={<AddProductPageWithContext />} />

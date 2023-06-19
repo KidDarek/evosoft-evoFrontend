@@ -1,6 +1,15 @@
 import React, { useContext } from "react";
 import Slider from "@mui/material/Slider";
-import { styled, Chip, Checkbox } from "@mui/material";
+import {
+  styled,
+  Chip,
+  Checkbox,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControlLabel,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import MUIButton from "@mui/material/Button";
@@ -60,6 +69,10 @@ const Filter = (props) => {
     setSelectedPriceRange,
     INITIAL_MIN_PRICE_VALUE,
     INITIAL_MAX_PRICE_VALUE,
+    sortBy,
+    setSortBy,
+    descending,
+    setDescending,
   } = props;
 
   const { products } = useContext(ProductContext);
@@ -83,7 +96,6 @@ const Filter = (props) => {
     }
   };
 
-  // "event" IS NEEDED HERE FOR PROPER WORKING
   const handlePriceRangeChange = (event, newPriceRange) => {
     setSelectedPriceRange(newPriceRange);
   };
@@ -110,6 +122,20 @@ const Filter = (props) => {
     if (value < min) value = min;
     return value;
   };
+
+  const handleSortByChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
+  const handleDescendingChange = (e) => {
+    setDescending(e.target.checked);
+  };
+
+  const StyledSortBySection = styled("div")({
+    padding: "15px",
+  });
+
+  const isSortingNone = sortBy === "";
 
   return (
     <ProductContextProvider>
@@ -178,9 +204,7 @@ const Filter = (props) => {
                   },
                 }}
               />
-              <label
-                style={{ width: "50%", height: "50px", margin: "0px 10px" }}
-              ></label>
+              <label style={{ width: "40%" }}></label>
               <TextField
                 id="outlined-max"
                 label="Max price"
@@ -213,7 +237,42 @@ const Filter = (props) => {
               />
             </StyledDivWithPadding>
           </div>
-          {/*New product*/}
+          {/* Sorting */}
+          <StyledSortBySection>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <FormControl
+                variant="outlined"
+                sx={{ minWidth: 180, marginRight: "16px" }}
+              >
+                <InputLabel id="sort-by-label">Sort By</InputLabel>
+                <Select
+                  labelId="sort-by-label"
+                  id="sort-by-select"
+                  value={sortBy}
+                  onChange={handleSortByChange}
+                  label="Sort By"
+                >
+                  <MenuItem value="">None</MenuItem>
+                  <MenuItem value="name">Name</MenuItem>
+                  <MenuItem value="price">Price</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={!isSortingNone && descending}
+                    onChange={handleDescendingChange}
+                    disabled={isSortingNone}
+                    id="descending-checkbox"
+                  />
+                }
+                label="Descending"
+                htmlFor="descending-checkbox"
+                style={{ marginLeft: "auto" }}
+              />
+            </div>
+          </StyledSortBySection>
+{/*New product*/}
           <StyledDivWithPadding>
             <MUIButton
               variant="contained"
