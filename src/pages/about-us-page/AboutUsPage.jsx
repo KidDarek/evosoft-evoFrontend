@@ -17,7 +17,7 @@ const StyledPageDiv = styled("div")({
   display: "flex",
   justifyContent: "center",
   height: "100%",
-  padding: "20px 0px 20px 0px",
+  paddingTop: "20px",
   backgroundColor: "#00EFB3",
   color: "white",
   fontWeight: "bold",
