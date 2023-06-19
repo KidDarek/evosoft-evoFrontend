@@ -19,6 +19,54 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
+const StyledAnimation = styled("div")({
+  display: "flex",
+  justifyContent: "end",
+  transform: "scale(-4,4)",
+  "@keyframes cartAnim": {
+    from: {
+      transform: "translateY(-10000%) scale(-4,4)",
+
+    },
+    "6%": {
+      transform: "translateX(0%) translateY(100%) scale(-4,4)",
+    },
+    "6.3%": {
+      transform: "translateX(0%) translateY(200%) scale(-12,1)",
+    },
+    "8%": {
+      transform: "translateX(0%) translateY(200%) scale(-12,1)",
+    },
+    "13%": {
+      transform: "translateX(0%) translateY(0%) scale(-4,4)",
+    },
+    "60%": {
+      transform: "scale(-40,40)",
+    },
+    to: {
+      transform: "translateX(-10000%) scale(-40,40)",
+    },
+  },
+  animation: "cartAnim 5s 1 ease",
+  position: "static"
+})
+
+const StyledPicAnimation = styled("div")({
+  transform: "scale(0.7,0.7)",
+  "@keyframes PicAnim": {
+    from: {
+      transform: "translateY(0%) scale(0.7,0.7)",
+    },
+    "66%": {
+      transform: "translateX(0%) translateY(-20%) scale(0.7,0.7)",
+    },
+    to: {
+      transform: "translateX(-185%) translateY(-20%) scale(0.7,0.7)",
+    },
+  },
+  animation: "PicAnim 5s 1 ease",
+})
+
 const StyledPageDiv = styled("div")({
   display: "flex",
   alignItems: "center",
@@ -70,27 +118,19 @@ const StyledImage = styled("img")({
   marginRight: "auto",
 });
 
-const BasicTheme = createTheme({
-  palette: {
-    green: {
-      main: "#00cc99",
-      contrastText: "#fff",
-    },
-    red: {
-      main: "#ff0055",
-      dark: "#990033",
-      contrastText: "#fff",
-    },
-    white: {
-      main: "#FFFFFF",
-    },
-  },
+const StyledH2 = styled("h2")({
+  color: "white"
+});
+
+const StyledWhiteDiv = styled("div")({
+  color: "white"
 });
 
 const ProductPageInside = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("1");
+  const [isAnimationused, setAnimationUsage] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -140,33 +180,45 @@ const ProductPageInside = () => {
 
   return (
     <>
-      <ThemeProvider theme={BasicTheme}>
-        <StyledPageDiv>
+      <StyledPageDiv>
+        <StyledInfoDiv>
           <StyledInfoDiv>
             <div>
-              <StyledImage src={product.imageUri} alt="kep" />
+              {!isAnimationused && <StyledImage
+                src={product.imageUri}
+                alt="kep"
+
+              />}
+              {isAnimationused &&
+                <StyledPicAnimation>
+                  <StyledImage
+                    src={product.imageUri}
+                    alt="kep" />
+                </StyledPicAnimation>
+              }
             </div>
           </StyledInfoDiv>
-          <StyledInfoDivText>
-            <div>
-              <h2 style={{ color: "white" }}>Product name:</h2>
-              <div style={{ color: "white" }}> {product.title}</div>
-              <h2 style={{ color: "white" }}>Price:</h2>
-              <div style={{ color: "white" }}> {product.price}</div>
-              <h2 style={{ color: "white" }}>Category:</h2>
-              <div style={{ color: "white" }}> {product.category}</div>
-              <h2 style={{ color: "white" }}>Tags:</h2>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-                {product.tags.map((tag) => (
-                  <Chip
-                    key={tag}
-                    label={tag}
-                    variant="outlined"
-                    style={{ color: "white", borderColor: "white" }}
-                  />
-                ))}
-              </div>
-              <div style={{ paddingTop: "20px", paddingBottom: "15px" }}>
+        </StyledInfoDiv>
+        <StyledInfoDivText>
+          <div>
+            <StyledH2 >Product name:</StyledH2>
+            <StyledWhiteDiv > {product.title}</StyledWhiteDiv>
+            <StyledH2 >Price:</StyledH2>
+            <StyledWhiteDiv > {product.price}</StyledWhiteDiv>
+            <StyledH2 >Category:</StyledH2>
+            <StyledWhiteDiv > {product.category}</StyledWhiteDiv>
+            <StyledH2 >Tags:</StyledH2>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+              {product.tags.map((tag) => (
+                <Chip
+                  key={tag}
+                  label={tag}
+                  variant="outlined"
+                  style={{ color: "white", borderColor: "white" }}
+                />
+              ))}
+            </div>
+            <div style={{ paddingTop: "20px", paddingBottom: "15px" }}>
                 <TextField
                   focused
                   margin="dense"
@@ -191,16 +243,22 @@ const ProductPageInside = () => {
                   }}
                 />
               </div>
-              <div style={{ paddingBottom: "15px" }}>
-                <MUIButton
-                  variant="contained"
-                  onClick={() => addItemToShoppingCart(product, value)}
-                >
-                  {" "}
-                  Add item to cart{" "}
-                </MUIButton>
-              </div>
-              <div>
+            <div>
+              <MUIButton
+                variant="contained"
+                onClick={() => {
+                  addItemToShoppingCart(product, value);
+                  setAnimationUsage(true);
+                  setTimeout(() => {
+                    setAnimationUsage(false)
+                  }, 5000);
+                }}
+              >
+                {" "}
+                Add item to cart{" "}
+              </MUIButton>
+            </div>
+            <div>
                 <MUIButton
                   sx={{ bgcolor: "#ff0000" }}
                   variant="contained"
@@ -232,19 +290,23 @@ const ProductPageInside = () => {
                   </DialogActions>
                 </Dialog>
               </div>
-              <div></div>
-            </div>
-          </StyledInfoDivText>
-        </StyledPageDiv>
-        <StyledPageDiv>
-          <StyledInfoDivText2>
-            <div>
-              <h1 style={{ color: "white" }}>Product description</h1>
-              <div style={{ color: "white" }}>{product.body}</div>
-            </div>
-          </StyledInfoDivText2>
-        </StyledPageDiv>
-      </ThemeProvider>
+          </div>
+        </StyledInfoDivText>
+        {!isAnimationused}
+        {isAnimationused &&
+          <StyledAnimation>
+            {<img src="/images/ShoppingCart.png" alt='ShoppingCart.png' style={{ width: "25px", height: "25px" }}></img>}
+          </StyledAnimation>
+        }
+      </StyledPageDiv>
+      <StyledPageDiv>
+        <StyledInfoDivText2>
+          <div>
+            <StyledH2>Product description</StyledH2>
+            <StyledWhiteDiv >{product.body}</StyledWhiteDiv>
+          </div>
+        </StyledInfoDivText2>
+      </StyledPageDiv>
     </>
   );
 };

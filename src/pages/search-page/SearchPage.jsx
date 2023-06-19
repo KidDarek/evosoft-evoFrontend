@@ -77,6 +77,9 @@ const SearchPageInside = () => {
     }
   }, [products]);
 
+  const [sortBy, setSortBy] = useState(""); // Possible values: "name", "price"
+  const [descending, setDescending] = useState(false);
+
   const filterProducts = useCallback(() => {
     let filtered = [...products];
 
@@ -100,8 +103,29 @@ const SearchPageInside = () => {
         );
       });
     }
+
+    // Sorting
+    if (sortBy === "name") {
+      filtered.sort((a, b) =>
+        descending
+          ? b.title.localeCompare(a.title)
+          : a.title.localeCompare(b.title)
+      );
+    } else if (sortBy === "price") {
+      filtered.sort((a, b) =>
+        descending ? b.price - a.price : a.price - b.price
+      );
+    }
+
     setFilteredProducts(filtered);
-  }, [selectedTags, searchString, selectedPriceRange, products]);
+  }, [
+    selectedTags,
+    searchString,
+    selectedPriceRange,
+    products,
+    sortBy,
+    descending,
+  ]);
 
   useEffect(() => {
     filterProducts();
@@ -125,6 +149,10 @@ const SearchPageInside = () => {
               filterProducts={filterProducts}
               INITIAL_MIN_PRICE_VALUE={INITIAL_MIN_PRICE_VALUE}
               INITIAL_MAX_PRICE_VALUE={INITIAL_MAX_PRICE_VALUE}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              descending={descending}
+              setDescending={setDescending}
             />
             <StyledProductDiv>
               <Grid

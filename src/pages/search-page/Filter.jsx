@@ -1,6 +1,15 @@
 import React, { useContext } from "react";
 import Slider from "@mui/material/Slider";
-import { styled, Chip, Checkbox } from "@mui/material";
+import {
+  styled,
+  Chip,
+  Checkbox,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControlLabel,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import {
   ProductContext,
@@ -46,6 +55,10 @@ const StyledFilterHider = styled("div")({
   position: "static",
 });
 
+const StyledDivWithPadding = styled("div")({
+  padding: "0px 10px 10px 10px",
+});
+
 const Filter = (props) => {
   const {
     selectedTags,
@@ -54,6 +67,10 @@ const Filter = (props) => {
     setSelectedPriceRange,
     INITIAL_MIN_PRICE_VALUE,
     INITIAL_MAX_PRICE_VALUE,
+    sortBy,
+    setSortBy,
+    descending,
+    setDescending,
   } = props;
 
   const { products } = useContext(ProductContext);
@@ -73,7 +90,6 @@ const Filter = (props) => {
     }
   };
 
-  // "event" IS NEEDED HERE FOR PROPER WORKING
   const handlePriceRangeChange = (event, newPriceRange) => {
     setSelectedPriceRange(newPriceRange);
   };
@@ -101,12 +117,26 @@ const Filter = (props) => {
     return value;
   };
 
+  const handleSortByChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
+  const handleDescendingChange = (e) => {
+    setDescending(e.target.checked);
+  };
+
+  const StyledSortBySection = styled("div")({
+    padding: "15px",
+  });
+
+  const isSortingNone = sortBy === "";
+
   return (
     <ProductContextProvider>
       <StyledFilterBox>
         <StyledFilterHider>
           {/*Searchbar*/}
-          <div style={{ padding: "0px 10px 10px 10px" }}>
+          <StyledDivWithPadding>
             <h3>Search</h3>
             <form>
               <TextField
@@ -120,9 +150,9 @@ const Filter = (props) => {
                 }}
               />
             </form>
-          </div>
+          </StyledDivWithPadding>
           {/*TagSelector*/}
-          <div style={{ padding: "0px 10px 0px 10px" }}>
+          <StyledDivWithPadding>
             <h3>Tags:</h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
               {uniqueTags.map((tag) => (
@@ -144,7 +174,7 @@ const Filter = (props) => {
                 </div>
               ))}
             </div>
-          </div>
+          </StyledDivWithPadding>
           {/** Price range /*/}
           <div style={{ padding: "15px" }}>
             <h3>Price range</h3>
@@ -189,7 +219,7 @@ const Filter = (props) => {
                 }}
               />
             </div>
-            <div style={{ padding: "5px 10px 0px 10px" }}>
+            <StyledDivWithPadding>
               <Slider
                 getAriaLabel={() => "Price Range"}
                 value={selectedPriceRange}
@@ -199,8 +229,43 @@ const Filter = (props) => {
                 max={INITIAL_MAX_PRICE_VALUE}
                 disableSwap
               />
-            </div>
+            </StyledDivWithPadding>
           </div>
+          {/* Sorting */}
+          <StyledSortBySection>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <FormControl
+                variant="outlined"
+                sx={{ minWidth: 180, marginRight: "16px" }}
+              >
+                <InputLabel id="sort-by-label">Sort By</InputLabel>
+                <Select
+                  labelId="sort-by-label"
+                  id="sort-by-select"
+                  value={sortBy}
+                  onChange={handleSortByChange}
+                  label="Sort By"
+                >
+                  <MenuItem value="">None</MenuItem>
+                  <MenuItem value="name">Name</MenuItem>
+                  <MenuItem value="price">Price</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={!isSortingNone && descending}
+                    onChange={handleDescendingChange}
+                    disabled={isSortingNone}
+                    id="descending-checkbox"
+                  />
+                }
+                label="Descending"
+                htmlFor="descending-checkbox"
+                style={{ marginLeft: "auto" }}
+              />
+            </div>
+          </StyledSortBySection>
         </StyledFilterHider>
       </StyledFilterBox>
     </ProductContextProvider>
