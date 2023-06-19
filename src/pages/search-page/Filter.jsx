@@ -58,7 +58,7 @@ const StyledFilterHider = styled("div")({
 });
 
 const StyledDivWithPadding = styled("div")({
-  padding: "0px 10px 10px 10px",
+  padding: "0px 15px 15px 15px",
 });
 
 const Filter = (props) => {
@@ -131,10 +131,6 @@ const Filter = (props) => {
     setDescending(e.target.checked);
   };
 
-  const StyledSortBySection = styled("div")({
-    padding: "15px",
-  });
-
   const isSortingNone = sortBy === "";
 
   return (
@@ -159,7 +155,7 @@ const Filter = (props) => {
           </StyledDivWithPadding>
           {/*TagSelector*/}
           <StyledDivWithPadding>
-            <h3>Tags:</h3>
+            <h3>Tags</h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
               {uniqueTags.map((tag) => (
                 <div key={tag}>
@@ -182,7 +178,7 @@ const Filter = (props) => {
             </div>
           </StyledDivWithPadding>
           {/** Price range /*/}
-          <div style={{ padding: "15px" }}>
+          <StyledDivWithPadding>
             <h3>Price range</h3>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <TextField
@@ -225,7 +221,7 @@ const Filter = (props) => {
                 }}
               />
             </div>
-            <StyledDivWithPadding>
+            <div style={{ padding: "10px" }}>
               <Slider
                 getAriaLabel={() => "Price Range"}
                 value={selectedPriceRange}
@@ -235,10 +231,10 @@ const Filter = (props) => {
                 max={INITIAL_MAX_PRICE_VALUE}
                 disableSwap
               />
-            </StyledDivWithPadding>
-          </div>
+            </div>
+          </StyledDivWithPadding>
           {/* Sorting */}
-          <StyledSortBySection>
+          <StyledDivWithPadding>
             <div style={{ display: "flex", alignItems: "center" }}>
               <FormControl
                 variant="outlined"
@@ -271,9 +267,9 @@ const Filter = (props) => {
                 style={{ marginLeft: "auto" }}
               />
             </div>
-          </StyledSortBySection>
-{/*New product*/}
-          <StyledDivWithPadding>
+          </StyledDivWithPadding>
+          {/*New product*/}
+          <div style={{ padding: "15px" }}>
             <MUIButton
               variant="contained"
               onClick={() => navigateToAddProductPage()}
@@ -281,7 +277,7 @@ const Filter = (props) => {
               {" "}
               Add new product{" "}
             </MUIButton>
-          </StyledDivWithPadding>
+          </div>
         </StyledFilterHider>
       </StyledFilterBox>
     </ProductContextProvider>
