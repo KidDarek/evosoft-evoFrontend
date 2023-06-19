@@ -1,17 +1,18 @@
-import React from "react";
-//import { forwardRef, useImperativeHandle, useRef } from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { users } from "../../DataBaseLoader";
+import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
 import { IconButton, Snackbar } from "@mui/material";
 
 const SignUpPopup = (props) => {
   const [open, setOpen] = React.useState(false);
-  const [openSnack, setOpenSnack] = React.useState(false);
+  const [openSnackInvalid, setOpenSnackInvalid] = React.useState(false);
+  const [openSnackConflict, setOpenSnackConflict] = React.useState(false);
+  const { addUser } = useContext(UserContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,11 +23,12 @@ const SignUpPopup = (props) => {
   };
 
   const handleSnackClose = () => {
-    setOpenSnack(false);
+    setOpenSnackInvalid(false);
+    setOpenSnackConflict(false);
   };
 
-  const handleSnackOpen = () => {
-    setOpenSnack(true);
+  const handleSnackOpen = (setOpenSnackFunction) => {
+    setOpenSnackFunction(true);
   };
 
   const requestSignUp = (e) => {
@@ -34,21 +36,24 @@ const SignUpPopup = (props) => {
       handleSignUpRequest();
     }
   };
-  const handleSignUpRequest = () => {
+
+  async function handleSignUpRequest() {
     const nameTextField = document.getElementById("sign-up-name");
     const emailTextField = document.getElementById("sign-up-email");
     const passwordTextField = document.getElementById("sign-up-password");
     const email = emailTextField.value;
     if (!validEmail(email)) {
-      handleSnackOpen();
+      handleSnackOpen(setOpenSnackInvalid);
       return;
     }
     const name = nameTextField.value;
     const password = passwordTextField.value;
     const role = "user";
-    const id = users[users.length - 1].id + 1;
-    const obj = { id, name, email, password, role };
-    users.push(obj);
+    const user = { name, email, password, role };
+    if (await (addUser(user))) {
+      handleSnackOpen(setOpenSnackConflict);
+      return;
+    }
     setOpen(false);
   };
 
@@ -129,14 +134,27 @@ const SignUpPopup = (props) => {
           <Button onClick={handleSignUpRequest}>Sign up</Button>
         </DialogActions>
         <Snackbar
-          open={openSnack}
+          open={openSnackInvalid}
           autoHideDuration={6000}
           onClose={handleSnackClose}
           message="Not a valid Email"
+          action={snackAction}
+        />
+        <Snackbar
+          open={openSnackConflict}
+          autoHideDuration={6000}
+          onClose={handleSnackClose}
+          message="Email is already used"
           action={snackAction}
         />
       </Dialog>
     </div>
   );
 };
-export default SignUpPopup;
+
+const WrappedSignUpPopup = () => (
+  <UserContextProvider>
+    <SignUpPopup />
+  </UserContextProvider>
+);
+export default WrappedSignUpPopup;

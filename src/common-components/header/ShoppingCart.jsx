@@ -1,10 +1,17 @@
-import * as React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../DataBaseLoader";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
+import {
+  CartItemsContext,
+  CartItemsContextProvider,
+} from "../../context-providers/CartItemsContext";
 import { styled } from "@mui/system";
 
 const StyledClearText = styled("div")({
@@ -17,9 +24,21 @@ const StyledShopText = styled("div")({
   margin: "auto",
 });
 
-const StyledNothingText = styled("div")({
-  margin: "2px",
-  fontSize: "13px",
+const StyledEmptyCartText = styled("div")({
+  textAlign: "center",
+  width: "100%",
+  margin: "auto",
+  fontFamily: "Roboto",
+});
+
+const StyledEmptyMainText = styled("div")({
+  fontWeight: "bold",
+  fontSize: "15px",
+});
+
+const StyledEmptySideText = styled("div")({
+  margin: "2px 10px 1px 10px",
+  fontSize: "14px",
 });
 
 const StyledButton = styled("button")({
@@ -39,17 +58,25 @@ const StyledImage = styled("img")({
   marginLeft: "5px",
 });
 
-const ShoppingCart = (props) => {
+const ShoppingCartInside = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const [refresh, setRefresh] = React.useState(false);
+  const { cartItems, removeFromCart, removeAllFromCart } =
+    useContext(CartItemsContext);
+  const [products, setProducts] = useState([]);
 
   const open = Boolean(anchorEl);
 
-  const shoppingItems =
-    JSON.parse(localStorage.getItem("shoppingItems")) === null
-      ? []
-      : JSON.parse(localStorage.getItem("shoppingItems"));
+  const { getProductById } = React.useContext(ProductContext);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const productPromises = cartItems.map(({ id }) => getProductById(id));
+      const resolvedProducts = await Promise.all(productPromises);
+      setProducts(resolvedProducts);
+    };
+
+    fetchProducts();
+  }, [getProductById, cartItems]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,29 +93,20 @@ const ShoppingCart = (props) => {
     handleClose();
   };
 
-  const navigateToShopPage = (id) => {
+  const navigateToShopPage = () => {
     navigate("/Shop");
     handleClose();
   };
 
   const removeItem = (e, id) => {
     e.stopPropagation();
-    let shoppingItems = JSON.parse(localStorage.getItem("shoppingItems"));
-    let index = 0;
-    for (let i = 0; i < shoppingItems.length; i++) {
-      if (shoppingItems[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-    shoppingItems.splice(index, 1);
-    localStorage.setItem("shoppingItems", JSON.stringify(shoppingItems));
-    setRefresh(!refresh);
+    removeFromCart(id);
+    setProducts(products.filter((product) => product.id !== id)); // Update products state to trigger re-render
   };
 
   const removeAllItems = () => {
-    localStorage.removeItem("shoppingItems");
-    setRefresh(!refresh);
+    removeAllFromCart();
+    setProducts([]); // Update products state to trigger re-render
   };
 
   return (
@@ -101,13 +119,11 @@ const ShoppingCart = (props) => {
         onClick={handleClick}
       >
         <Avatar sx={{ width: 32, height: 32, bgcolor: "#ff0055" }}>
-          {
-            <img
-              src="/images/ShoppingCart.png"
-              alt="ShoppingCart.png"
-              style={{ width: "24px", height: "24px" }}
-            ></img>
-          }
+          <img
+            src="/images/ShoppingCart.png"
+            alt="ShoppingCart.png"
+            style={{ width: "24px", height: "24px" }}
+          ></img>
         </Avatar>
       </Button>
       <Menu
@@ -118,37 +134,67 @@ const ShoppingCart = (props) => {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        style={{ width: "auto" }}
       >
-        {shoppingItems.length === 0 ? (
-          <StyledNothingText>{"Nothing here :("}</StyledNothingText>
+        {products.length === 0 ? (
+          <StyledEmptyCartText>
+            <img
+              src="/images/sadEmptyCart.png"
+              alt="An empty cart"
+              style={{ width: "26%" }}
+            />
+            <StyledEmptyMainText>Your cart is empty</StyledEmptyMainText>
+            <StyledEmptySideText>
+              Looks like you have not added <br></br>
+              anything to your cart.
+            </StyledEmptySideText>
+          </StyledEmptyCartText>
         ) : (
-          shoppingItems.map(({ id, quantity }) => (
-            <MenuItem key={id} onClick={() => navigateToProductPage(id)}>
-              <StyledQuantityDiv>{quantity}x</StyledQuantityDiv>
-              {products[id].title}
-              <StyledImage
-                src={products[id].imageUri}
-                alt="Product.png"
-              ></StyledImage>
-              <StyledButton onClick={(event) => removeItem(event, id)}>
-                X
-              </StyledButton>
-            </MenuItem>
-          ))
+          products.map((product, index) => {
+            const { id, quantity } = cartItems[index];
+            if (!product) {
+              return null;
+            }
+            const key = `${id}-${quantity}`; // Generate a unique key
+            return (
+              <MenuItem key={key} onClick={() => navigateToProductPage(id)}>
+                <StyledQuantityDiv>{quantity}x</StyledQuantityDiv>
+                {product.title}
+                <StyledImage src={product.imageUri} alt="Product.png" />
+                <StyledButton onClick={(event) => removeItem(event, id)}>
+                  X
+                </StyledButton>
+              </MenuItem>
+            );
+          })
         )}
 
-        {shoppingItems.length > 0 ? (
+        {products.length > 0 && (
           <MenuItem onClick={removeAllItems}>
             <StyledClearText>Clear all</StyledClearText>
           </MenuItem>
-        ) : null}
-        {shoppingItems.length > 0 ? (
+        )}
+
+        {products.length > 0 && (
           <MenuItem onClick={navigateToShopPage}>
             <StyledShopText>Buy Items</StyledShopText>
           </MenuItem>
-        ) : null}
+        )}
       </Menu>
     </div>
   );
 };
+
+const ShoppingCart = () => {
+  return (
+    <>
+      <ProductContextProvider>
+        <CartItemsContextProvider>
+          <ShoppingCartInside />
+        </CartItemsContextProvider>
+      </ProductContextProvider>
+    </>
+  );
+};
+
 export default ShoppingCart;

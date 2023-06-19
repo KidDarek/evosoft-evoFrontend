@@ -1,8 +1,15 @@
+import React, { useContext, useEffect, useState } from "react";
 import { Button, createTheme, styled } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../DataBaseLoader";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
+import {
+  CartItemsContext,
+  CartItemsContextProvider,
+} from "../../context-providers/CartItemsContext";
 import MiniCard from "./MiniCard";
 
 const StyledPageDiv = styled("div")({
@@ -67,28 +74,37 @@ const BasicTheme = createTheme({
   },
 });
 
-let shoppingItems;
-const RefreshShoppingItems = () => {
-  shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) ?? [];
-};
-
-let total;
-const CalculateTotal = () => {
-  total = 0;
-  for (let i = 0; i < shoppingItems.length; i++) {
-    total += shoppingItems[i].quantity * shoppingItems[i].price;
-  }
-};
-
-const ShopPage = () => {
+const ShopPageInside = () => {
   const navigate = useNavigate();
+  const { getProductById } = useContext(ProductContext);
+  const { cartItems } = useContext(CartItemsContext);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [itemPrices, setItemPrices] = useState([]);
+
+  useEffect(() => {
+    const calculateItemPrices = async () => {
+      const prices = await Promise.all(
+        cartItems.map(async ({ id, quantity }) => {
+          const product = await getProductById(id);
+          return product ? product.price * quantity : 0;
+        })
+      );
+
+      setItemPrices(prices);
+    };
+
+    calculateItemPrices();
+  }, [cartItems, getProductById]);
+
+  useEffect(() => {
+    const subtotal = itemPrices.reduce((acc, price) => acc + price, 0);
+    setTotalPrice(subtotal);
+  }, [itemPrices]);
 
   const navigateToCheckoutPage = () => {
-    navigate(`/Checkout`);
+    navigate(`/Checkout`, { state: { grandTotal: totalPrice + 5 } });
   };
 
-  RefreshShoppingItems();
-  CalculateTotal();
   return (
     <>
       <ThemeProvider theme={BasicTheme}>
@@ -106,28 +122,25 @@ const ShopPage = () => {
                   </th>
                 </tr>
               </div>
-              {shoppingItems.length !== 0
-                ? shoppingItems.map(({ id, quantity }) => (
-                    <div key={id}>
-                      <tr valign="middle">
-                        <td>
-                          <MiniCard id={id} />
-                        </td>
-                        <td rowSpan="3" width="17%">
-                          <StyledDiv>x{quantity}</StyledDiv>
-                        </td>
-                        <td rowSpan="3">
-                          <StyledDiv>
-                            ${quantity * products[id].price}
-                          </StyledDiv>
-                        </td>
-                      </tr>
-                    </div>
-                  ))
-                : null}
+              {cartItems.length !== 0 &&
+                cartItems.map(({ id, quantity }, index) => (
+                  <div key={id}>
+                    <tr valign="middle">
+                      <td>
+                        <MiniCard id={id} />
+                      </td>
+                      <td rowSpan="3" width="17%">
+                        <StyledDiv>x{quantity}</StyledDiv>
+                      </td>
+                      <td rowSpan="3">
+                        <StyledDiv>${itemPrices[index]}</StyledDiv>
+                      </td>
+                    </tr>
+                  </div>
+                ))}
             </tbody>
           </StyledBigTable>
-          {shoppingItems.length !== 0 ? (
+          {cartItems.length !== 0 ? (
             <StyledSmallTable>
               <tbody>
                 <tr>
@@ -135,15 +148,15 @@ const ShopPage = () => {
                 </tr>
                 <tr>
                   <td>Subtotal: </td>
-                  <td align="right">${total} </td>
+                  <td align="right">${totalPrice}</td>
                 </tr>
                 <tr>
                   <td>Delivery: </td>
-                  <td align="right">${5} </td>
+                  <td align="right">${5}</td>
                 </tr>
                 <tr style={{ fontWeight: "bold" }}>
                   <td>Grand total: </td>
-                  <td align="right">${total + 5} </td>
+                  <td align="right">${totalPrice + 5}</td>
                 </tr>
                 <tr>
                   <td colSpan="3" align="center">
@@ -162,6 +175,18 @@ const ShopPage = () => {
           ) : null}
         </StyledPageDiv>
       </ThemeProvider>
+    </>
+  );
+};
+
+const ShopPage = () => {
+  return (
+    <>
+      <ProductContextProvider>
+        <CartItemsContextProvider>
+          <ShopPageInside />
+        </CartItemsContextProvider>
+      </ProductContextProvider>
     </>
   );
 };
