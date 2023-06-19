@@ -1,4 +1,4 @@
-const BASE_URL = `${process.env.BACKEND_ADDRESS}/UserQuestion`;
+const BASE_URL = "http://localhost:5232/UserQuestion";
 
 export default class UserQuestionAPI {
   static async getAll() {
