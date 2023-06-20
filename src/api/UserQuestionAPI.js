@@ -1,4 +1,4 @@
-const BASE_URL = `${process.env.BACKEND_ADDRESS}/UserQuestion`;
+const BASE_URL = `${process.env.REACT_APP_BACKEND_ADDRESS}/UserQuestion`;
 
 export default class UserQuestionAPI {
   static async getAll() {

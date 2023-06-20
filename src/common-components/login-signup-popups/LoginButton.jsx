@@ -7,12 +7,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import SignUpButton from "./SignUpButton";
 import { IconButton, Snackbar } from "@mui/material";
-import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
+import {
+  UserContext,
+  UserContextProvider,
+} from "../../context-providers/UserContext";
 
 const LoginButton = (props) => {
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
-  const { loginUser } = useContext(UserContext);
+  const { loginUser, loginGithubUser } = useContext(UserContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,7 +53,24 @@ const LoginButton = (props) => {
     }
     props.setLoggedInUser(user);
     setOpen(false);
-  };
+  }
+
+  async function handleGitHubLogin() {
+    const authorizationUrl =
+      "https://github.com/login/oauth/authorize?client_id=ac9c3f680f66d0c835de&redirect_uri=http://192.168.0.193:5232/api/github/callback&scope=user:email";
+    window.location.href = authorizationUrl;
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+    if (code) {
+      const user = await loginGithubUser(code);
+      if (user.id === undefined) {
+        handleSnackOpen();
+        return;
+      }
+      props.setLoggedInUser(user);
+      setOpen(false);
+    }
+  }
 
   const snackAction = (
     <React.Fragment>
@@ -105,8 +125,13 @@ const LoginButton = (props) => {
         </DialogContent>
         <DialogActions>
           <SignUpButton theme={props.theme} />
-          <Button color="red" onClick={handleClickClose}>Cancel</Button>
+          <Button color="red" onClick={handleClickClose}>
+            Cancel
+          </Button>
           <Button onClick={handleLogInRequest}>Log in</Button>
+          <Button onClick={handleGitHubLogin} sx={{ color: "black" }}>
+            Log in with GitHub
+          </Button>
         </DialogActions>
         <Snackbar
           open={openSnack}

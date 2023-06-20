@@ -29,6 +29,11 @@ function UserContextProvider({ children }) {
     return await UserAPI.login(userData);
   }
 
+  async function loginGithubUser(code) {
+    const response = await UserAPI.loginGithub(code);
+    return response.user; // Assuming the response contains a "user" property
+  }
+
   async function removeUser(id) {
     await UserAPI.remove(id);
     setUsers(users.filter((user) => user.id !== id));
@@ -43,7 +48,15 @@ function UserContextProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ users, addUser, removeUser, updateUser, getUserById, loginUser }}
+      value={{
+        users,
+        addUser,
+        removeUser,
+        updateUser,
+        getUserById,
+        loginUser,
+        loginGithubUser,
+      }}
     >
       {children}
     </UserContext.Provider>
