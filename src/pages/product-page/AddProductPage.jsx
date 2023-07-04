@@ -205,6 +205,7 @@ const AddProductPage = () => {
 
   // Image drag&drop
   const [image, setImage] = useState(null);
+  const [base64String, setBase64] = useState("");
 
   function handleDragEnter(e) {
     e.preventDefault();
@@ -222,6 +223,16 @@ const AddProductPage = () => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     setImage(file);
+    convertToBase64(file);
+  }
+
+  function convertToBase64(file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64String = event.target.result;
+      setBase64(base64String);
+    };
+    reader.readAsDataURL(file);
   }
 
   function handleDelete() {
@@ -243,7 +254,7 @@ const AddProductPage = () => {
 
     await addProduct({
       title: title,
-      imageUri: URL.createObjectURL(image),
+      imageData: base64String,
       body: description,
       price: price,
       category: selectedOption,

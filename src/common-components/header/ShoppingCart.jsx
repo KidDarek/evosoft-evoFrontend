@@ -160,7 +160,10 @@ const ShoppingCartInside = () => {
               <MenuItem key={key} onClick={() => navigateToProductPage(id)}>
                 <StyledQuantityDiv>{quantity}x</StyledQuantityDiv>
                 {product.title}
-                <StyledImage src={product.imageUri} alt="Product.png" />
+                <StyledImage
+                  src={`data:image/png;base64,${product.imageData}`}
+                  alt="Product.png"
+                />
                 <StyledButton onClick={(event) => removeItem(event, id)}>
                   X
                 </StyledButton>
