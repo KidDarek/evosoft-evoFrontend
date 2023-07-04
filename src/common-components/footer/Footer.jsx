@@ -9,7 +9,7 @@ const StyledFooter = styled("footer")({
   height: "auto",
   width: "100%",
   color: "#fff",
-  marginTop: "20px",
+  marginTop: "0",
   position: "static",
 });
 

@@ -14,6 +14,10 @@ import CheckoutPage from "./pages/checkout-page/CheckoutPage";
 import AnswerQuestionPage from "./pages/answer-question-page/AnswerQuestionPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+const StyledFontDiv = styled("div")({
+  fontFamily: "Roboto",
+});
+
 const MainTheme = createTheme({
   palette: {
     green: {
@@ -30,6 +34,7 @@ const MainTheme = createTheme({
     },
   },
   typography: {
+
     button: {
       fontSize: 16,
       fontWeight: 700,
@@ -37,21 +42,10 @@ const MainTheme = createTheme({
   },
 });
 
-const BodyContainer = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  width: "100%",
-  height: "100vh",
-  fontFamily: "Roboto",
-  backgroundColor: "#00efb3",
-  overflowX: "hidden",
-});
-
 function App() {
   return (
     <ThemeProvider theme={MainTheme}>
-      <BodyContainer>
+      <StyledFontDiv>
         <BrowserRouter>
           <Header />
           <Routes>
@@ -68,7 +62,7 @@ function App() {
           </Routes>
         </BrowserRouter>
         <Footer />
-      </BodyContainer>
+      </StyledFontDiv>
     </ThemeProvider>
   );
 }
