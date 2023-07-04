@@ -184,11 +184,17 @@ const ProductPageInside = () => {
           <StyledInfoDiv>
             <div>
               {!isAnimationused && (
-                <StyledImage src={product.imageUri} alt="kep" />
+                <StyledImage
+                  src={`data:image/png;base64,${product.imageData}`}
+                  alt="kep"
+                />
               )}
               {isAnimationused && (
                 <StyledPicAnimation>
-                  <StyledImage src={product.imageUri} alt="kep" />
+                  <StyledImage
+                    src={`data:image/png;base64,${product.imageData}`}
+                    alt="kep"
+                  />
                 </StyledPicAnimation>
               )}
             </div>

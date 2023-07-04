@@ -73,11 +73,11 @@ const Card = (props) => {
       <StyledCardContainer onClick={navigateToProductPage}>
         <div>
           <img
-            src={product.imageUri}
+            src={`data:image/png;base64,${product.imageData}`}
             alt=""
             overflow="hidden"
             height="200px"
-          ></img>
+          />
         </div>
         <StyledCardContent>
           <StyledCardTitle>
