@@ -31,7 +31,7 @@ function UserContextProvider({ children }) {
 
   async function loginGithubUser(code) {
     const response = await UserAPI.loginGithub(code);
-    return response.user; // Assuming the response contains a "user" property
+    return response.user;
   }
 
   async function removeUser(id) {

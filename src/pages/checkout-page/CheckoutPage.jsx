@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { Button, styled } from "@mui/material";
-import {
-  CartItemsContext,
-  CartItemsContextProvider,
-} from "../../context-providers/CartItemsContext";
+import { CartItemsContext } from "../../context-providers/CartItemsContext";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -42,7 +39,7 @@ const StyledLabel = styled("label")({
   fontSize: "15px",
 });
 
-const CheckoutPageInside = () => {
+const CheckoutPage = () => {
   const { cartItems } = useContext(CartItemsContext);
 
   const location = useLocation();
@@ -76,44 +73,26 @@ const CheckoutPageInside = () => {
             </tr>
             <tr>
               <td>
-                <StyledInput
-                  type="text"
-                  placeholder="First name"
-                />
+                <StyledInput type="text" placeholder="First name" />
               </td>
               <td>
-                <StyledInput
-                  type="text"
-                  placeholder="Last name"
-                />
+                <StyledInput type="text" placeholder="Last name" />
               </td>
             </tr>
             <tr>
               <td>
-                <StyledInput
-                  type="text"
-                  placeholder="Email"
-                />
+                <StyledInput type="text" placeholder="Email" />
               </td>
               <td>
-                <StyledInput
-                  type="tel"
-                  placeholder="Phone number"
-                />
+                <StyledInput type="tel" placeholder="Phone number" />
               </td>
             </tr>
             <tr>
               <td>
-                <StyledInput
-                  type="text"
-                  placeholder="Post code"
-                />
+                <StyledInput type="text" placeholder="Post code" />
               </td>
               <td>
-                <StyledInput
-                  type="text"
-                  placeholder="City"
-                />
+                <StyledInput type="text" placeholder="City" />
               </td>
             </tr>
             <tr>
@@ -135,11 +114,7 @@ const CheckoutPageInside = () => {
               </tr>
               <tr>
                 <td colSpan="2">
-                  <input
-                    type="checkbox"
-                    checked="false"
-                    name="acceptPolicy"
-                  />
+                  <input type="checkbox" checked="false" name="acceptPolicy" />
                   <StyledLabel for="acceptPolicy">
                     I would like to get emails about the best deals.
                   </StyledLabel>
@@ -147,11 +122,7 @@ const CheckoutPageInside = () => {
               </tr>
               <tr>
                 <td colSpan="2">
-                  <input
-                    type="checkbox"
-                    checked="false"
-                    name="acceptPolicy"
-                  />
+                  <input type="checkbox" checked="false" name="acceptPolicy" />
                   <StyledLabel for="acceptPolicy">
                     I have read and accepted that my order involves a payment
                     obligation, with ordering I agree to Terms of Service and
@@ -165,11 +136,7 @@ const CheckoutPageInside = () => {
               </tr>
               <tr>
                 <td colSpan="3" align="center">
-                  <Button
-                    variant="contained"
-                    color="green"
-                    sx={{ width: 325 }}
-                  >
+                  <Button variant="contained" color="green" sx={{ width: 325 }}>
                     Order
                   </Button>
                 </td>
@@ -178,16 +145,6 @@ const CheckoutPageInside = () => {
           </StyledTable>
         ) : null}
       </StyledPageDiv>
-    </>
-  );
-};
-
-const CheckoutPage = () => {
-  return (
-    <>
-      <CartItemsContextProvider>
-        <CheckoutPageInside />
-      </CartItemsContextProvider>
     </>
   );
 };

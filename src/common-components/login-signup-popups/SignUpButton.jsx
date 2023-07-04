@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
+import { UserContext } from "../../context-providers/UserContext";
 import { IconButton, Snackbar } from "@mui/material";
 
 const SignUpPopup = (props) => {
@@ -50,12 +50,12 @@ const SignUpPopup = (props) => {
     const password = passwordTextField.value;
     const role = "user";
     const user = { name, email, password, role };
-    if (await (addUser(user))) {
+    if (await addUser(user)) {
       handleSnackOpen(setOpenSnackConflict);
       return;
     }
     setOpen(false);
-  };
+  }
 
   const validEmail = (emailText) => {
     const validRegex = /^[A-z0-9.-_]+@[A-z0-9.-_]+\.[A-z]+$/;
@@ -151,10 +151,4 @@ const SignUpPopup = (props) => {
     </div>
   );
 };
-
-const WrappedSignUpPopup = () => (
-  <UserContextProvider>
-    <SignUpPopup />
-  </UserContextProvider>
-);
-export default WrappedSignUpPopup;
+export default SignUpPopup;

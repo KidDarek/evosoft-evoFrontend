@@ -1,10 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../../context-providers/ProductContext";
+import { ProductContext } from "../../../context-providers/ProductContext";
 
 const StyledCardContainer = styled("div")({
   width: "250px",
@@ -83,25 +80,23 @@ const Card = (props) => {
   }
 
   return (
-    <ProductContextProvider>
-      <StyledCardContainer onClick={navigateToProductPage}>
-        <div>
-          <img
-            src={product.imageUri}
-            alt=""
-            overflow="hidden"
-            height="70%"
-            width="70%"
-          ></img>
-        </div>
-        <StyledCardContent>
-          <StyledCardTitle>
-            <StyledH3>{product.title}</StyledH3>
-          </StyledCardTitle>
-          <StyledH2ForPrice>{"$" + product.price}</StyledH2ForPrice>
-        </StyledCardContent>
-      </StyledCardContainer>
-    </ProductContextProvider>
+    <StyledCardContainer onClick={navigateToProductPage}>
+      <div>
+        <img
+          src={product.imageUri}
+          alt=""
+          overflow="hidden"
+          height="70%"
+          width="70%"
+        ></img>
+      </div>
+      <StyledCardContent>
+        <StyledCardTitle>
+          <StyledH3>{product.title}</StyledH3>
+        </StyledCardTitle>
+        <StyledH2ForPrice>{"$" + product.price}</StyledH2ForPrice>
+      </StyledCardContent>
+    </StyledCardContainer>
   );
 };
 export default Card;

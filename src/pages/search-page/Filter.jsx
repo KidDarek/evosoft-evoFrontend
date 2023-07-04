@@ -11,10 +11,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../context-providers/ProductContext";
+import { ProductContext } from "../../context-providers/ProductContext";
 
 const StyledFilterBox = styled("div")({
   backgroundColor: "#00cc99",
@@ -132,145 +129,141 @@ const Filter = (props) => {
   const isSortingNone = sortBy === "";
 
   return (
-    <ProductContextProvider>
-      <StyledFilterBox>
-        <StyledFilterHider>
-          {/*Searchbar*/}
-          <StyledDivWithPadding>
-            <h3>Search</h3>
-            <form>
-              <TextField
-                id="outlined-search"
-                label="Search something..."
-                variant="outlined"
-                onChange={props.handleSearch}
-                style={{ width: "100%" }}
-                InputLabelProps={{
-                  sx: { color: "white" },
-                }}
-              />
-            </form>
-          </StyledDivWithPadding>
-          {/*TagSelector*/}
-          <StyledDivWithPadding>
-            <h3>Tags:</h3>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-              {uniqueTags.map((tag) => (
-                <div key={tag}>
-                  <Chip
-                    label={tag}
-                    variant={
-                      selectedTags.includes(tag) ? "default" : "outlined"
-                    }
-                    onClick={() => handleCheckboxChange(tag)}
-                    style={{ color: "white", borderColor: "grey" }}
-                  />
-                  <Checkbox
-                    id={tag}
-                    checked={selectedTags.includes(tag)}
-                    onChange={() => handleCheckboxChange(tag)}
-                    style={{ display: "none" }}
-                  />
-                </div>
-              ))}
-            </div>
-          </StyledDivWithPadding>
-          {/** Price range /*/}
-          <div style={{ padding: "15px" }}>
-            <h3>Price range</h3>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <TextField
-                id="outlined-min"
-                label="Min price"
-                type="number"
-                variant="outlined"
-                value={selectedPriceRange[0]}
-                style={{ width: "35%", color: "white" }}
-                onChange={(e) => {
-                  validateMinPriceInput(e);
-                }}
-                InputLabelProps={{
-                  sx: { color: "white" },
-                }}
-                InputProps={{
-                  sx: {
-                    color: "white",
-                  },
-                }}
-              />
-              <label
-                style={{ width: "50%", height: "50px", margin: "0px 10px" }}
-              ></label>
-              <TextField
-                id="outlined-max"
-                label="Max price"
-                type="number"
-                variant="outlined"
-                value={selectedPriceRange[1]}
-                style={{ width: "35%" }}
-                onChange={(e) => {
-                  validateMaxPriceInput(e);
-                }}
-                InputLabelProps={{
-                  sx: { color: "white" },
-                }}
-                InputProps={{
-                  sx: {
-                    color: "white",
-                  },
-                }}
-              />
-            </div>
-            <StyledDivWithPadding>
-              <Slider
-                getAriaLabel={() => "Price Range"}
-                value={selectedPriceRange}
-                valueLabelDisplay="auto"
-                onChange={handlePriceRangeChange}
-                min={INITIAL_MIN_PRICE_VALUE}
-                max={INITIAL_MAX_PRICE_VALUE}
-                disableSwap
-              />
-            </StyledDivWithPadding>
+    <StyledFilterBox>
+      <StyledFilterHider>
+        {/*Searchbar*/}
+        <StyledDivWithPadding>
+          <h3>Search</h3>
+          <form>
+            <TextField
+              id="outlined-search"
+              label="Search something..."
+              variant="outlined"
+              onChange={props.handleSearch}
+              style={{ width: "100%" }}
+              InputLabelProps={{
+                sx: { color: "white" },
+              }}
+            />
+          </form>
+        </StyledDivWithPadding>
+        {/*TagSelector*/}
+        <StyledDivWithPadding>
+          <h3>Tags:</h3>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            {uniqueTags.map((tag) => (
+              <div key={tag}>
+                <Chip
+                  label={tag}
+                  variant={selectedTags.includes(tag) ? "default" : "outlined"}
+                  onClick={() => handleCheckboxChange(tag)}
+                  style={{ color: "white", borderColor: "grey" }}
+                />
+                <Checkbox
+                  id={tag}
+                  checked={selectedTags.includes(tag)}
+                  onChange={() => handleCheckboxChange(tag)}
+                  style={{ display: "none" }}
+                />
+              </div>
+            ))}
           </div>
-          {/* Sorting */}
-          <StyledSortBySection>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <FormControl
-                variant="outlined"
-                sx={{ minWidth: 180, marginRight: "16px" }}
+        </StyledDivWithPadding>
+        {/** Price range /*/}
+        <div style={{ padding: "15px" }}>
+          <h3>Price range</h3>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <TextField
+              id="outlined-min"
+              label="Min price"
+              type="number"
+              variant="outlined"
+              value={selectedPriceRange[0]}
+              style={{ width: "35%", color: "white" }}
+              onChange={(e) => {
+                validateMinPriceInput(e);
+              }}
+              InputLabelProps={{
+                sx: { color: "white" },
+              }}
+              InputProps={{
+                sx: {
+                  color: "white",
+                },
+              }}
+            />
+            <label
+              style={{ width: "50%", height: "50px", margin: "0px 10px" }}
+            ></label>
+            <TextField
+              id="outlined-max"
+              label="Max price"
+              type="number"
+              variant="outlined"
+              value={selectedPriceRange[1]}
+              style={{ width: "35%" }}
+              onChange={(e) => {
+                validateMaxPriceInput(e);
+              }}
+              InputLabelProps={{
+                sx: { color: "white" },
+              }}
+              InputProps={{
+                sx: {
+                  color: "white",
+                },
+              }}
+            />
+          </div>
+          <StyledDivWithPadding>
+            <Slider
+              getAriaLabel={() => "Price Range"}
+              value={selectedPriceRange}
+              valueLabelDisplay="auto"
+              onChange={handlePriceRangeChange}
+              min={INITIAL_MIN_PRICE_VALUE}
+              max={INITIAL_MAX_PRICE_VALUE}
+              disableSwap
+            />
+          </StyledDivWithPadding>
+        </div>
+        {/* Sorting */}
+        <StyledSortBySection>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <FormControl
+              variant="outlined"
+              sx={{ minWidth: 180, marginRight: "16px" }}
+            >
+              <InputLabel id="sort-by-label">Sort By</InputLabel>
+              <Select
+                labelId="sort-by-label"
+                id="sort-by-select"
+                value={sortBy}
+                onChange={handleSortByChange}
+                label="Sort By"
               >
-                <InputLabel id="sort-by-label">Sort By</InputLabel>
-                <Select
-                  labelId="sort-by-label"
-                  id="sort-by-select"
-                  value={sortBy}
-                  onChange={handleSortByChange}
-                  label="Sort By"
-                >
-                  <MenuItem value="">None</MenuItem>
-                  <MenuItem value="name">Name</MenuItem>
-                  <MenuItem value="price">Price</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={!isSortingNone && descending}
-                    onChange={handleDescendingChange}
-                    disabled={isSortingNone}
-                    id="descending-checkbox"
-                  />
-                }
-                label="Descending"
-                htmlFor="descending-checkbox"
-                style={{ marginLeft: "auto" }}
-              />
-            </div>
-          </StyledSortBySection>
-        </StyledFilterHider>
-      </StyledFilterBox>
-    </ProductContextProvider>
+                <MenuItem value="">None</MenuItem>
+                <MenuItem value="name">Name</MenuItem>
+                <MenuItem value="price">Price</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={!isSortingNone && descending}
+                  onChange={handleDescendingChange}
+                  disabled={isSortingNone}
+                  id="descending-checkbox"
+                />
+              }
+              label="Descending"
+              htmlFor="descending-checkbox"
+              style={{ marginLeft: "auto" }}
+            />
+          </div>
+        </StyledSortBySection>
+      </StyledFilterHider>
+    </StyledFilterBox>
   );
 };
 

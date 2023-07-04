@@ -12,6 +12,18 @@ import SearchPage from "./pages/search-page/SearchPage";
 import ShopPage from "./pages/shop-page/ShopPage";
 import CheckoutPage from "./pages/checkout-page/CheckoutPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  UserContextProvider
+} from "./context-providers/UserContext";
+import {
+  ProductContextProvider
+} from "./context-providers/ProductContext";
+import {
+  UserQuestionContextProvider
+} from "./context-providers/UserQuestionContext";
+import {
+  CartItemsContextProvider
+} from "./context-providers/CartItemsContext";
 
 const StyledFontDiv = styled("div")({
   fontFamily: "Roboto",
@@ -44,6 +56,10 @@ const MainTheme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={MainTheme}>
+      <UserContextProvider>
+        <ProductContextProvider>
+          <CartItemsContextProvider>
+          <UserQuestionContextProvider>
       <StyledFontDiv>
         <BrowserRouter>
           <Header />
@@ -61,6 +77,10 @@ function App() {
         </BrowserRouter>
         <Footer />
       </StyledFontDiv>
+      </UserQuestionContextProvider>
+      </CartItemsContextProvider>
+      </ProductContextProvider>
+      </UserContextProvider>
     </ThemeProvider>
   );
 }

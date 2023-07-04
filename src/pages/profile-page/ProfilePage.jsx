@@ -2,7 +2,7 @@ import { Avatar, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import PurchaseHistoryButton from "./PurchaseHistoryButton";
-import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
+import { UserContext } from "../../context-providers/UserContext";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -32,8 +32,8 @@ const StyledBrightPurchaseHistoryDiv = styled("div")({
     },
   },
   animation: "brightdivanimation 0.5s 1 ease",
-  position: "static"
-})
+  position: "static",
+});
 
 const StyledDarkPurchaseHistoryDiv = styled("div")({
   width: "100%",
@@ -54,9 +54,8 @@ const StyledDarkPurchaseHistoryDiv = styled("div")({
     },
   },
   animation: "darkdivanimation 0.5s 1 ease",
-  position: "static"
-})
-
+  position: "static",
+});
 
 const StyledTable = styled("table")({
   width: "25%",
@@ -72,7 +71,7 @@ const StyledPurchaseHistory = styled("div")({
   width: "80%",
   height: "100%",
   backgroundColor: "#00cc99",
-})
+});
 
 const ProfilePage = () => {
   const [VisiblePurchaseHistory, setPurchaseHistory] = useState(false);
@@ -133,22 +132,34 @@ const ProfilePage = () => {
         </StyledTable>
       </StyledPageDiv>
       <StyledPageDiv>
-        {!VisiblePurchaseHistory && <PurchaseHistoryButton setPurchaseHistory={setPurchaseHistory}></PurchaseHistoryButton>}
-        {VisiblePurchaseHistory &&
+        {!VisiblePurchaseHistory && (
+          <PurchaseHistoryButton
+            setPurchaseHistory={setPurchaseHistory}
+          ></PurchaseHistoryButton>
+        )}
+        {VisiblePurchaseHistory && (
           <StyledPurchaseHistory>
-            <StyledDarkPurchaseHistoryDiv> Product 1 </StyledDarkPurchaseHistoryDiv>
-            <StyledBrightPurchaseHistoryDiv> Product 2 </StyledBrightPurchaseHistoryDiv>
-            <StyledDarkPurchaseHistoryDiv> Product 3 </StyledDarkPurchaseHistoryDiv>
-            <StyledBrightPurchaseHistoryDiv> Product 4 </StyledBrightPurchaseHistoryDiv>
-          </StyledPurchaseHistory>}
+            <StyledDarkPurchaseHistoryDiv>
+              {" "}
+              Product 1{" "}
+            </StyledDarkPurchaseHistoryDiv>
+            <StyledBrightPurchaseHistoryDiv>
+              {" "}
+              Product 2{" "}
+            </StyledBrightPurchaseHistoryDiv>
+            <StyledDarkPurchaseHistoryDiv>
+              {" "}
+              Product 3{" "}
+            </StyledDarkPurchaseHistoryDiv>
+            <StyledBrightPurchaseHistoryDiv>
+              {" "}
+              Product 4{" "}
+            </StyledBrightPurchaseHistoryDiv>
+          </StyledPurchaseHistory>
+        )}
       </StyledPageDiv>
     </>
   );
 };
 
-const WrappedProfilePage = (props) => (
-  <UserContextProvider>
-    <ProfilePage id={props.id} />
-  </UserContextProvider>
-);
-export default WrappedProfilePage;
+export default ProfilePage;

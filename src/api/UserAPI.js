@@ -34,7 +34,7 @@ class UserAPI {
   }
 
   static async loginGithub(code) {
-    const response = await fetch(`/api/github/callback?code=${code}`, {
+    const response = await fetch(`${BASE_URL}/api/github/callback?code=${code}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

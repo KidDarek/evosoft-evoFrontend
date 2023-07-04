@@ -4,14 +4,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../context-providers/ProductContext";
-import {
-  CartItemsContext,
-  CartItemsContextProvider,
-} from "../../context-providers/CartItemsContext";
+import { ProductContext } from "../../context-providers/ProductContext";
+import { CartItemsContext } from "../../context-providers/CartItemsContext";
 import { styled } from "@mui/system";
 
 const StyledClearText = styled("div")({
@@ -58,7 +52,7 @@ const StyledImage = styled("img")({
   marginLeft: "5px",
 });
 
-const ShoppingCartInside = () => {
+const ShoppingCart = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { cartItems, removeFromCart, removeAllFromCart } =
     useContext(CartItemsContext);
@@ -182,18 +176,6 @@ const ShoppingCartInside = () => {
         )}
       </Menu>
     </div>
-  );
-};
-
-const ShoppingCart = () => {
-  return (
-    <>
-      <ProductContextProvider>
-        <CartItemsContextProvider>
-          <ShoppingCartInside />
-        </CartItemsContextProvider>
-      </ProductContextProvider>
-    </>
   );
 };
 
