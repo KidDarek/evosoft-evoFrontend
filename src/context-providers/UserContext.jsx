@@ -31,6 +31,8 @@ function UserContextProvider({ children }) {
     const user = await UserAPI.login(userData);
     if (user.id) {
       setLoggedInUser(user);
+      // Save the logged-in user in localStorage
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
     }
     return user;
   }

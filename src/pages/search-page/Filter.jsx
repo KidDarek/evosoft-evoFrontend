@@ -13,10 +13,7 @@ import {
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import MUIButton from "@mui/material/Button";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../context-providers/ProductContext";
+import { ProductContext } from "../../context-providers/ProductContext";
 
 const StyledFilterBox = styled("div")({
   backgroundColor: "#00cc99",
@@ -344,9 +341,9 @@ const Filter = (props) => {
               Add new product{" "}
             </MUIButton>
           </div>
-        </StyledFilterHider>
-      </StyledFilterBox>
-    </ProductContextProvider>
+        </div>
+      </StyledFilterHider>
+    </StyledFilterBox>
   );
 };
 

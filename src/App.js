@@ -68,7 +68,6 @@ function App() {
         <ProductContextProvider>
           <CartItemsContextProvider>
           <UserQuestionContextProvider>
-      <StyledFontDiv>
       <BodyContainer>
         <BrowserRouter>
           <Header />
@@ -87,12 +86,11 @@ function App() {
           </Routes>
         </BrowserRouter>
         <Footer />
-      </StyledFontDiv>
+        </BodyContainer>
       </UserQuestionContextProvider>
       </CartItemsContextProvider>
       </ProductContextProvider>
       </UserContextProvider>
-      </BodyContainer>
     </ThemeProvider>
   );
 }

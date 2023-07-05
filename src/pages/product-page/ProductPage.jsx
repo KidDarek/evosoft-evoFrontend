@@ -120,6 +120,8 @@ const StyledWhiteDiv = styled("div")({
 });
 
 const ProductPage = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("1");
   const [isAnimationused, setAnimationUsage] = useState(false);
 

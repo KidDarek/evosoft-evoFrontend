@@ -1,9 +1,6 @@
 import styled from "@emotion/styled";
 import AddQuestionButton from "./AddQuestionButton";
-import {
-  UserQuestionContext,
-  UserQuestionContextProvider,
-} from "../../context-providers/UserQuestionContext";
+import { UserQuestionContext } from "../../context-providers/UserQuestionContext";
 import React, { Fragment, useContext } from "react";
 import MUIButton from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
@@ -87,10 +84,4 @@ const FaqPage = () => {
   );
 };
 
-const FaqPageWithContext = () => (
-  <UserQuestionContextProvider>
-    <FaqPage />
-  </UserQuestionContextProvider>
-);
-
-export default FaqPageWithContext;
+export default FaqPage;

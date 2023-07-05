@@ -83,8 +83,8 @@ const LoginButton = (props) => {
     const name = undefined;
     const password = passwordTextField.value;
     const logInData = { email, name, password };
-    const user = await loginUser(logInData);
-    if (user === null) {
+    const response = await loginUser(logInData);
+    if (response !== 200) {
       handleSnackOpen();
       return;
     }

@@ -66,25 +66,23 @@ const Card = (props) => {
   }
 
   return (
-    <ProductContextProvider>
-      <StyledCardContainer onClick={navigateToProductPage}>
-        <div>
-          <img
-            src={`data:image/png;base64,${product.imageData}`}
-            alt=""
-            overflow="hidden"
-            height="200px"
-          />
-        </div>
-        <StyledCardContent>
-          <StyledCardTitle>
-            <StyledH3>{product.title}</StyledH3>
-          </StyledCardTitle>
-          <StyledP>{product.body}</StyledP>
-          <StyledH2ForPrice>{"$" + product.price}</StyledH2ForPrice>
-        </StyledCardContent>
-      </StyledCardContainer>
-    </ProductContextProvider>
+    <StyledCardContainer onClick={navigateToProductPage}>
+      <div>
+        <img
+          src={`data:image/png;base64,${product.imageData}`}
+          alt=""
+          overflow="hidden"
+          height="200px"
+        />
+      </div>
+      <StyledCardContent>
+        <StyledCardTitle>
+          <StyledH3>{product.title}</StyledH3>
+        </StyledCardTitle>
+        <StyledP>{product.body}</StyledP>
+        <StyledH2ForPrice>{"$" + product.price}</StyledH2ForPrice>
+      </StyledCardContent>
+    </StyledCardContainer>
   );
 };
 
