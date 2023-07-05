@@ -54,6 +54,7 @@ const LoginButton = (props) => {
     }
   }, [userDTOString, queryParams, setLoggedInUser, getLoggedInUser]);
 
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -84,7 +85,7 @@ const LoginButton = (props) => {
     const password = passwordTextField.value;
     const logInData = { email, name, password };
     const user = await loginUser(logInData);
-    if (user.id === undefined) {
+    if (user === null) {
       handleSnackOpen();
       return;
     }

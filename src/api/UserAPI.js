@@ -1,7 +1,6 @@
 const BASE_URL = `${process.env.REACT_APP_BACKEND_ADDRESS}/User`;
 
 class UserAPI {
-
   static async getById(id) {
     const response = await fetch(`${BASE_URL}/${id}`);
     return await response.json();

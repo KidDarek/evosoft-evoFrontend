@@ -11,6 +11,8 @@ import { styled } from "@mui/material";
 import SearchPage from "./pages/search-page/SearchPage";
 import ShopPage from "./pages/shop-page/ShopPage";
 import CheckoutPage from "./pages/checkout-page/CheckoutPage";
+import AddProductPageWithContext from "./pages/product-page/AddProductPage";
+import AnswerQuestionPage from "./pages/answer-question-page/AnswerQuestionPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   UserContextProvider
@@ -24,10 +26,6 @@ import {
 import {
   CartItemsContextProvider
 } from "./context-providers/CartItemsContext";
-
-const StyledFontDiv = styled("div")({
-  fontFamily: "Roboto",
-});
 
 const MainTheme = createTheme({
   palette: {
@@ -45,12 +43,22 @@ const MainTheme = createTheme({
     },
   },
   typography: {
-
     button: {
       fontSize: 16,
       fontWeight: 700,
     },
   },
+});
+
+const BodyContainer = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  width: "100%",
+  height: "100vh",
+  fontFamily: "Roboto",
+  backgroundColor: "#00efb3",
+  overflowX: "hidden",
 });
 
 function App() {
@@ -61,6 +69,7 @@ function App() {
           <CartItemsContextProvider>
           <UserQuestionContextProvider>
       <StyledFontDiv>
+      <BodyContainer>
         <BrowserRouter>
           <Header />
           <Routes>
@@ -72,7 +81,9 @@ function App() {
             <Route path="/Shop" element={<ShopPage />} />
             <Route path="/Checkout" element={<CheckoutPage />} />
             <Route path="/Profile" element={<ProfilePage />} />
+            <Route path="/AnswerQuestion" element={<AnswerQuestionPage />} />
             <Route path="/Product/:id" element={<ProductPageWithContext />} />
+            <Route path="/AddProduct" element={<AddProductPageWithContext />} />
           </Routes>
         </BrowserRouter>
         <Footer />
@@ -81,6 +92,7 @@ function App() {
       </CartItemsContextProvider>
       </ProductContextProvider>
       </UserContextProvider>
+      </BodyContainer>
     </ThemeProvider>
   );
 }

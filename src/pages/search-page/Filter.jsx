@@ -11,7 +11,12 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { ProductContext } from "../../context-providers/ProductContext";
+import { useNavigate } from "react-router-dom";
+import MUIButton from "@mui/material/Button";
+import {
+  ProductContext,
+  ProductContextProvider,
+} from "../../context-providers/ProductContext";
 
 const StyledFilterBox = styled("div")({
   backgroundColor: "#00cc99",
@@ -53,7 +58,7 @@ const StyledFilterHider = styled("div")({
 });
 
 const StyledDivWithPadding = styled("div")({
-  padding: "0px 10px 10px 10px",
+  padding: "0px 15px 15px 15px",
 });
 
 const Filter = (props) => {
@@ -71,6 +76,10 @@ const Filter = (props) => {
   } = props;
 
   const { products } = useContext(ProductContext);
+  const navigateToAddProductPage = () => {
+    navigate(`/AddProduct`);
+  };
+  const navigate = useNavigate();
 
   // Get all distinct tags from products
   const setTags = new Set();
@@ -121,10 +130,6 @@ const Filter = (props) => {
   const handleDescendingChange = (e) => {
     setDescending(e.target.checked);
   };
-
-  const StyledSortBySection = styled("div")({
-    padding: "15px",
-  });
 
   const isSortingNone = sortBy === "";
 
@@ -216,54 +221,132 @@ const Filter = (props) => {
             />
           </div>
           <StyledDivWithPadding>
-            <Slider
-              getAriaLabel={() => "Price Range"}
-              value={selectedPriceRange}
-              valueLabelDisplay="auto"
-              onChange={handlePriceRangeChange}
-              min={INITIAL_MIN_PRICE_VALUE}
-              max={INITIAL_MAX_PRICE_VALUE}
-              disableSwap
-            />
+            <h3>Tags</h3>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+              {uniqueTags.map((tag) => (
+                <div key={tag}>
+                  <Chip
+                    label={tag}
+                    variant={
+                      selectedTags.includes(tag) ? "default" : "outlined"
+                    }
+                    onClick={() => handleCheckboxChange(tag)}
+                    style={{ color: "white", borderColor: "grey" }}
+                  />
+                  <Checkbox
+                    id={tag}
+                    checked={selectedTags.includes(tag)}
+                    onChange={() => handleCheckboxChange(tag)}
+                    style={{ display: "none" }}
+                  />
+                </div>
+              ))}
+            </div>
           </StyledDivWithPadding>
-        </div>
-        {/* Sorting */}
-        <StyledSortBySection>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <FormControl
-              variant="outlined"
-              sx={{ minWidth: 180, marginRight: "16px" }}
-            >
-              <InputLabel id="sort-by-label">Sort By</InputLabel>
-              <Select
-                labelId="sort-by-label"
-                id="sort-by-select"
-                value={sortBy}
-                onChange={handleSortByChange}
-                label="Sort By"
+          {/** Price range /*/}
+          <StyledDivWithPadding>
+            <h3>Price range</h3>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <TextField
+                id="outlined-min"
+                label="Min price"
+                type="number"
+                variant="outlined"
+                value={selectedPriceRange[0]}
+                style={{ width: "35%", color: "white" }}
+                onChange={(e) => {
+                  validateMinPriceInput(e);
+                }}
+                InputLabelProps={{
+                  sx: { color: "white" },
+                }}
+                InputProps={{
+                  sx: {
+                    color: "white",
+                  },
+                }}
+              />
+              <label style={{ width: "40%" }}></label>
+              <TextField
+                id="outlined-max"
+                label="Max price"
+                type="number"
+                variant="outlined"
+                value={selectedPriceRange[1]}
+                style={{ width: "35%" }}
+                onChange={(e) => {
+                  validateMaxPriceInput(e);
+                }}
+                InputLabelProps={{
+                  sx: { color: "white" },
+                }}
+                InputProps={{
+                  sx: {
+                    color: "white",
+                  },
+                }}
+              />
+            </div>
+            <div style={{ padding: "10px" }}>
+              <Slider
+                getAriaLabel={() => "Price Range"}
+                value={selectedPriceRange}
+                valueLabelDisplay="auto"
+                onChange={handlePriceRangeChange}
+                min={INITIAL_MIN_PRICE_VALUE}
+                max={INITIAL_MAX_PRICE_VALUE}
+                disableSwap
+              />
+            </div>
+          </StyledDivWithPadding>
+          {/* Sorting */}
+          <StyledDivWithPadding>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <FormControl
+                variant="outlined"
+                sx={{ minWidth: 180, marginRight: "16px" }}
               >
-                <MenuItem value="">None</MenuItem>
-                <MenuItem value="name">Name</MenuItem>
-                <MenuItem value="price">Price</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={!isSortingNone && descending}
-                  onChange={handleDescendingChange}
-                  disabled={isSortingNone}
-                  id="descending-checkbox"
-                />
-              }
-              label="Descending"
-              htmlFor="descending-checkbox"
-              style={{ marginLeft: "auto" }}
-            />
+                <InputLabel id="sort-by-label">Sort By</InputLabel>
+                <Select
+                  labelId="sort-by-label"
+                  id="sort-by-select"
+                  value={sortBy}
+                  onChange={handleSortByChange}
+                  label="Sort By"
+                >
+                  <MenuItem value="">None</MenuItem>
+                  <MenuItem value="name">Name</MenuItem>
+                  <MenuItem value="price">Price</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={!isSortingNone && descending}
+                    onChange={handleDescendingChange}
+                    disabled={isSortingNone}
+                    id="descending-checkbox"
+                  />
+                }
+                label="Descending"
+                htmlFor="descending-checkbox"
+                style={{ marginLeft: "auto" }}
+              />
+            </div>
+          </StyledDivWithPadding>
+          {/*New product*/}
+          <div style={{ padding: "15px" }}>
+            <MUIButton
+              variant="contained"
+              onClick={() => navigateToAddProductPage()}
+            >
+              {" "}
+              Add new product{" "}
+            </MUIButton>
           </div>
-        </StyledSortBySection>
-      </StyledFilterHider>
-    </StyledFilterBox>
+        </StyledFilterHider>
+      </StyledFilterBox>
+    </ProductContextProvider>
   );
 };
 

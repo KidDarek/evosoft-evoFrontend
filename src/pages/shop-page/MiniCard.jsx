@@ -73,7 +73,7 @@ const MiniCard = (props) => {
             <tr>
               <td rowSpan="3">
                 <img
-                  src={product.imageUri}
+                  src={`data:image/png;base64,${product.imageData}`}
                   alt=""
                   overflow="hidden"
                   height="100px"
