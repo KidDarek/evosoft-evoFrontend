@@ -54,7 +54,6 @@ const LoginButton = (props) => {
     }
   }, [userDTOString, queryParams, setLoggedInUser, getLoggedInUser]);
 
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -93,8 +92,10 @@ const LoginButton = (props) => {
   };
 
   const handleGithubLoginRequest = () => {
-    const authorizationUrl =
-      "http://github.com/login/oauth/authorize?client_id=ac9c3f680f66d0c835de&redirect_uri=http://192.168.0.195:5232/api/github/callback&scope=user:email";
+    const clientId = process.env.REACT_APP_CLIENT_ID;
+    const redirectUri = process.env.REACT_APP_REDIRECT_URI;
+
+    const authorizationUrl = `http://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user:email`;
     window.location.href = authorizationUrl;
   };
 
