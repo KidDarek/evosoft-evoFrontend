@@ -71,7 +71,7 @@ function App() {
             <Route path="/Search" element={<SearchPage />} />
             <Route path="/Shop" element={<ShopPage />} />
             <Route path="/Checkout" element={<CheckoutPage />} />
-            <Route path="/Profile:id" element={<ProfilePage />} />
+            <Route path="/Profile" element={<ProfilePage />} />
             <Route path="/Product/:id" element={<ProductPageWithContext />} />
           </Routes>
         </BrowserRouter>

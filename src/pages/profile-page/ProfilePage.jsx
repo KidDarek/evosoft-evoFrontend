@@ -1,6 +1,5 @@
 import { Avatar, styled } from "@mui/material";
-import { useParams } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import PurchaseHistoryButton from "./PurchaseHistoryButton";
 import { UserContext } from "../../context-providers/UserContext";
 
@@ -76,23 +75,14 @@ const StyledPurchaseHistory = styled("div")({
 const ProfilePage = () => {
   const [VisiblePurchaseHistory, setPurchaseHistory] = useState(false);
 
-  const params = useParams();
-  const id = params.id;
-  const { getUserById } = useContext(UserContext);
-  const [user, setUser] = useState(null);
+  const { getLoggedInUser } = useContext(UserContext);
 
-  useEffect(() => {
-    async function fetchUser() {
-      const user = await getUserById(id);
-      setUser(user);
-    }
+  const loggedInUser = getLoggedInUser();
 
-    fetchUser();
-  }, [getUserById, id]);
-
-  if (user?.id === undefined) {
-    return <div>Loading...</div>;
+  if (!loggedInUser) {
+    return null; // or any appropriate UI when the user is not logged in
   }
+
   return (
     <>
       <StyledPageDiv>
@@ -108,21 +98,21 @@ const ProfilePage = () => {
                     fontSize: 100,
                   }}
                 >
-                  {user.name[0].toUpperCase()}
+                  {loggedInUser.name[0].toUpperCase()}
                 </Avatar>
               </td>
             </tr>
             <tr>
               <td>Name:</td>
-              <td>{user.name}</td>
+              <td>{loggedInUser.name}</td>
             </tr>
             <tr>
               <td>Email:</td>
-              <td>{user.email}</td>
+              <td>{loggedInUser.email}</td>
             </tr>
             <tr>
               <td>Role:</td>
-              <td>{user.role}</td>
+              <td>{loggedInUser.role}</td>
             </tr>
             <tr>
               <td>Status:</td>

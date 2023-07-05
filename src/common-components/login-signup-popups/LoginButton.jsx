@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -13,28 +13,46 @@ import { useLocation } from "react-router-dom";
 const LoginButton = (props) => {
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
-  const { loginUser } = useContext(UserContext);
+  const { loginUser, setLoggedInUser, getLoggedInUser } =
+    useContext(UserContext);
+
   const location = useLocation();
-
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
   const userDTOString = queryParams.get("userDTO");
-  if (userDTOString) {
-    const userDTO = JSON.parse(userDTOString);
 
-    const userId = userDTO.Id;
-    const userName = userDTO.Name;
-    const userEmail = userDTO.Email;
-    const user = { userId, userName, userEmail };
+  // Looking for GitHub login query, converting and storing UserDTO data
+  useEffect(() => {
+    const loggedInUser = getLoggedInUser();
+    if (!loggedInUser && userDTOString) {
+      const userDTO = JSON.parse(userDTOString);
 
-    console.log(user);
-    // Handle the login process with userDTO...
-    props.setLoggedInUser(user);
-    setOpen(false);
+      const user = {};
 
-    // Clear the query parameter from the URL
-    queryParams.delete("userDTO");
-    //props.history.replace({ search: queryParams.toString() });
-  }
+      for (const key in userDTO) {
+        if (userDTO.hasOwnProperty(key)) {
+          const lowercasedKey = key.charAt(0).toLowerCase() + key.slice(1);
+          user[lowercasedKey] = userDTO[key];
+        }
+      }
+
+      //console.log(userDTO);
+      // Handle the login process with userDTO...
+      setLoggedInUser(user);
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
+      setOpen(false);
+
+      // Clear the query parameter from the URL
+      queryParams.delete("userDTO");
+      const updatedSearch = queryParams.toString();
+      const newUrl = `${window.location.pathname}${
+        updatedSearch ? `?${updatedSearch}` : ""
+      }`;
+      window.history.replaceState(null, "", newUrl);
+    }
+  }, [userDTOString, queryParams, setLoggedInUser, getLoggedInUser]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,7 +88,6 @@ const LoginButton = (props) => {
       handleSnackOpen();
       return;
     }
-    props.setLoggedInUser(user);
     setOpen(false);
   };
 
