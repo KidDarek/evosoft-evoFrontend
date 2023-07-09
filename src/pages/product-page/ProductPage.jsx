@@ -2,14 +2,8 @@ import styled from "@emotion/styled";
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { users } from "../../db";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../context-providers/ProductContext";
-import {
-  CartItemsContext,
-  CartItemsContextProvider,
-} from "../../context-providers/CartItemsContext";
+import { ProductContext } from "../../context-providers/ProductContext";
+import { CartItemsContext } from "../../context-providers/CartItemsContext";
 import MUIButton from "@mui/material/Button";
 import { TextField, Chip } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -125,7 +119,7 @@ const StyledWhiteDiv = styled("div")({
   color: "white",
 });
 
-const ProductPageInside = () => {
+const ProductPage = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("1");
@@ -314,18 +308,6 @@ const ProductPageInside = () => {
           </div>
         </StyledInfoDivText2>
       </StyledPageDiv>
-    </>
-  );
-};
-
-const ProductPage = () => {
-  return (
-    <>
-      <ProductContextProvider>
-        <CartItemsContextProvider>
-          <ProductPageInside />
-        </CartItemsContextProvider>
-      </ProductContextProvider>
     </>
   );
 };

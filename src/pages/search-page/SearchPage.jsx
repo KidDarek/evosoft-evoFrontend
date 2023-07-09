@@ -1,9 +1,6 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
 import { styled, Grid } from "@mui/material";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../context-providers/ProductContext";
+import { ProductContext } from "../../context-providers/ProductContext";
 import Filter from "./Filter";
 import CardWithProps from "../main-page/best-deals/Card";
 
@@ -45,7 +42,7 @@ const StyledProductDiv = styled("div")({
 var INITIAL_MIN_PRICE_VALUE = 0;
 var INITIAL_MAX_PRICE_VALUE = 9999;
 
-const SearchPageInside = () => {
+const SearchPage = () => {
   const { products } = useContext(ProductContext);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
@@ -177,16 +174,6 @@ const SearchPageInside = () => {
           </StyledContent>
         </StyledDiv>
       </StyledPadding>
-    </>
-  );
-};
-
-const SearchPage = () => {
-  return (
-    <>
-      <ProductContextProvider>
-        <SearchPageInside />
-      </ProductContextProvider>
     </>
   );
 };

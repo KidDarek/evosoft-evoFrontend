@@ -1,10 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Button, styled } from "@mui/material";
-import {
-  CartItemsContext,
-  CartItemsContextProvider,
-} from "../../context-providers/CartItemsContext";
+import { CartItemsContext } from "../../context-providers/CartItemsContext";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -42,7 +39,7 @@ const StyledLabel = styled("label")({
   fontSize: "15px",
 });
 
-const CheckoutPageInside = () => {
+const CheckoutPage = () => {
   const { cartItems } = useContext(CartItemsContext);
 
   const location = useLocation();
@@ -204,16 +201,6 @@ const CheckoutPageInside = () => {
           </StyledTable>
         ) : null}
       </StyledPageDiv>
-    </>
-  );
-};
-
-const CheckoutPage = () => {
-  return (
-    <>
-      <CartItemsContextProvider>
-        <CheckoutPageInside />
-      </CartItemsContextProvider>
     </>
   );
 };

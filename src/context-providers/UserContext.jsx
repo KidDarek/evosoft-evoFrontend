@@ -1,18 +1,18 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import UserAPI from "../api/UserAPI";
 
 const UserContext = createContext([]);
 
 function UserContextProvider({ children }) {
   const [users, setUsers] = useState([]);
-  const [loggedInUser, setLoggedInUser] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
-    async function fetchUsers() {
-      const data = await UserAPI.getAll();
-      setUsers(data);
+    // Load the logged-in user from localStorage when the component mounts
+    const savedLoggedInUser = localStorage.getItem("loggedInUser");
+    if (savedLoggedInUser) {
+      setLoggedInUser(JSON.parse(savedLoggedInUser));
     }
-    fetchUsers();
   }, []);
 
   async function getUserById(id) {
@@ -26,10 +26,37 @@ function UserContextProvider({ children }) {
     return result;
   }
 
+  // Works with regular logins, since backend expects a password in userData
   async function loginUser(userData) {
     const user = await UserAPI.login(userData);
-    setLoggedInUser(user);
+    if (user.id) {
+      setLoggedInUser(user);
+      // Save the logged-in user in localStorage
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
+    }
     return user;
+  }
+
+  // Mandatory function to validate the user that is given back from query through GitHub login.
+  // This way when setLoggedInUser() is called from outside components, it will still validate it and avoid logging in with fake a user.
+  function validateLoggedInUser(user) {
+    if (user.id) {
+      getUserById(user.id).then((validatedUser) => {
+        if (validatedUser.id) {
+          setLoggedInUser(validatedUser); // Set the logged-in user
+          // Save the logged-in user in localStorage
+          localStorage.setItem("loggedInUser", JSON.stringify(validatedUser));
+        }
+      });
+    }
+  }
+
+  function logoutUser() {
+    // Clear the logged-in user state
+    setLoggedInUser(null);
+
+    // Remove the logged-in user from localStorage
+    localStorage.removeItem("loggedInUser");
   }
 
   async function removeUser(id) {
@@ -44,9 +71,23 @@ function UserContextProvider({ children }) {
     );
   }
 
+  function getLoggedInUser() {
+    return loggedInUser;
+  }
+
   return (
     <UserContext.Provider
-      value={{ loggedInUser, users, addUser, removeUser, updateUser, getUserById, loginUser }}
+      value={{
+        users,
+        addUser,
+        removeUser,
+        updateUser,
+        getUserById,
+        loginUser,
+        getLoggedInUser,
+        logoutUser,
+        setLoggedInUser: validateLoggedInUser, // Update setLoggedInUser
+      }}
     >
       {children}
     </UserContext.Provider>

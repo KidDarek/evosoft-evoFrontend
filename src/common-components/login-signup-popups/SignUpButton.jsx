@@ -5,10 +5,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
+import { UserContext } from "../../context-providers/UserContext";
 import { IconButton, Snackbar } from "@mui/material";
 
-const SignUpPopup = (props) => {
+const SignUpPopup = () => {
   const [open, setOpen] = React.useState(false);
   const [openSnackInvalid, setOpenSnackInvalid] = React.useState(false);
   const [openSnackConflict, setOpenSnackConflict] = React.useState(false);
@@ -27,8 +27,12 @@ const SignUpPopup = (props) => {
     setOpenSnackConflict(false);
   };
 
-  const handleSnackOpen = (setOpenSnackFunction) => {
-    setOpenSnackFunction(true);
+  const handleInvalidEmailSnackOpen = () => {
+    setOpenSnackInvalid(true);
+  };
+
+  const handleConflictEmailSnackOpen = () => {
+    setOpenSnackConflict(true);
   };
 
   const requestSignUp = (e) => {
@@ -43,19 +47,21 @@ const SignUpPopup = (props) => {
     const passwordTextField = document.getElementById("sign-up-password");
     const email = emailTextField.value;
     if (!validEmail(email)) {
-      handleSnackOpen(setOpenSnackInvalid);
+      handleInvalidEmailSnackOpen();
       return;
     }
     const name = nameTextField.value;
     const password = passwordTextField.value;
-    const role = "user";
+    const role = "User";
     const user = { name, email, password, role };
-    if (await (addUser(user))) {
-      handleSnackOpen(setOpenSnackConflict);
+    const result = await addUser(user);
+    if (result !== 200) {
+      handleConflictEmailSnackOpen();
       return;
     }
+
     setOpen(false);
-  };
+  }
 
   const validEmail = (emailText) => {
     const validRegex = /^[A-z0-9.-_]+@[A-z0-9.-_]+\.[A-z]+$/;
@@ -151,10 +157,4 @@ const SignUpPopup = (props) => {
     </div>
   );
 };
-
-const WrappedSignUpPopup = () => (
-  <UserContextProvider>
-    <SignUpPopup />
-  </UserContextProvider>
-);
-export default WrappedSignUpPopup;
+export default SignUpPopup;

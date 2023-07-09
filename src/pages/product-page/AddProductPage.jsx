@@ -1,9 +1,6 @@
 import { Autocomplete, TextField, styled, Chip, Checkbox } from "@mui/material";
 import React, { useContext, useState, useEffect } from "react";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../context-providers/ProductContext";
+import { ProductContext } from "../../context-providers/ProductContext";
 import MUIButton from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -230,7 +227,10 @@ const AddProductPage = () => {
     const reader = new FileReader();
     reader.onload = (event) => {
       const base64String = event.target.result;
-      setBase64(base64String);
+      const trimmedBase64 = base64String.substring(
+        base64String.indexOf(",") + 1
+      );
+      setBase64(trimmedBase64);
     };
     reader.readAsDataURL(file);
   }
@@ -252,14 +252,16 @@ const AddProductPage = () => {
       return;
     }
 
-    await addProduct({
+    const product = {
       title: title,
       imageData: base64String,
       body: description,
       price: price,
       category: selectedOption,
       tags: selectedTags,
-    });
+    };
+    console.log(product);
+    await addProduct(product);
     navigateToSearchPage();
   };
 
@@ -389,10 +391,4 @@ const AddProductPage = () => {
   );
 };
 
-const AddProductPageWithContext = () => (
-  <ProductContextProvider>
-    <AddProductPage />
-  </ProductContextProvider>
-);
-
-export default AddProductPageWithContext;
+export default AddProductPage;

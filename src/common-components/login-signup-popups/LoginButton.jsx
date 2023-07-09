@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -7,13 +7,52 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import SignUpButton from "./SignUpButton";
 import { IconButton, Snackbar } from "@mui/material";
-import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
+import { UserContext } from "../../context-providers/UserContext";
+import { useLocation } from "react-router-dom";
 
 const LoginButton = (props) => {
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
-  const { loginUser } = useContext(UserContext);
+  const { loginUser, setLoggedInUser, getLoggedInUser } =
+    useContext(UserContext);
 
+  const location = useLocation();
+  const queryParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+  const userDTOString = queryParams.get("userDTO");
+
+  // Looking for GitHub login query, converting and storing UserDTO data
+  useEffect(() => {
+    const loggedInUser = getLoggedInUser();
+    if (!loggedInUser && userDTOString) {
+      const userDTO = JSON.parse(userDTOString);
+
+      const user = {};
+
+      for (const key in userDTO) {
+        if (userDTO.hasOwnProperty(key)) {
+          const lowercasedKey = key.charAt(0).toLowerCase() + key.slice(1);
+          user[lowercasedKey] = userDTO[key];
+        }
+      }
+
+      //console.log(userDTO);
+      // Handle the login process with userDTO...
+      setLoggedInUser(user);
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
+      setOpen(false);
+
+      // Clear the query parameter from the URL
+      queryParams.delete("userDTO");
+      const updatedSearch = queryParams.toString();
+      const newUrl = `${window.location.pathname}${
+        updatedSearch ? `?${updatedSearch}` : ""
+      }`;
+      window.history.replaceState(null, "", newUrl);
+    }
+  }, [userDTOString, queryParams, setLoggedInUser, getLoggedInUser]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,20 +76,27 @@ const LoginButton = (props) => {
     }
   };
 
-  async function handleLogInRequest() {
+  const handleLogInRequest = async () => {
     const emailTextField = document.getElementById("log-in-email");
     const passwordTextField = document.getElementById("log-in-password");
     const email = emailTextField.value;
     const name = undefined;
     const password = passwordTextField.value;
     const logInData = { email, name, password };
-    const user = await loginUser(logInData);
-    if (user === null) {
+    const response = await loginUser(logInData);
+    if (response !== 200) {
       handleSnackOpen();
       return;
     }
-    props.setLoggedInUser(user);
     setOpen(false);
+  };
+
+  const handleGithubLoginRequest = () => {
+    const clientId = process.env.REACT_APP_CLIENT_ID;
+    const redirectUri = process.env.REACT_APP_REDIRECT_URI;
+
+    const authorizationUrl = `http://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user:email`;
+    window.location.href = authorizationUrl;
   };
 
   const snackAction = (
@@ -106,8 +152,13 @@ const LoginButton = (props) => {
         </DialogContent>
         <DialogActions>
           <SignUpButton theme={props.theme} />
-          <Button color="red" onClick={handleClickClose}>Cancel</Button>
+          <Button color="red" onClick={handleClickClose}>
+            Cancel
+          </Button>
           <Button onClick={handleLogInRequest}>Log in</Button>
+          <Button onClick={handleGithubLoginRequest} sx={{ color: "black" }}>
+            Log in with GitHub
+          </Button>
         </DialogActions>
         <Snackbar
           open={openSnack}
@@ -121,11 +172,4 @@ const LoginButton = (props) => {
   );
 };
 
-const WrappedLoginButton = (props) => {
-  return (
-    <UserContextProvider>
-      <LoginButton theme={props.theme} setLoggedInUser={props.setLoggedInUser} />
-    </UserContextProvider>
-  )
-};
-export default WrappedLoginButton;
+export default LoginButton;

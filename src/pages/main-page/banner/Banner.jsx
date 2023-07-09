@@ -2,10 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { styled } from "@mui/material";
 import CardSmall from "./CardSmall";
 import CardBig from "./CardBig";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../../context-providers/ProductContext";
+import { ProductContext } from "../../../context-providers/ProductContext";
 
 const StyledBannerDiv = styled("div")({
   display: "flex",
@@ -71,7 +68,7 @@ function shuffleArray(array) {
   return newArray;
 }
 
-const SetNewBanner = () => {
+const Banner = () => {
   const { products } = useContext(ProductContext);
   const [shuffledProducts, setShuffledProducts] = useState([]);
 
@@ -129,16 +126,6 @@ const SetNewBanner = () => {
         </StyledBannerDiv>
       </StyledBannerColors>
     </div>
-  );
-};
-
-const Banner = () => {
-  return (
-    <>
-      <ProductContextProvider>
-        <SetNewBanner />
-      </ProductContextProvider>
-    </>
   );
 };
 

@@ -1,10 +1,7 @@
 import { Grid } from "@mui/material";
 import React, { Fragment, useContext } from "react";
 import { styled } from "@mui/material";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../../context-providers/ProductContext";
+import { ProductContext } from "../../../context-providers/ProductContext";
 import Card from "./Card";
 
 const StyledPadding = styled("div")({
@@ -67,11 +64,9 @@ const ReturnTwoRandomProductByCategory = () => {
 const BestDealsPage = () => {
   return (
     <>
-      <ProductContextProvider>
-        <StyledPadding>
-          <ReturnTwoRandomProductByCategory />
-        </StyledPadding>
-      </ProductContextProvider>
+      <StyledPadding>
+        <ReturnTwoRandomProductByCategory />
+      </StyledPadding>
     </>
   );
 };

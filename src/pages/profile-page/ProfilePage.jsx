@@ -1,8 +1,7 @@
 import { Avatar, styled } from "@mui/material";
-import { useParams } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import PurchaseHistoryButton from "./PurchaseHistoryButton";
-import { UserContext, UserContextProvider } from "../../context-providers/UserContext";
+import { UserContext } from "../../context-providers/UserContext";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -32,8 +31,8 @@ const StyledBrightPurchaseHistoryDiv = styled("div")({
     },
   },
   animation: "brightdivanimation 0.5s 1 ease",
-  position: "static"
-})
+  position: "static",
+});
 
 const StyledDarkPurchaseHistoryDiv = styled("div")({
   width: "100%",
@@ -54,9 +53,8 @@ const StyledDarkPurchaseHistoryDiv = styled("div")({
     },
   },
   animation: "darkdivanimation 0.5s 1 ease",
-  position: "static"
-})
-
+  position: "static",
+});
 
 const StyledTable = styled("table")({
   width: "25%",
@@ -72,28 +70,19 @@ const StyledPurchaseHistory = styled("div")({
   width: "80%",
   height: "100%",
   backgroundColor: "#00cc99",
-})
+});
 
 const ProfilePage = () => {
   const [VisiblePurchaseHistory, setPurchaseHistory] = useState(false);
 
-  const params = useParams();
-  const id = params.id;
-  const { getUserById } = useContext(UserContext);
-  const [user, setUser] = useState(null);
+  const { getLoggedInUser } = useContext(UserContext);
 
-  useEffect(() => {
-    async function fetchUser() {
-      const user = await getUserById(id);
-      setUser(user);
-    }
+  const loggedInUser = getLoggedInUser();
 
-    fetchUser();
-  }, [getUserById, id]);
-
-  if (user?.id === undefined) {
-    return <div>Loading...</div>;
+  if (!loggedInUser) {
+    return null; // or any appropriate UI when the user is not logged in
   }
+
   return (
     <>
       <StyledPageDiv>
@@ -109,21 +98,21 @@ const ProfilePage = () => {
                     fontSize: 100,
                   }}
                 >
-                  {user.name[0].toUpperCase()}
+                  {loggedInUser.name[0].toUpperCase()}
                 </Avatar>
               </td>
             </tr>
             <tr>
               <td>Name:</td>
-              <td>{user.name}</td>
+              <td>{loggedInUser.name}</td>
             </tr>
             <tr>
               <td>Email:</td>
-              <td>{user.email}</td>
+              <td>{loggedInUser.email}</td>
             </tr>
             <tr>
               <td>Role:</td>
-              <td>{user.role}</td>
+              <td>{loggedInUser.role}</td>
             </tr>
             <tr>
               <td>Status:</td>
@@ -133,22 +122,34 @@ const ProfilePage = () => {
         </StyledTable>
       </StyledPageDiv>
       <StyledPageDiv>
-        {!VisiblePurchaseHistory && <PurchaseHistoryButton setPurchaseHistory={setPurchaseHistory}></PurchaseHistoryButton>}
-        {VisiblePurchaseHistory &&
+        {!VisiblePurchaseHistory && (
+          <PurchaseHistoryButton
+            setPurchaseHistory={setPurchaseHistory}
+          ></PurchaseHistoryButton>
+        )}
+        {VisiblePurchaseHistory && (
           <StyledPurchaseHistory>
-            <StyledDarkPurchaseHistoryDiv> Product 1 </StyledDarkPurchaseHistoryDiv>
-            <StyledBrightPurchaseHistoryDiv> Product 2 </StyledBrightPurchaseHistoryDiv>
-            <StyledDarkPurchaseHistoryDiv> Product 3 </StyledDarkPurchaseHistoryDiv>
-            <StyledBrightPurchaseHistoryDiv> Product 4 </StyledBrightPurchaseHistoryDiv>
-          </StyledPurchaseHistory>}
+            <StyledDarkPurchaseHistoryDiv>
+              {" "}
+              Product 1{" "}
+            </StyledDarkPurchaseHistoryDiv>
+            <StyledBrightPurchaseHistoryDiv>
+              {" "}
+              Product 2{" "}
+            </StyledBrightPurchaseHistoryDiv>
+            <StyledDarkPurchaseHistoryDiv>
+              {" "}
+              Product 3{" "}
+            </StyledDarkPurchaseHistoryDiv>
+            <StyledBrightPurchaseHistoryDiv>
+              {" "}
+              Product 4{" "}
+            </StyledBrightPurchaseHistoryDiv>
+          </StyledPurchaseHistory>
+        )}
       </StyledPageDiv>
     </>
   );
 };
 
-const WrappedProfilePage = (props) => (
-  <UserContextProvider>
-    <ProfilePage id={props.id} />
-  </UserContextProvider>
-);
-export default WrappedProfilePage;
+export default ProfilePage;

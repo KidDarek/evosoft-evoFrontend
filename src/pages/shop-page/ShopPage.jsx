@@ -2,14 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, createTheme, styled } from "@mui/material";
 import { ThemeProvider } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-import {
-  ProductContext,
-  ProductContextProvider,
-} from "../../context-providers/ProductContext";
-import {
-  CartItemsContext,
-  CartItemsContextProvider,
-} from "../../context-providers/CartItemsContext";
+import { ProductContext } from "../../context-providers/ProductContext";
+import { CartItemsContext } from "../../context-providers/CartItemsContext";
 import MiniCard from "./MiniCard";
 
 const StyledPageDiv = styled("div")({
@@ -74,7 +68,7 @@ const BasicTheme = createTheme({
   },
 });
 
-const ShopPageInside = () => {
+const ShopPage = () => {
   const navigate = useNavigate();
   const { getProductById } = useContext(ProductContext);
   const { cartItems } = useContext(CartItemsContext);
@@ -175,18 +169,6 @@ const ShopPageInside = () => {
           ) : null}
         </StyledPageDiv>
       </ThemeProvider>
-    </>
-  );
-};
-
-const ShopPage = () => {
-  return (
-    <>
-      <ProductContextProvider>
-        <CartItemsContextProvider>
-          <ShopPageInside />
-        </CartItemsContextProvider>
-      </ProductContextProvider>
     </>
   );
 };

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, styled } from "@mui/material";
 import MUIButton from "@mui/material/Button";
 import LoginButton from "../login-signup-popups/LoginButton";
 import ProfileButton from "./ProfileButton";
 import ShoppingCart from "./ShoppingCart";
+import { UserContext } from "../../context-providers/UserContext";
 
 const StyledHeader = styled("div")({
   backgroundColor: "#00cc99",
@@ -38,10 +39,10 @@ const StyledLinks = styled("div")({
   gap: "30px",
 });
 
-
 const Header = (props) => {
-  const [loggedInUser, setLoggedInUser] = useState({});
+  const { getLoggedInUser } = useContext(UserContext);
 
+  const loggedInUser = getLoggedInUser();
 
   const navigate = useNavigate();
 
@@ -68,15 +69,23 @@ const Header = (props) => {
   return (
     <>
       <StyledHeader>
-        <StyledLogo src="/images/evosoftlogo.png" alt="logo" onClick={navigateToMainPage} />
+        <StyledLogo
+          src="/images/evosoftlogo.png"
+          alt="logo"
+          onClick={navigateToMainPage}
+        />
         <StyledSearchDiv>
-          <MUIButton variant="contained" color="red" sx={{ width: 1 }} onClick={navigateToSearchPage}>
+          <MUIButton
+            variant="contained"
+            color="red"
+            sx={{ width: 1 }}
+            onClick={navigateToSearchPage}
+          >
             Go to search page
           </MUIButton>
         </StyledSearchDiv>
         <Card />
         <StyledLinks>
-
           <MUIButton
             variant="contained"
             onClick={navigateToFaqPage}
@@ -98,14 +107,13 @@ const Header = (props) => {
           >
             Contact
           </MUIButton>
-          {loggedInUser?.id === undefined && <LoginButton setLoggedInUser={setLoggedInUser}> Log in / Sign up</LoginButton>}
-          {loggedInUser?.id !== undefined && <ProfileButton setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} />}
+          {!loggedInUser && <LoginButton> Log in / Sign up</LoginButton>}
+          {loggedInUser && <ProfileButton />}
           <ShoppingCart />
         </StyledLinks>
       </StyledHeader>
     </>
   );
 };
-
 
 export default Header;

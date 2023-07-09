@@ -1,10 +1,7 @@
 import styled from "@emotion/styled";
 import AnswerQuestionButton from "./AnswerQuestionButton";
 import DeleteQuestionButton from "./DeleteQuestionButton";
-import {
-  UserQuestionContext,
-  UserQuestionContextProvider,
-} from "../../context-providers/UserQuestionContext";
+import { UserQuestionContext } from "../../context-providers/UserQuestionContext";
 import React, { Fragment, useContext } from "react";
 
 const StyledHeader = styled("h1")({
@@ -85,10 +82,4 @@ const AnswerQuestionPage = () => {
   );
 };
 
-const AnswerQuestionPageWithContext = () => (
-  <UserQuestionContextProvider>
-    <AnswerQuestionPage />
-  </UserQuestionContextProvider>
-);
-
-export default AnswerQuestionPageWithContext;
+export default AnswerQuestionPage;

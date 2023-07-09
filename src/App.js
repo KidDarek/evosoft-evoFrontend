@@ -14,6 +14,18 @@ import CheckoutPage from "./pages/checkout-page/CheckoutPage";
 import AddProductPageWithContext from "./pages/product-page/AddProductPage";
 import AnswerQuestionPage from "./pages/answer-question-page/AnswerQuestionPage";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  UserContextProvider
+} from "./context-providers/UserContext";
+import {
+  ProductContextProvider
+} from "./context-providers/ProductContext";
+import {
+  UserQuestionContextProvider
+} from "./context-providers/UserQuestionContext";
+import {
+  CartItemsContextProvider
+} from "./context-providers/CartItemsContext";
 
 const MainTheme = createTheme({
   palette: {
@@ -52,6 +64,10 @@ const BodyContainer = styled("div")({
 function App() {
   return (
     <ThemeProvider theme={MainTheme}>
+      <UserContextProvider>
+        <ProductContextProvider>
+          <CartItemsContextProvider>
+          <UserQuestionContextProvider>
       <BodyContainer>
         <BrowserRouter>
           <Header />
@@ -63,14 +79,18 @@ function App() {
             <Route path="/Search" element={<SearchPage />} />
             <Route path="/Shop" element={<ShopPage />} />
             <Route path="/Checkout" element={<CheckoutPage />} />
+            <Route path="/Profile" element={<ProfilePage />} />
             <Route path="/AnswerQuestion" element={<AnswerQuestionPage />} />
-            <Route path="/Profile:id" element={<ProfilePage />} />
             <Route path="/Product/:id" element={<ProductPageWithContext />} />
             <Route path="/AddProduct" element={<AddProductPageWithContext />} />
           </Routes>
         </BrowserRouter>
         <Footer />
-      </BodyContainer>
+        </BodyContainer>
+      </UserQuestionContextProvider>
+      </CartItemsContextProvider>
+      </ProductContextProvider>
+      </UserContextProvider>
     </ThemeProvider>
   );
 }
