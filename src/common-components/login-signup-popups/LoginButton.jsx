@@ -1,17 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { users } from "../../db";
 import SignUpButton from "./SignUpButton";
 import { IconButton, Snackbar } from "@mui/material";
+import { UserContext } from "../../context-providers/UserContext";
+import { useLocation } from "react-router-dom";
 
 const LoginButton = (props) => {
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = React.useState(false);
+  const { loginUser, setLoggedInUser, getLoggedInUser } =
+    useContext(UserContext);
+
+  const location = useLocation();
+  const queryParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+  const userDTOString = queryParams.get("userDTO");
+
+  // Looking for GitHub login query, converting and storing UserDTO data
+  useEffect(() => {
+    const loggedInUser = getLoggedInUser();
+    if (!loggedInUser && userDTOString) {
+      const userDTO = JSON.parse(userDTOString);
+
+      const user = {};
+
+      for (const key in userDTO) {
+        if (userDTO.hasOwnProperty(key)) {
+          const lowercasedKey = key.charAt(0).toLowerCase() + key.slice(1);
+          user[lowercasedKey] = userDTO[key];
+        }
+      }
+
+      //console.log(userDTO);
+      // Handle the login process with userDTO...
+      setLoggedInUser(user);
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
+      setOpen(false);
+
+      // Clear the query parameter from the URL
+      queryParams.delete("userDTO");
+      const updatedSearch = queryParams.toString();
+      const newUrl = `${window.location.pathname}${
+        updatedSearch ? `?${updatedSearch}` : ""
+      }`;
+      window.history.replaceState(null, "", newUrl);
+    }
+  }, [userDTOString, queryParams, setLoggedInUser, getLoggedInUser]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,33 +71,42 @@ const LoginButton = (props) => {
   };
 
   const requestLogin = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleLogInRequest();
     }
-  }
+  };
 
-  const handleLogInRequest = () => {
-    const emailextField = document.getElementById("log-in-email");
+  const handleLogInRequest = async () => {
+    const emailTextField = document.getElementById("log-in-email");
     const passwordTextField = document.getElementById("log-in-password");
-    const email = emailextField.value;
+    const email = emailTextField.value;
+    const name = undefined;
     const password = passwordTextField.value;
-    const logInData = { email, password };
-    if (validEmail(email)) {
-      const id = logIn(logInData);
-      if (id >= 0) {
-        props.setLoginID(id);
-      }
-    }
-    else {
+    const logInData = { email, name, password };
+    const response = await loginUser(logInData);
+    if (response !== 200) {
       handleSnackOpen();
       return;
     }
     setOpen(false);
   };
 
+  const handleGithubLoginRequest = () => {
+    const clientId = process.env.REACT_APP_CLIENT_ID;
+    const redirectUri = process.env.REACT_APP_REDIRECT_URI;
+
+    const authorizationUrl = `http://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user:email`;
+    window.location.href = authorizationUrl;
+  };
+
   const snackAction = (
     <React.Fragment>
-      <Button color="red" size="small" variant="contained" onClick={handleSnackClose}>
+      <Button
+        color="red"
+        size="small"
+        variant="contained"
+        onClick={handleSnackClose}
+      >
         Close
       </Button>
       <IconButton
@@ -64,28 +114,9 @@ const LoginButton = (props) => {
         aria-label="close"
         color="inherit"
         onClick={handleSnackClose}
-      >
-      </IconButton>
+      ></IconButton>
     </React.Fragment>
   );
-
-  const logIn = (logInData) => {
-    for (let index = 0; index < users.length; index++) {
-      if (logInData.email === users[index].email && logInData.password === users[index].password) {
-        props.setLoggedin(true);
-        return index + 1;
-      }
-    }
-    return -1;
-  }
-
-  const validEmail = (emailText) => {
-    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (emailText.match(validRegex)) {
-      return true;
-    }
-    return false;
-  }
 
   return (
     <div>
@@ -121,18 +152,24 @@ const LoginButton = (props) => {
         </DialogContent>
         <DialogActions>
           <SignUpButton theme={props.theme} />
-          <Button onClick={handleClickClose}>Cancel</Button>
+          <Button color="red" onClick={handleClickClose}>
+            Cancel
+          </Button>
           <Button onClick={handleLogInRequest}>Log in</Button>
+          <Button onClick={handleGithubLoginRequest} sx={{ color: "black" }}>
+            Log in with GitHub
+          </Button>
         </DialogActions>
         <Snackbar
           open={openSnack}
           autoHideDuration={6000}
           onClose={handleSnackClose}
-          message="Not a valid Email"
+          message="Email or password is incorrect"
           action={snackAction}
         />
       </Dialog>
     </div>
   );
 };
+
 export default LoginButton;

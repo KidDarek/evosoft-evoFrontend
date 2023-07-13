@@ -1,18 +1,18 @@
-import React from "react";
-//import { forwardRef, useImperativeHandle, useRef } from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { users } from "../../db";
+import { UserContext } from "../../context-providers/UserContext";
 import { IconButton, Snackbar } from "@mui/material";
 
-const SignUpPopup = (props) => {
-
+const SignUpPopup = () => {
   const [open, setOpen] = React.useState(false);
-  const [openSnack, setOpenSnack] = React.useState(false);
+  const [openSnackInvalid, setOpenSnackInvalid] = React.useState(false);
+  const [openSnackConflict, setOpenSnackConflict] = React.useState(false);
+  const { addUser } = useContext(UserContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,47 +23,62 @@ const SignUpPopup = (props) => {
   };
 
   const handleSnackClose = () => {
-    setOpenSnack(false);
+    setOpenSnackInvalid(false);
+    setOpenSnackConflict(false);
   };
 
-  const handleSnackOpen = () => {
-    setOpenSnack(true);
+  const handleInvalidEmailSnackOpen = () => {
+    setOpenSnackInvalid(true);
+  };
+
+  const handleConflictEmailSnackOpen = () => {
+    setOpenSnackConflict(true);
   };
 
   const requestSignUp = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSignUpRequest();
     }
-  }
-  const handleSignUpRequest = () => {
+  };
+
+  async function handleSignUpRequest() {
     const nameTextField = document.getElementById("sign-up-name");
     const emailTextField = document.getElementById("sign-up-email");
     const passwordTextField = document.getElementById("sign-up-password");
     const email = emailTextField.value;
     if (!validEmail(email)) {
-      handleSnackOpen();
+      handleInvalidEmailSnackOpen();
       return;
     }
     const name = nameTextField.value;
     const password = passwordTextField.value;
-    const role = "user";
-    const id = users[users.length - 1].id + 1;
-    const obj = { id, name, email, password, role };
-    users.push(obj);
+    const role = "User";
+    const user = { name, email, password, role };
+    const result = await addUser(user);
+    if (result !== 200) {
+      handleConflictEmailSnackOpen();
+      return;
+    }
+
     setOpen(false);
-  };
+  }
 
   const validEmail = (emailText) => {
-    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validRegex = /^[A-z0-9.-_]+@[A-z0-9.-_]+\.[A-z]+$/;
     if (emailText.match(validRegex)) {
       return true;
     }
     return false;
-  }
+  };
 
   const snackAction = (
     <React.Fragment>
-      <Button color="red" size="small" variant="contained" onClick={handleSnackClose}>
+      <Button
+        color="red"
+        size="small"
+        variant="contained"
+        onClick={handleSnackClose}
+      >
         Close
       </Button>
       <IconButton
@@ -71,8 +86,7 @@ const SignUpPopup = (props) => {
         aria-label="close"
         color="inherit"
         onClick={handleSnackClose}
-      >
-      </IconButton>
+      ></IconButton>
     </React.Fragment>
   );
 
@@ -86,7 +100,11 @@ const SignUpPopup = (props) => {
       >
         Sign up instead
       </Button>
-      <Dialog open={open} onClose={handleSignUpRequest} onKeyDown={requestSignUp}>
+      <Dialog
+        open={open}
+        onClose={handleSignUpRequest}
+        onKeyDown={requestSignUp}
+      >
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
           <TextField
@@ -122,14 +140,20 @@ const SignUpPopup = (props) => {
           <Button onClick={handleSignUpRequest}>Sign up</Button>
         </DialogActions>
         <Snackbar
-          open={openSnack}
+          open={openSnackInvalid}
           autoHideDuration={6000}
           onClose={handleSnackClose}
           message="Not a valid Email"
           action={snackAction}
         />
+        <Snackbar
+          open={openSnackConflict}
+          autoHideDuration={6000}
+          onClose={handleSnackClose}
+          message="Email is already used"
+          action={snackAction}
+        />
       </Dialog>
-
     </div>
   );
 };

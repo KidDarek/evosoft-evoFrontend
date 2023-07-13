@@ -1,26 +1,18 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { styled, Grid } from "@mui/material";
-import { products } from "../../db";
-import Card from "../main-page/best-deals/Card";
+import { ProductContext } from "../../context-providers/ProductContext";
 import Filter from "./Filter";
+import CardWithProps from "../main-page/best-deals/Card";
 
 const StyledPadding = styled("div")({
-  backgroundColor: "#ff0055",
+  backgroundColor: "#00EFB3",
   paddingLeft: "25px",
   paddingRight: "25px",
-  paddingBottom: "25px",
+  paddingBottom: "50px",
 });
 
 const StyledDiv = styled("div")({
-  backgroundColor: "#00cc99",
-});
-
-const StyledTitle = styled("div")({
-  textAlign: "center",
-  backgroundImage: "linear-gradient(to right,#ff0055, #0066ff, #ff0055)",
-  height: "50px",
-  fontSize: "35px",
-  fontWeight: "bold",
+  backgroundColor: "#00EFB3",
 });
 
 const StyledContent = styled("div")({
@@ -30,10 +22,28 @@ const StyledContent = styled("div")({
   height: "100%",
 });
 
-const INITIAL_MIN_PRICE_VALUE = 0;
-const INITIAL_MAX_PRICE_VALUE = 9999;
+const StyledProductDiv = styled("div")({
+  width: "70%",
+  "@keyframes pagestartanimation": {
+    from: {
+      opacity: "0%",
+    },
+    "50%": {
+      opacity: "0%",
+    },
+    to: {
+      opacity: "100%",
+    },
+  },
+  animation: "pagestartanimation 1.5s 1 ease",
+  position: "static",
+});
+
+var INITIAL_MIN_PRICE_VALUE = 0;
+var INITIAL_MAX_PRICE_VALUE = 9999;
 
 const SearchPage = () => {
+  const { products } = useContext(ProductContext);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchString, setSearchString] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -41,6 +51,31 @@ const SearchPage = () => {
     INITIAL_MIN_PRICE_VALUE,
     INITIAL_MAX_PRICE_VALUE,
   ]);
+
+  // NEW CODE SNIPPET
+  useEffect(() => {
+    const priceRangeOfProducts = () => {
+      let minPrice = 0;
+      let maxPrice = minPrice;
+      for (let i = 0; i < products.length; i++) {
+        if (minPrice > products[i].price) {
+          minPrice = products[i].price;
+        }
+        if (maxPrice < products[i].price) {
+          maxPrice = products[i].price;
+        }
+      }
+      return [minPrice, maxPrice];
+    };
+
+    if (products.length > 0) {
+      const priceRange = priceRangeOfProducts();
+      setSelectedPriceRange([priceRange[0], priceRange[1]]);
+    }
+  }, [products]);
+
+  const [sortBy, setSortBy] = useState(""); // Possible values: "name", "price"
+  const [descending, setDescending] = useState(false);
 
   const filterProducts = useCallback(() => {
     let filtered = [...products];
@@ -53,7 +88,7 @@ const SearchPage = () => {
 
     if (selectedTags.length > 0) {
       filtered = filtered.filter((product) => {
-        return selectedTags.every((tag) => product.tag.includes(tag));
+        return selectedTags.every((tags) => product.tags.includes(tags));
       });
     }
 
@@ -65,8 +100,29 @@ const SearchPage = () => {
         );
       });
     }
+
+    // Sorting
+    if (sortBy === "name") {
+      filtered.sort((a, b) =>
+        descending
+          ? b.title.localeCompare(a.title)
+          : a.title.localeCompare(b.title)
+      );
+    } else if (sortBy === "price") {
+      filtered.sort((a, b) =>
+        descending ? b.price - a.price : a.price - b.price
+      );
+    }
+
     setFilteredProducts(filtered);
-  }, [selectedTags, searchString, selectedPriceRange]);
+  }, [
+    selectedTags,
+    searchString,
+    selectedPriceRange,
+    products,
+    sortBy,
+    descending,
+  ]);
 
   useEffect(() => {
     filterProducts();
@@ -80,7 +136,6 @@ const SearchPage = () => {
     <>
       <StyledPadding>
         <StyledDiv>
-          <StyledTitle>SearchPage</StyledTitle>
           <StyledContent>
             <Filter
               handleSearch={handleSearch}
@@ -89,8 +144,14 @@ const SearchPage = () => {
               selectedPriceRange={selectedPriceRange}
               setSelectedPriceRange={setSelectedPriceRange}
               filterProducts={filterProducts}
+              INITIAL_MIN_PRICE_VALUE={INITIAL_MIN_PRICE_VALUE}
+              INITIAL_MAX_PRICE_VALUE={INITIAL_MAX_PRICE_VALUE}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              descending={descending}
+              setDescending={setDescending}
             />
-            <div style={{ width: "70%" }}>
+            <StyledProductDiv>
               <Grid
                 container
                 spacing={10}
@@ -104,12 +165,12 @@ const SearchPage = () => {
                 ) : (
                   filteredProducts.map((product) => (
                     <Grid item xs="auto" md="auto" key={product.id}>
-                      <Card id={product.id} />
+                      <CardWithProps id={product.id} />
                     </Grid>
                   ))
                 )}
               </Grid>
-            </div>
+            </StyledProductDiv>
           </StyledContent>
         </StyledDiv>
       </StyledPadding>

@@ -6,21 +6,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import styled from "@emotion/styled";
-import { v4 as uuidv4 } from "uuid";
 
-const StyledPageDiv = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  height: "100%",
-  padding: "10px 25px 10px 25px",
-  backgroundColor: "#00EFB3",
-});
-
-const AddQuestionButton = () => {
+const AnswerQuestionButton = ({ id }) => {
   const [open, setOpen] = useState(false);
-  const { addUserQuestion } = useContext(UserQuestionContext);
+  const { getUserQuestionById, updateUserQuestion } =
+    useContext(UserQuestionContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,44 +20,43 @@ const AddQuestionButton = () => {
     setOpen(false);
   };
 
-  const addQuestion = async () => {
-    const questionField = document.getElementById("TotallyNotATest2");
-    const question = questionField.value;
-    if (question === "") {
+  const addAnswer = async () => {
+    const answerField = document.getElementById("TotallyNotATest");
+    const answer = answerField.value;
+    if (answer === "") {
       return;
     }
-    const id = uuidv4();
-    await addUserQuestion({
-      id: id,
-      question: question,
-      userId: id,
+    const userQuestion = await getUserQuestionById(id);
+    await updateUserQuestion({
+      id: userQuestion.id,
+      question: userQuestion.question,
+      answer: answer,
+      userId: userQuestion.id,
     });
     setOpen(false);
   };
 
   return (
     <div>
-      <StyledPageDiv>
-        <MUIButton variant="contained" onClick={handleClickOpen}>
-          {" "}
-          Add Question{" "}
-        </MUIButton>
-      </StyledPageDiv>
+      <MUIButton variant="contained" onClick={handleClickOpen}>
+        {" "}
+        Answer Question{" "}
+      </MUIButton>
       <Dialog open={open} onClose={handleClickClose}>
-        <DialogTitle>Got a Question?</DialogTitle>
+        <DialogTitle>Give the answer</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
-            id="TotallyNotATest2"
-            label="Question you wish to add"
+            id="TotallyNotATest"
+            label="Answer"
             type="text"
             fullWidth
             variant="standard"
           />
         </DialogContent>
         <DialogActions>
-          <MUIButton variant="contained" onClick={addQuestion}>
+          <MUIButton variant="contained" onClick={addAnswer}>
             {" "}
             Add{" "}
           </MUIButton>
@@ -81,4 +70,4 @@ const AddQuestionButton = () => {
   );
 };
 
-export default AddQuestionButton;
+export default AnswerQuestionButton;

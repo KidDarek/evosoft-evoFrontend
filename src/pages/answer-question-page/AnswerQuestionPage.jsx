@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
-import AddQuestionButton from "./AddQuestionButton";
+import AnswerQuestionButton from "./AnswerQuestionButton";
+import DeleteQuestionButton from "./DeleteQuestionButton";
 import { UserQuestionContext } from "../../context-providers/UserQuestionContext";
 import React, { Fragment, useContext } from "react";
-import MUIButton from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
 
 const StyledHeader = styled("h1")({
   color: "white",
@@ -22,16 +21,15 @@ const StyledQuestion = styled("h2")({
 });
 
 const StyledQuestionContainer = styled("div")({
-  width: "40%",
+  width: "30%",
   borderBottom: "5px solid #ff0055",
 });
 
-const StyledAnswer = styled("h3")({
-  color: "white",
-  aligntext: "left",
-  width: "40%",
+const StyledButtonTable = styled("table")({
+  width: "30%",
+  height: "fit-content",
   display: "flex",
-  justifyContent: "center",
+  marginBottom: "1%",
 });
 
 const StyledPageDiv = styled("div")({
@@ -43,21 +41,16 @@ const StyledPageDiv = styled("div")({
   backgroundColor: "#00EFB3",
 });
 
-const FaqPage = () => {
+const AnswerQuestionPage = () => {
   const { userQuestions } = useContext(UserQuestionContext);
-
-  const navigate = useNavigate();
-  const navigateToAnswerQuestionPage = () => {
-    navigate(`/AnswerQuestion`);
-  };
 
   return (
     <>
       <StyledPageDiv>
-        <StyledHeader>Frequently Asked Questions</StyledHeader>
+        <StyledHeader>Unanswered Questions</StyledHeader>
       </StyledPageDiv>
       {userQuestions.map((userQuestion) => {
-        if (userQuestion.answer != null) {
+        if (userQuestion.answer == null) {
           return (
             <Fragment key={userQuestion.id}>
               <StyledPageDiv>
@@ -66,22 +59,31 @@ const FaqPage = () => {
                 </StyledQuestionContainer>
               </StyledPageDiv>
               <StyledPageDiv>
-                <StyledAnswer>{userQuestion.answer}</StyledAnswer>
+                <StyledButtonTable>
+                  <tbody>
+                    <tr>
+                      <td width="50%">
+                        <AnswerQuestionButton id={userQuestion.id} />
+                      </td>
+                      <td
+                        style={{
+                          width: "50%",
+                          textAlign: "right",
+                        }}
+                      >
+                        <DeleteQuestionButton id={userQuestion.id} />
+                      </td>
+                    </tr>
+                  </tbody>
+                </StyledButtonTable>
               </StyledPageDiv>
             </Fragment>
           );
         }
         return null;
       })}
-      <AddQuestionButton />
-      <StyledPageDiv>
-        <MUIButton variant="contained" onClick={navigateToAnswerQuestionPage}>
-          {" "}
-          Answer questions{" "}
-        </MUIButton>
-      </StyledPageDiv>
     </>
   );
 };
 
-export default FaqPage;
+export default AnswerQuestionPage;

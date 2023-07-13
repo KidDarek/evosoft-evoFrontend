@@ -5,23 +5,71 @@ import Footer from "./common-components/footer/Footer";
 import ContactPage from "./pages/contact-page/ContactPage";
 import FaqPage from "./pages/faq-page/FaqPage";
 import AboutUsPage from "./pages/about-us-page/AboutUsPage";
-import ProductPage from "./pages/product-page/ProductPage";
-import ProductPageAdmin from "./pages/product-page/ProductPageAdmin";
+import ProductPageWithContext from "./pages/product-page/ProductPage";
 import ProfilePage from "./pages/profile-page/ProfilePage";
 import { styled } from "@mui/material";
 import SearchPage from "./pages/search-page/SearchPage";
 import ShopPage from "./pages/shop-page/ShopPage";
+import CheckoutPage from "./pages/checkout-page/CheckoutPage";
+import AddProductPageWithContext from "./pages/product-page/AddProductPage";
+import AnswerQuestionPage from "./pages/answer-question-page/AnswerQuestionPage";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  UserContextProvider
+} from "./context-providers/UserContext";
+import {
+  ProductContextProvider
+} from "./context-providers/ProductContext";
+import {
+  UserQuestionContextProvider
+} from "./context-providers/UserQuestionContext";
+import {
+  CartItemsContextProvider
+} from "./context-providers/CartItemsContext";
 
-const StyledFontDiv = styled("div")({
-  fontFamily: "Roboto"
+const MainTheme = createTheme({
+  palette: {
+    green: {
+      main: "#00cc99",
+      contrastText: "#fff",
+    },
+    red: {
+      main: "#ff0055",
+      dark: "#990033",
+      contrastText: "#fff",
+    },
+    white: {
+      main: "#FFFFFF",
+    },
+  },
+  typography: {
+    button: {
+      fontSize: 16,
+      fontWeight: 700,
+    },
+  },
 });
 
+const BodyContainer = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  width: "100%",
+  height: "100vh",
+  fontFamily: "Roboto",
+  backgroundColor: "#00efb3",
+  overflowX: "hidden",
+});
 
 function App() {
   return (
-    <>
-    <StyledFontDiv>
-    <BrowserRouter>
+    <ThemeProvider theme={MainTheme}>
+      <UserContextProvider>
+        <ProductContextProvider>
+          <CartItemsContextProvider>
+          <UserQuestionContextProvider>
+      <BodyContainer>
+        <BrowserRouter>
           <Header />
           <Routes>
             <Route path="/" element={<MainPage />} />
@@ -30,14 +78,20 @@ function App() {
             <Route path="/Contact" element={<ContactPage />} />
             <Route path="/Search" element={<SearchPage />} />
             <Route path="/Shop" element={<ShopPage />} />
-            <Route path="/Profile:id" element={<ProfilePage />} />
-            <Route path="/Product/:id" element={<ProductPage />} />
-            <Route path="/ProductAdmin/:id" element={<ProductPageAdmin />} />
+            <Route path="/Checkout" element={<CheckoutPage />} />
+            <Route path="/Profile" element={<ProfilePage />} />
+            <Route path="/AnswerQuestion" element={<AnswerQuestionPage />} />
+            <Route path="/Product/:id" element={<ProductPageWithContext />} />
+            <Route path="/AddProduct" element={<AddProductPageWithContext />} />
           </Routes>
         </BrowserRouter>
-      <Footer />
-    </StyledFontDiv>
-    </>
+        <Footer />
+        </BodyContainer>
+      </UserQuestionContextProvider>
+      </CartItemsContextProvider>
+      </ProductContextProvider>
+      </UserContextProvider>
+    </ThemeProvider>
   );
 }
 

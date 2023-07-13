@@ -1,7 +1,7 @@
 import { Avatar, styled } from "@mui/material";
-import React from "react";
-import { useParams } from "react-router-dom";
-import { users } from "../../db";
+import React, { useContext, useState } from "react";
+import PurchaseHistoryButton from "./PurchaseHistoryButton";
+import { UserContext } from "../../context-providers/UserContext";
 
 const StyledPageDiv = styled("div")({
   display: "flex",
@@ -9,9 +9,51 @@ const StyledPageDiv = styled("div")({
   justifyContent: "center",
   height: "100%",
   padding: "10px 25px 10px 25px",
-  marginTop: "20px",
-  marginBottom: "15px",
-  gap: "25px",
+  backgroundColor: "#00EFB3",
+});
+
+const StyledBrightPurchaseHistoryDiv = styled("div")({
+  width: "100%",
+  height: "100%",
+  backgroundColor: "#00e6ac",
+  color: "white",
+  textAlign: "center",
+  paddingTop: "50px",
+  paddingBottom: "50px",
+  "@keyframes brightdivanimation": {
+    from: {
+      transform: "translateX(100%)",
+      opacity: "0",
+    },
+    to: {
+      transform: "translateX(0)",
+      opacity: "1",
+    },
+  },
+  animation: "brightdivanimation 0.5s 1 ease",
+  position: "static",
+});
+
+const StyledDarkPurchaseHistoryDiv = styled("div")({
+  width: "100%",
+  height: "100%",
+  backgroundColor: "#00b386",
+  color: "white",
+  textAlign: "center",
+  paddingTop: "50px",
+  paddingBottom: "50px",
+  "@keyframes darkdivanimation": {
+    from: {
+      transform: "translateX(-100%)",
+      opacity: "0",
+    },
+    to: {
+      transform: "translateX(0)",
+      opacity: "1",
+    },
+  },
+  animation: "darkdivanimation 0.5s 1 ease",
+  position: "static",
 });
 
 const StyledTable = styled("table")({
@@ -19,41 +61,68 @@ const StyledTable = styled("table")({
   height: "128px",
   background: "#00cc99",
   borderRadius: "15px",
+  color: "white",
+  padding: "20px 20px 20px 24px",
+  fontWeight: "bold",
+});
+
+const StyledPurchaseHistory = styled("div")({
+  width: "80%",
+  height: "100%",
+  backgroundColor: "#00cc99",
 });
 
 const ProfilePage = () => {
-  const params = useParams();
-  const id = params.id;
+  const [VisiblePurchaseHistory, setPurchaseHistory] = useState(false);
+
+  const { getLoggedInUser } = useContext(UserContext);
+
+  const loggedInUser = getLoggedInUser();
+
+  if (!loggedInUser) {
+    return null; // or any appropriate UI when the user is not logged in
+  }
+
   return (
-    <div>
+    <>
       <StyledPageDiv>
-        <Avatar
-          sx={{ width: 128, height: 128, bgcolor: "#ff0055", fontSize: 100 }}
-        >
-          {users[id - 1].name[0].toUpperCase()}
-        </Avatar>
         <StyledTable>
           <tbody>
             <tr>
-              <td>Name</td>
-              <td>{users[id - 1].name}</td>
+              <td rowSpan="5">
+                <Avatar
+                  sx={{
+                    width: 128,
+                    height: 128,
+                    bgcolor: "#ff0055",
+                    fontSize: 100,
+                  }}
+                >
+                  {loggedInUser.name[0].toUpperCase()}
+                </Avatar>
+              </td>
             </tr>
             <tr>
-              <td>Email</td>
-              <td>{users[id - 1].email}</td>
+              <td>Name:</td>
+              <td>{loggedInUser.name}</td>
             </tr>
             <tr>
-              <td>Role</td>
-              <td>{users[id - 1].role}</td>
+              <td>Email:</td>
+              <td>{loggedInUser.email}</td>
             </tr>
             <tr>
-              <td>Status</td>
+              <td>Role:</td>
+              <td>{loggedInUser.role}</td>
+            </tr>
+            <tr>
+              <td>Status:</td>
               <td>active</td>
             </tr>
           </tbody>
         </StyledTable>
       </StyledPageDiv>
-    </div>
+      <StyledPageDiv></StyledPageDiv>
+    </>
   );
 };
 

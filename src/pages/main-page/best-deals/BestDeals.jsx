@@ -1,16 +1,28 @@
 import { Grid } from "@mui/material";
-import React, { Fragment } from "react";
-import Card from "./Card";
+import React, { Fragment, useContext } from "react";
 import { styled } from "@mui/material";
-import { products } from "../../../db";
+import { ProductContext } from "../../../context-providers/ProductContext";
+import Card from "./Card";
 
 const StyledPadding = styled("div")({
   paddingLeft: "9rem",
   paddingRight: "9rem",
-  marginBottom: "20px",
+  borderBottom: "30px solid #00EFB3",
+  "@keyframes mainbestdealanimation": {
+    from: {
+      opacity: "0%",
+    },
+    to: {
+      opacity: "100%",
+    },
+  },
+  animation: "mainbestdealanimation 1s 1 ease",
+  position: "static",
 });
 
 const ReturnTwoRandomProductByCategory = () => {
+  const { products } = useContext(ProductContext);
+
   // Filtering all products categories and putting it in an array
   let filtered = [];
   products.map((product) =>

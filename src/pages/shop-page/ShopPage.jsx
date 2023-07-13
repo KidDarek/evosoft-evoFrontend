@@ -1,72 +1,172 @@
+import React, { useContext, useEffect, useState } from "react";
+import { Button, createTheme, styled } from "@mui/material";
+import { ThemeProvider } from "@mui/system";
+import { useNavigate } from "react-router-dom";
+import { ProductContext } from "../../context-providers/ProductContext";
+import { CartItemsContext } from "../../context-providers/CartItemsContext";
+import MiniCard from "./MiniCard";
 
-import { Button, createTheme, styled } from '@mui/material';
-import { ThemeProvider } from '@mui/system';
-import React from 'react'
-import { products } from '../../db'
-import Card from '../main-page/best-deals/Card'
-
-let shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
-
-const StyledContainer = styled("div")({
-    marginTop: "25px",
-    marginLeft: "25px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "left",
-
+const StyledPageDiv = styled("div")({
+  display: "flex",
+  alignItems: "top",
+  justifyContent: "center",
+  height: "100%",
+  padding: "15px 25px 15px 25px",
+  backgroundColor: "#00EFB3",
 });
 
 const StyledDiv = styled("div")({
-    marginTop: "25px",
-    marginLeft: "25px",
-    fontSize: "50px",
-    color: "#00cc99"
+  width: "10%",
+  marginLeft: "40px",
+  fontSize: "20px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "#00cc99",
+  padding: "10px 25px 10px 25px",
+  borderRadius: "15px",
+  color: "white",
+});
+
+const StyledBigTable = styled("table")({
+  width: "65%",
+  height: "fit-content",
+  background: "#00cc99",
+  borderRadius: "15px",
+  color: "white",
+  padding: "20px 20px 20px 40px",
+  fontSize: "25px",
+  fontWeight: "bold",
+});
+
+const StyledSmallTable = styled("table")({
+  width: "15%",
+  height: "fit-content",
+  marginLeft: "20px",
+  background: "#00cc99",
+  borderRadius: "15px",
+  color: "white",
+  padding: "8px 10px 10px 8px",
+  borderSpacing: "8px",
+  fontSize: "22px",
 });
 
 const BasicTheme = createTheme({
-    palette: {
-        green: {
-            main: "#00cc99",
-            contrastText: "#fff",
-        },
-        red: {
-            main: "#ff0055",
-            dark: "#990033",
-            contrastText: "#fff",
-        },
-        white: {
-            main: "#FFFFFF",
-        },
+  palette: {
+    green: {
+      main: "#00EFB3",
+      contrastText: "#fff",
     },
+    red: {
+      main: "#ff0055",
+      dark: "#990033",
+      contrastText: "#fff",
+    },
+    white: {
+      main: "#FFFFFF",
+    },
+  },
 });
 
-let sum = 0;
-const CalculateSum = () => {
-    sum = 0;
-    for (let i = 0; i < shoppingItems.length; i++) {
-        sum += shoppingItems[i].quantity * shoppingItems[i].price;
-    }
-}
-
 const ShopPage = () => {
-    shoppingItems = JSON.parse(localStorage.getItem("shoppingItems")) === null ? [] : JSON.parse(localStorage.getItem("shoppingItems"));
-    CalculateSum();
-    return (
-        <>
-            <ThemeProvider theme={BasicTheme}>
-                {shoppingItems.length !== 0 ? shoppingItems.map(({ id, quantity }) =>
-                    <StyledContainer key={id}>
-                        <Card id={id} />
-                        <StyledDiv>x{quantity}</StyledDiv>
-                        <StyledDiv>= ${quantity * products[id].price}</StyledDiv>
-                    </StyledContainer>
-                ) : null}
-                {shoppingItems.length !== 0 ?
-                    <StyledDiv>Your total is: ${sum} <Button variant='contained' color='green' >Continue</Button></StyledDiv>
-                    : null}
-            </ThemeProvider>
-        </>
-    )
-}
+  const navigate = useNavigate();
+  const { getProductById } = useContext(ProductContext);
+  const { cartItems } = useContext(CartItemsContext);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [itemPrices, setItemPrices] = useState([]);
 
-export default ShopPage
+  useEffect(() => {
+    const calculateItemPrices = async () => {
+      const prices = await Promise.all(
+        cartItems.map(async ({ id, quantity }) => {
+          const product = await getProductById(id);
+          return product ? product.price * quantity : 0;
+        })
+      );
+
+      setItemPrices(prices);
+    };
+
+    calculateItemPrices();
+  }, [cartItems, getProductById]);
+
+  useEffect(() => {
+    const subtotal = itemPrices.reduce((acc, price) => acc + price, 0);
+    setTotalPrice(subtotal);
+  }, [itemPrices]);
+
+  const navigateToCheckoutPage = () => {
+    navigate(`/Checkout`, { state: { grandTotal: totalPrice + 5 } });
+  };
+
+  return (
+    <>
+      <ThemeProvider theme={BasicTheme}>
+        <StyledPageDiv>
+          <StyledBigTable>
+            <tbody>
+              <tr>
+                <th align="left" width="75%">
+                  Product
+                </th>
+                <th align="center">Quantity</th>
+                <th align="center" width="25%">
+                  Price
+                </th>
+              </tr>
+              {cartItems.length !== 0 &&
+                cartItems.map(({ id, quantity }, index) => (
+                  <tr valign="middle" key={id}>
+                    <td>
+                      <MiniCard id={id} />
+                    </td>
+                    <td rowSpan="3" width="17%">
+                      <StyledDiv>x{quantity}</StyledDiv>
+                    </td>
+                    <td rowSpan="3">
+                      <StyledDiv>${itemPrices[index]}</StyledDiv>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </StyledBigTable>
+          {cartItems.length !== 0 ? (
+            <StyledSmallTable>
+              <tbody>
+                <tr>
+                  <th style={{ textAlign: "left", fontSize: "26px" }}>Total</th>
+                </tr>
+                <tr>
+                  <td>Subtotal: </td>
+                  <td align="right">${totalPrice}</td>
+                </tr>
+                <tr>
+                  <td>Delivery: </td>
+                  <td align="right">${5}</td>
+                </tr>
+                <tr style={{ fontWeight: "bold" }}>
+                  <td>Grand total: </td>
+                  <td align="right">${totalPrice + 5}</td>
+                </tr>
+                <tr>
+                  <td colSpan="3" align="center">
+                    <Button
+                      variant="contained"
+                      color="green"
+                      sx={{ width: "100%" }}
+                      onClick={navigateToCheckoutPage}
+                    >
+                      Continue
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            </StyledSmallTable>
+          ) : null}
+        </StyledPageDiv>
+      </ThemeProvider>
+    </>
+  );
+};
+
+export default ShopPage;
